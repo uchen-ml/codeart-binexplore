@@ -1,6 +1,6 @@
 {
   "name": "codeart-binexplore",
-  "displayName": "codeart-binexplore",
+  "displayName": "Code Art - Binary Explore",
   "description": "VSCode extension for analyzing compiled binaries",
   "publisher": "uchenml",
   "version": "0.1.0",
