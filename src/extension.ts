@@ -1,32 +1,48 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
+import * as fs from 'fs';
+import * as preview from './preview';
 
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
+/**
+ * This method is called when the extension is activated.
+ * @param context The context in which the extension is activated.
+ */
 export function activate(context: vscode.ExtensionContext) {
-  // Use the console to output diagnostic information (console.log) and errors (console.error)
-  // This line of code will only be executed once when your extension is activated
-  console.log(
-    'Congratulations, your extension "codeart-binexplore" is now active!'
-  );
-
-  // The command has been defined in the package.json file
-  // Now provide the implementation of the command with registerCommand
-  // The commandId parameter must match the command field in package.json
-  const disposable = vscode.commands.registerCommand(
-    'codeart-binexplore.helloWorld',
-    () => {
-      // The code you place here will be executed every time your command is executed
-      // Display a message box to the user
-      vscode.window.showInformationMessage(
-        'Hello World from codeart-binexplore!'
-      );
+  const disposable = vscode.workspace.onDidOpenTextDocument(async document => {
+    if (isExecutable(document.fileName)) {
+      await preview.previewOutput(document.fileName);
     }
-  );
+  });
 
   context.subscriptions.push(disposable);
+
+  preview.activate(context);
 }
 
-// This method is called when your extension is deactivated
-export function deactivate() {}
+/**
+ * This method is called when the extension is deactivated.
+ */
+export function deactivate() {
+  preview.deactivate();
+}
+
+/**
+ * Checks if a file is a binary executable.
+ * @param filePath The path to the file.
+ * @returns True if the file is a binary executable, false otherwise.
+ */
+function isExecutable(filePath: string): boolean {
+  if (!fs.existsSync(filePath)) {
+    return false;
+  }
+
+  try {
+    const stats = fs.statSync(filePath);
+
+    const isExecutable = (stats.mode & 0o111) !== 0;
+
+    return isExecutable;
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+}
