@@ -1,0 +1,38 @@
+'main-extension-logic':
+  - any-glob-to-any-file:
+      - 'src/*.ts'
+
+'explore':
+  - any-glob-to-any-file:
+      - 'src/explore.ts'
+
+'preview':
+  - any-glob-to-any-file:
+      - 'src/preview.ts'
+
+'documentation':
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'docs/**/*'
+          - 'README.md'
+          - 'CONTRIBUTING.md'
+          - 'SECURITY.md'
+
+'workspace':
+  - any-glob-to-any-file:
+      - '.github/**/*'
+      - '.vscode/**/*'
+      - '.editorconfig'
+      - '.eslint*'
+      - '*prettier*'
+      - '.vscode-test.mjs'
+      - '.vscodeignore'
+
+'testing':
+  - any-glob-to-any-file:
+      - 'src/test/**/*'
+
+'configurations':
+  - any-glob-to-any-file:
+      - 'package.json'
+      - 'tsconfig.json'

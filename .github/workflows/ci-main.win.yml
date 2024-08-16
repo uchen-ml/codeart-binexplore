@@ -1,0 +1,44 @@
+name: CI (Windows)
+
+on:
+  push:
+    branches: [main, rel]
+  pull_request:
+    branches: [main, rel]
+
+jobs:
+  build:
+    runs-on: windows-2019
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v3
+
+      - name: Setup Node environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Install Yarn
+        run: npm install -g yarn
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Build the extension
+        run: yarn compile-production
+
+      - name: Lint
+        run: yarn lint
+
+      - name: Install CMake/Ninja
+        uses: lukka/get-cmake@v3.18.3
+
+      - name: Build fake executables for tests
+        uses: urkle/action-cmake-build@v1.0.0
+        with:
+          source-dir: ${{ github.workspace }}/src/test/objectFilesGenerator
+          install-build: true
+
+      - name: Run tests
+        run: npx vscode-test

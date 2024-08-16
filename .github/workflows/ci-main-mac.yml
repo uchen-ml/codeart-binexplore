@@ -1,0 +1,52 @@
+name: CI (macOS)
+
+on:
+  push:
+    branches: [main, rel]
+  pull_request:
+    branches: [main, rel]
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.16.0
+
+      - name: Install VSCE
+        run: npm install --global @vscode/vsce
+
+      - name: Install ESLint
+        run: npm install --global eslint@8.57.0
+
+      - name: Install GTS
+        run: npm install --global gts
+
+      - name: Install VScode Test
+        run: npm install --global vscode-test
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build the extension
+        run: npm run compile
+
+      - name: Lint
+        run: gts lint
+
+      - name: Install CMake/Ninja
+        uses: lukka/get-cmake@v3.18.3
+
+      - name: Build fake executables for tests
+        uses: urkle/action-cmake-build@v1.0.0
+        with:
+          source-dir: ${{ github.workspace }}/src/test/objectFilesGenerator
+          install-build: true
+
+      - name: Run tests
+        run: npx vscode-test
