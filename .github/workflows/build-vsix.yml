@@ -36,6 +36,9 @@ jobs:
       - name: Clean vsix
         run: rm -f codeart-binexplore-*.vsix
 
+      - name: Install VSCE
+        run: npm install --global @vscode/vsce
+
       - name: Build the VSIX
         run: |
           vsce package

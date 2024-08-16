@@ -18,9 +18,6 @@ jobs:
         with:
           node-version: 20.16.0
 
-      - name: Install VSCE
-        run: npm install --global @vscode/vsce
-
       - name: Install ESLint
         run: npm install --global eslint@8.57.0
 
