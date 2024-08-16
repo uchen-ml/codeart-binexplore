@@ -8,6 +8,7 @@
     "type": "git",
     "url": "https://github.com/uchen-ml/codeart-binexplore"
   },
+  "icon": "assets/images/logo.png",
   "engines": {
     "vscode": "^1.92.0"
   },
