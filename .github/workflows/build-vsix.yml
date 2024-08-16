@@ -64,6 +64,6 @@ jobs:
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: codeart-binexplore-*.vsix
+          name: codeart-binexplore.vsix
           path: ./codeart-binexplore-*.vsix
           if-no-files-found: error
