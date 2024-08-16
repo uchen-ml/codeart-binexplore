@@ -1,49 +1,50 @@
-"main-extension-logic":
-  - any-glob-to-any-file:
-      - "src/*.ts"
-
 feature:
-  - head-branch: ["^feature", "feature"]
+  - head-branch: ['^feature', 'feature']
 
 release:
-  - base-branch: "main"
+  - base-branch: 'main'
 
-"explore":
+'main-extension-logic':
   - changed-files:
       - any-glob-to-any-file:
-          - "src/explore.ts"
+          - 'src/*.ts'
 
-"preview":
+'explore':
   - changed-files:
       - any-glob-to-any-file:
-          - "src/preview.ts"
+          - 'src/explore.ts'
 
-"documentation":
+'preview':
   - changed-files:
       - any-glob-to-any-file:
-          - "docs/**/*"
-          - "README.md"
-          - "CONTRIBUTING.md"
-          - "SECURITY.md"
+          - 'src/preview.ts'
 
-"workspace":
+'documentation':
   - changed-files:
       - any-glob-to-any-file:
-          - ".github/**/*"
-          - ".vscode/**/*"
-          - ".editorconfig"
-          - ".eslint*"
-          - "*prettier*"
-          - ".vscode-test.mjs"
-          - ".vscodeignore"
+          - 'docs/**/*'
+          - 'README.md'
+          - 'CONTRIBUTING.md'
+          - 'SECURITY.md'
 
-"testing":
+'workspace':
   - changed-files:
       - any-glob-to-any-file:
-          - "src/test/**/*"
+          - '.github/**/*'
+          - '.vscode/**/*'
+          - '.editorconfig'
+          - '.eslint*'
+          - '*prettier*'
+          - '.vscode-test.mjs'
+          - '.vscodeignore'
 
-"configurations":
+'testing':
   - changed-files:
       - any-glob-to-any-file:
-          - "package.json"
-          - "tsconfig.json"
+          - 'src/test/**/*'
+
+'configurations':
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'package.json'
+          - 'tsconfig.json'
