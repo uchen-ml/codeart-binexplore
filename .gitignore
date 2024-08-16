@@ -1,5 +1,7 @@
 out
 dist
+build
+deploy
 node_modules
 .vscode-test/
 *.vsix
