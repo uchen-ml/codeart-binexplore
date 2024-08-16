@@ -6,6 +6,9 @@
   },
   "include": [
     "src/**/*.ts",
-    "test/**/*.ts"
+    "src/test/**/*.ts"
+  ],
+  "exclude": [
+    "src/test/objectFilesGenerator/**/*.ts"
   ]
 }
