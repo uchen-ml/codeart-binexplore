@@ -38,7 +38,7 @@ jobs:
         run: npm run compile
 
       - name: Converting files to UNIX format
-        run: find ./src -type f -print0 | xargs -0 dos2unix
+        run: Get-ChildItem -Path ./src -Recurse -File | ForEach-Object { dos2unix $_.FullName }
 
       - name: Lint
         run: gts lint

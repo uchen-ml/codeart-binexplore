@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
+import * as os from 'os';
 import * as preview from './preview';
 
 /**
@@ -39,8 +40,10 @@ function isExecutable(filePath: string): boolean {
     const stats = fs.statSync(filePath);
 
     const isExecutable = (stats.mode & 0o111) !== 0;
+    const isWinExecutable =
+      filePath.endsWith('.exe') && os.platform() === 'win32';
 
-    return isExecutable;
+    return isExecutable || isWinExecutable;
   } catch (error) {
     console.error(error);
     return false;
