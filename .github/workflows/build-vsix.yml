@@ -34,7 +34,7 @@ jobs:
           exclude: '.git'
 
       - name: Clean vsix
-        run: rm codeart-binexplore-*.vsix
+        run: rm -f codeart-binexplore-*.vsix
 
       - name: Build the VSIX
         run: |

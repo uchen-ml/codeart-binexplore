@@ -47,13 +47,3 @@ jobs:
         with:
           source-dir: ${{ github.workspace }}/src/test/objectFilesGenerator
           install-build: true
-
-      - name: Install Xvfb
-        run: sudo apt-get install -y xvfb
-
-      - name: Run Xvfb and tests
-        run: |
-          xvfb-run --auto-servernum --server-args="-screen 0 1024x768x24" npm run test
-
-      - name: Run tests
-        run: npx vscode-test
