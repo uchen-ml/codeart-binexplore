@@ -36,6 +36,24 @@ jobs:
       - name: Clean vsix
         run: rm -f codeart-binexplore-*.vsix
 
+      - name: Install ESLint
+        run: npm install --global eslint@8.57.0
+
+      - name: Install GTS
+        run: npm install --global gts
+
+      - name: Install VScode Test
+        run: npm install --global vscode-test
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build the extension
+        run: npm run compile
+
+      - name: Lint
+        run: gts lint
+
       - name: Install VSCE
         run: npm install --global @vscode/vsce
 
