@@ -10,7 +10,8 @@
   },
   "icon": "assets/images/logo.png",
   "engines": {
-    "vscode": "^1.92.0"
+    "vscode": "^1.92.0",
+    "node": ">=11.14.0"
   },
   "categories": [
     "Other"

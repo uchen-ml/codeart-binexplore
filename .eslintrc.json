@@ -1,3 +1,14 @@
 {
-  "extends": "./node_modules/gts/"
+  "extends": "./node_modules/gts/",
+  "rules": {
+    "object-curly-spacing": [
+      "error",
+      "always"
+    ],
+    "require-jsdoc": "off",
+    "valid-jsdoc": "off",
+    "prettier/prettier": "error",
+    "@typescript-eslint/no-unused-vars": "off",
+    "@typescript-eslint/no-floating-promises": "error"
+  }
 }
