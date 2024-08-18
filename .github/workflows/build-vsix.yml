@@ -1,0 +1,69 @@
+name: Build VSIX
+
+on:
+  push:
+    branches: [main]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2.1.2
+        with:
+          node-version: '20.16.0'
+          check-latest: true
+
+      - name: Get Short SHA
+        id: get-short-sha
+        run: echo "sha=$(git rev-parse --short ${GITHUB_SHA})" >> $GITHUB_OUTPUT
+
+      - name: Update the package version
+        uses: jacobtomlinson/gha-find-replace@master
+        with:
+          find: "\"version\": \"(\\d+\\.\\d+\\.\\d+)\""
+          replace: '"version": "$1-${{ steps.get-short-sha.outputs.sha }}"'
+          include: 'package.json'
+          exclude: '.git'
+
+      - name: Clean vsix
+        run: rm -f codeart-binexplore-*.vsix
+
+      - name: Install ESLint
+        run: npm install --global eslint@8.57.0
+
+      - name: Install GTS
+        run: npm install --global gts
+
+      - name: Install VScode Test
+        run: npm install --global vscode-test
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build the extension
+        run: npm run compile
+
+      - name: Lint
+        run: gts lint
+
+      - name: Install VSCE
+        run: npm install --global @vscode/vsce
+
+      - name: Build the VSIX
+        run: |
+          vsce package
+
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: codeart-binexplore.vsix
+          path: ./codeart-binexplore-*.vsix
+          if-no-files-found: error
