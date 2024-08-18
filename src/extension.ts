@@ -47,8 +47,6 @@ export function deactivate() {
  */
 async function isExecutable(filePath: string): Promise<boolean> {
   try {
-    await fs.promises.access(filePath, fs.constants.F_OK);
-
     const stats = await fs.promises.stat(filePath);
     const isExecutable = (stats.mode & 0o111) !== 0;
 

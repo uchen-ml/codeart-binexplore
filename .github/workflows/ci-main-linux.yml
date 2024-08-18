@@ -35,12 +35,3 @@ jobs:
 
       - name: Lint
         run: gts lint
-
-      - name: Install CMake/Ninja
-        uses: lukka/get-cmake@v3.18.3
-
-      - name: Build fake executables for tests
-        uses: urkle/action-cmake-build@v1.0.0
-        with:
-          source-dir: ${{ github.workspace }}/src/test/objectFilesGenerator
-          install-build: true
