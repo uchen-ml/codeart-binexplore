@@ -1,0 +1,94 @@
+
+examples/mmul_release.o:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000000000 <_ZN10binexplore3mulERKNS_6MatrixES2_>:
+   0:	f3 0f 1e fa          	endbr64
+   4:	41 57                	push   %r15
+   6:	41 56                	push   %r14
+   8:	49 89 f6             	mov    %rsi,%r14
+   b:	41 55                	push   %r13
+   d:	45 31 ed             	xor    %r13d,%r13d
+  10:	41 54                	push   %r12
+  12:	55                   	push   %rbp
+  13:	48 89 fd             	mov    %rdi,%rbp
+  16:	48 89 f7             	mov    %rsi,%rdi
+  19:	53                   	push   %rbx
+  1a:	48 83 ec 28          	sub    $0x28,%rsp
+  1e:	64 48 8b 04 25 28 00 	mov    %fs:0x28,%rax
+  25:	00 00 
+  27:	48 89 44 24 18       	mov    %rax,0x18(%rsp)
+  2c:	31 c0                	xor    %eax,%eax
+  2e:	4c 8d 7c 24 10       	lea    0x10(%rsp),%r15
+  33:	e8 00 00 00 00       	call   38 <_ZN10binexplore3mulERKNS_6MatrixES2_+0x38>
+  38:	48 89 ef             	mov    %rbp,%rdi
+  3b:	48 89 c3             	mov    %rax,%rbx
+  3e:	e8 00 00 00 00       	call   43 <_ZN10binexplore3mulERKNS_6MatrixES2_+0x43>
+  43:	4c 89 ff             	mov    %r15,%rdi
+  46:	48 89 da             	mov    %rbx,%rdx
+  49:	48 89 c6             	mov    %rax,%rsi
+  4c:	e8 00 00 00 00       	call   51 <_ZN10binexplore3mulERKNS_6MatrixES2_+0x51>
+  51:	48 89 ef             	mov    %rbp,%rdi
+  54:	e8 00 00 00 00       	call   59 <_ZN10binexplore3mulERKNS_6MatrixES2_+0x59>
+  59:	49 39 c5             	cmp    %rax,%r13
+  5c:	0f 83 ad 00 00 00    	jae    10f <_ZN10binexplore3mulERKNS_6MatrixES2_+0x10f>
+  62:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+  68:	4c 89 f7             	mov    %r14,%rdi
+  6b:	45 31 e4             	xor    %r12d,%r12d
+  6e:	e8 00 00 00 00       	call   73 <_ZN10binexplore3mulERKNS_6MatrixES2_+0x73>
+  73:	49 39 c4             	cmp    %rax,%r12
+  76:	0f 83 7e 00 00 00    	jae    fa <_ZN10binexplore3mulERKNS_6MatrixES2_+0xfa>
+  7c:	0f 1f 40 00          	nopl   0x0(%rax)
+  80:	31 db                	xor    %ebx,%ebx
+  82:	c7 44 24 08 00 00 00 	movl   $0x0,0x8(%rsp)
+  89:	00 
+  8a:	eb 3c                	jmp    c8 <_ZN10binexplore3mulERKNS_6MatrixES2_+0xc8>
+  8c:	0f 1f 40 00          	nopl   0x0(%rax)
+  90:	48 89 da             	mov    %rbx,%rdx
+  93:	4c 89 ee             	mov    %r13,%rsi
+  96:	48 89 ef             	mov    %rbp,%rdi
+  99:	e8 00 00 00 00       	call   9e <_ZN10binexplore3mulERKNS_6MatrixES2_+0x9e>
+  9e:	48 89 de             	mov    %rbx,%rsi
+  a1:	4c 89 e2             	mov    %r12,%rdx
+  a4:	4c 89 f7             	mov    %r14,%rdi
+  a7:	c5 fa 11 44 24 0c    	vmovss %xmm0,0xc(%rsp)
+  ad:	48 83 c3 01          	add    $0x1,%rbx
+  b1:	e8 00 00 00 00       	call   b6 <_ZN10binexplore3mulERKNS_6MatrixES2_+0xb6>
+  b6:	c5 fa 59 44 24 0c    	vmulss 0xc(%rsp),%xmm0,%xmm0
+  bc:	c5 fa 58 54 24 08    	vaddss 0x8(%rsp),%xmm0,%xmm2
+  c2:	c5 fa 11 54 24 08    	vmovss %xmm2,0x8(%rsp)
+  c8:	48 89 ef             	mov    %rbp,%rdi
+  cb:	e8 00 00 00 00       	call   d0 <_ZN10binexplore3mulERKNS_6MatrixES2_+0xd0>
+  d0:	48 39 c3             	cmp    %rax,%rbx
+  d3:	72 bb                	jb     90 <_ZN10binexplore3mulERKNS_6MatrixES2_+0x90>
+  d5:	c5 fa 10 44 24 08    	vmovss 0x8(%rsp),%xmm0
+  db:	4c 89 e2             	mov    %r12,%rdx
+  de:	4c 89 ff             	mov    %r15,%rdi
+  e1:	4c 89 ee             	mov    %r13,%rsi
+  e4:	49 83 c4 01          	add    $0x1,%r12
+  e8:	e8 00 00 00 00       	call   ed <_ZN10binexplore3mulERKNS_6MatrixES2_+0xed>
+  ed:	4c 89 f7             	mov    %r14,%rdi
+  f0:	e8 00 00 00 00       	call   f5 <_ZN10binexplore3mulERKNS_6MatrixES2_+0xf5>
+  f5:	49 39 c4             	cmp    %rax,%r12
+  f8:	72 86                	jb     80 <_ZN10binexplore3mulERKNS_6MatrixES2_+0x80>
+  fa:	48 89 ef             	mov    %rbp,%rdi
+  fd:	49 83 c5 01          	add    $0x1,%r13
+ 101:	e8 00 00 00 00       	call   106 <_ZN10binexplore3mulERKNS_6MatrixES2_+0x106>
+ 106:	49 39 c5             	cmp    %rax,%r13
+ 109:	0f 82 59 ff ff ff    	jb     68 <_ZN10binexplore3mulERKNS_6MatrixES2_+0x68>
+ 10f:	48 8b 44 24 10       	mov    0x10(%rsp),%rax
+ 114:	48 8b 54 24 18       	mov    0x18(%rsp),%rdx
+ 119:	64 48 2b 14 25 28 00 	sub    %fs:0x28,%rdx
+ 120:	00 00 
+ 122:	75 0f                	jne    133 <_ZN10binexplore3mulERKNS_6MatrixES2_+0x133>
+ 124:	48 83 c4 28          	add    $0x28,%rsp
+ 128:	5b                   	pop    %rbx
+ 129:	5d                   	pop    %rbp
+ 12a:	41 5c                	pop    %r12
+ 12c:	41 5d                	pop    %r13
+ 12e:	41 5e                	pop    %r14
+ 130:	41 5f                	pop    %r15
+ 132:	c3                   	ret
+ 133:	e8 00 00 00 00       	call   138 <_ZN10binexplore3mulERKNS_6MatrixES2_+0x138>

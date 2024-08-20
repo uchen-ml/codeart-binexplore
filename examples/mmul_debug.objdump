@@ -1,0 +1,121 @@
+
+examples/mmul_debug.o:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000000000 <_ZN10binexplore3mulERKNS_6MatrixES2_>:
+
+private:
+  MatrixPimpl *pimpl_;
+};
+
+Matrix mul(const Matrix &lhs, const Matrix &rhs) {
+   0:	f3 0f 1e fa          	endbr64
+   4:	55                   	push   %rbp
+   5:	48 89 e5             	mov    %rsp,%rbp
+   8:	53                   	push   %rbx
+   9:	48 83 ec 58          	sub    $0x58,%rsp
+   d:	48 89 7d b8          	mov    %rdi,-0x48(%rbp)
+  11:	48 89 75 b0          	mov    %rsi,-0x50(%rbp)
+  15:	64 48 8b 04 25 28 00 	mov    %fs:0x28,%rax
+  1c:	00 00 
+  1e:	48 89 45 e8          	mov    %rax,-0x18(%rbp)
+  22:	31 c0                	xor    %eax,%eax
+  Matrix result(lhs.get_height(), rhs.get_width());
+  24:	48 8b 45 b0          	mov    -0x50(%rbp),%rax
+  28:	48 89 c7             	mov    %rax,%rdi
+  2b:	e8 00 00 00 00       	call   30 <_ZN10binexplore3mulERKNS_6MatrixES2_+0x30>
+  30:	48 89 c3             	mov    %rax,%rbx
+  33:	48 8b 45 b8          	mov    -0x48(%rbp),%rax
+  37:	48 89 c7             	mov    %rax,%rdi
+  3a:	e8 00 00 00 00       	call   3f <_ZN10binexplore3mulERKNS_6MatrixES2_+0x3f>
+  3f:	48 89 c1             	mov    %rax,%rcx
+  42:	48 8d 45 c8          	lea    -0x38(%rbp),%rax
+  46:	48 89 da             	mov    %rbx,%rdx
+  49:	48 89 ce             	mov    %rcx,%rsi
+  4c:	48 89 c7             	mov    %rax,%rdi
+  4f:	e8 00 00 00 00       	call   54 <_ZN10binexplore3mulERKNS_6MatrixES2_+0x54>
+  for (size_t i = 0; i < lhs.get_height(); ++i) {
+  54:	48 c7 45 d0 00 00 00 	movq   $0x0,-0x30(%rbp)
+  5b:	00 
+  5c:	e9 c5 00 00 00       	jmp    126 <_ZN10binexplore3mulERKNS_6MatrixES2_+0x126>
+    for (size_t j = 0; j < rhs.get_width(); ++j) {
+  61:	48 c7 45 d8 00 00 00 	movq   $0x0,-0x28(%rbp)
+  68:	00 
+  69:	e9 98 00 00 00       	jmp    106 <_ZN10binexplore3mulERKNS_6MatrixES2_+0x106>
+      float sum = 0.0f;
+  6e:	66 0f ef c0          	pxor   %xmm0,%xmm0
+  72:	f3 0f 11 45 c4       	movss  %xmm0,-0x3c(%rbp)
+      for (size_t k = 0; k < lhs.get_width(); ++k) {
+  77:	48 c7 45 e0 00 00 00 	movq   $0x0,-0x20(%rbp)
+  7e:	00 
+  7f:	eb 4b                	jmp    cc <_ZN10binexplore3mulERKNS_6MatrixES2_+0xcc>
+        sum += lhs.get(i, k) * rhs.get(k, j);
+  81:	48 8b 55 e0          	mov    -0x20(%rbp),%rdx
+  85:	48 8b 4d d0          	mov    -0x30(%rbp),%rcx
+  89:	48 8b 45 b8          	mov    -0x48(%rbp),%rax
+  8d:	48 89 ce             	mov    %rcx,%rsi
+  90:	48 89 c7             	mov    %rax,%rdi
+  93:	e8 00 00 00 00       	call   98 <_ZN10binexplore3mulERKNS_6MatrixES2_+0x98>
+  98:	f3 0f 11 45 ac       	movss  %xmm0,-0x54(%rbp)
+  9d:	48 8b 55 d8          	mov    -0x28(%rbp),%rdx
+  a1:	48 8b 4d e0          	mov    -0x20(%rbp),%rcx
+  a5:	48 8b 45 b0          	mov    -0x50(%rbp),%rax
+  a9:	48 89 ce             	mov    %rcx,%rsi
+  ac:	48 89 c7             	mov    %rax,%rdi
+  af:	e8 00 00 00 00       	call   b4 <_ZN10binexplore3mulERKNS_6MatrixES2_+0xb4>
+  b4:	f3 0f 59 45 ac       	mulss  -0x54(%rbp),%xmm0
+  b9:	f3 0f 10 4d c4       	movss  -0x3c(%rbp),%xmm1
+  be:	f3 0f 58 c1          	addss  %xmm1,%xmm0
+  c2:	f3 0f 11 45 c4       	movss  %xmm0,-0x3c(%rbp)
+      for (size_t k = 0; k < lhs.get_width(); ++k) {
+  c7:	48 83 45 e0 01       	addq   $0x1,-0x20(%rbp)
+  cc:	48 8b 45 b8          	mov    -0x48(%rbp),%rax
+  d0:	48 89 c7             	mov    %rax,%rdi
+  d3:	e8 00 00 00 00       	call   d8 <_ZN10binexplore3mulERKNS_6MatrixES2_+0xd8>
+  d8:	48 39 45 e0          	cmp    %rax,-0x20(%rbp)
+  dc:	0f 92 c0             	setb   %al
+  df:	84 c0                	test   %al,%al
+  e1:	75 9e                	jne    81 <_ZN10binexplore3mulERKNS_6MatrixES2_+0x81>
+      }
+      result.set(i, j, sum);
+  e3:	8b 75 c4             	mov    -0x3c(%rbp),%esi
+  e6:	48 8b 55 d8          	mov    -0x28(%rbp),%rdx
+  ea:	48 8b 4d d0          	mov    -0x30(%rbp),%rcx
+  ee:	48 8d 45 c8          	lea    -0x38(%rbp),%rax
+  f2:	66 0f 6e c6          	movd   %esi,%xmm0
+  f6:	48 89 ce             	mov    %rcx,%rsi
+  f9:	48 89 c7             	mov    %rax,%rdi
+  fc:	e8 00 00 00 00       	call   101 <_ZN10binexplore3mulERKNS_6MatrixES2_+0x101>
+    for (size_t j = 0; j < rhs.get_width(); ++j) {
+ 101:	48 83 45 d8 01       	addq   $0x1,-0x28(%rbp)
+ 106:	48 8b 45 b0          	mov    -0x50(%rbp),%rax
+ 10a:	48 89 c7             	mov    %rax,%rdi
+ 10d:	e8 00 00 00 00       	call   112 <_ZN10binexplore3mulERKNS_6MatrixES2_+0x112>
+ 112:	48 39 45 d8          	cmp    %rax,-0x28(%rbp)
+ 116:	0f 92 c0             	setb   %al
+ 119:	84 c0                	test   %al,%al
+ 11b:	0f 85 4d ff ff ff    	jne    6e <_ZN10binexplore3mulERKNS_6MatrixES2_+0x6e>
+  for (size_t i = 0; i < lhs.get_height(); ++i) {
+ 121:	48 83 45 d0 01       	addq   $0x1,-0x30(%rbp)
+ 126:	48 8b 45 b8          	mov    -0x48(%rbp),%rax
+ 12a:	48 89 c7             	mov    %rax,%rdi
+ 12d:	e8 00 00 00 00       	call   132 <_ZN10binexplore3mulERKNS_6MatrixES2_+0x132>
+ 132:	48 39 45 d0          	cmp    %rax,-0x30(%rbp)
+ 136:	0f 92 c0             	setb   %al
+ 139:	84 c0                	test   %al,%al
+ 13b:	0f 85 20 ff ff ff    	jne    61 <_ZN10binexplore3mulERKNS_6MatrixES2_+0x61>
+    }
+  }
+  return result;
+ 141:	48 8b 45 c8          	mov    -0x38(%rbp),%rax
+}
+ 145:	48 8b 55 e8          	mov    -0x18(%rbp),%rdx
+ 149:	64 48 2b 14 25 28 00 	sub    %fs:0x28,%rdx
+ 150:	00 00 
+ 152:	74 05                	je     159 <_ZN10binexplore3mulERKNS_6MatrixES2_+0x159>
+ 154:	e8 00 00 00 00       	call   159 <_ZN10binexplore3mulERKNS_6MatrixES2_+0x159>
+ 159:	48 8b 5d f8          	mov    -0x8(%rbp),%rbx
+ 15d:	c9                   	leave
+ 15e:	c3                   	ret
