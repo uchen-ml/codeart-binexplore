@@ -51,6 +51,7 @@ export class ObjDumper {
           outputChannel.appendLine(
             `Error running objDump command: ${error.message}`
           );
+          outputChannel.show();
         } else {
           console.error(error);
         }
