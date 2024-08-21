@@ -30,7 +30,6 @@ export function activate(context: vscode.ExtensionContext) {
   outputChannel.appendLine(`os.platform() = ${os.platform()}`);
   outputChannel.appendLine(`os.arch() = ${os.arch()}`);
   outputChannel.appendLine(`os.release() = ${os.release()}`);
-  outputChannel.show();
 }
 
 /**

@@ -14,8 +14,434 @@
     "node": ">=11.14.0"
   },
   "categories": [
-    "Other"
+    "Other",
+    "Debuggers"
   ],
+  "contributes": {
+    "configuration": [
+      {
+        "type": "object",
+        "properties": {
+          "codeart-binexplore.objdumpPath": {
+            "type": "string",
+            "default": "/usr/bin/objdump",
+            "markdownDescription": "Path to objdump executable to use",
+            "order": 0,
+            "scope": "resource"
+          },
+          "codeart-binexplore.commandBuildArgs": {
+            "type": "array",
+            "markdownDescription": "Arguments to pass to the build command. At least one option from the list '-a,-d,-D,-e,-f,-g,-G,-h,-H,-p,-P,-r,-R,-s,-S,-t,-T,-V,-x' must be given. [More info](https://man7.org/linux/man-pages/man1/objdump.1.html). \n\nThis setting will overwrite the `#codeart-binexplore.BuildArguments#` settings.",
+            "items": {
+              "type": "string"
+            },
+            "default": [],
+            "scope": "resource"
+          }
+        }
+      },
+      {
+        "type": "object",
+        "title": "Build Arguments",
+        "properties": {
+          "codeart-binexplore.args.disassemble": {
+            "type": "boolean",
+            "default": true,
+            "markdownDescription": "Display the assembler mnemonics for the machine instructions from the input file. This option only disassembles those sections which are expected to contain instructions. \n\nThis setting may be overwritten by the more specific `#codeart-binexplore.commandBuildArgs#` setting.",
+            "scope": "resource"
+          },
+          "codeart-binexplore.args.source": {
+            "type": "boolean",
+            "default": true,
+            "markdownDescription": "Display source code intermixed with disassembly, if possible. This setting will overwrite the #codeart-binexplore.args.disassemble# setting to true. \n\nThis setting may be overwritten by the more specific `#codeart-binexplore.commandBuildArgs#` setting.",
+            "scope": "resource"
+          },
+          "codeart-binexplore.args.archive-headers": {
+            "type": "boolean",
+            "default": false,
+            "markdownDescription": "If any of the objfile files are archives, display the archive header information (in a format similar to ls -l). Besides the information you could list with ar tv, objdump `#codeart-binexplore.args.archive-headers#` shows the object file format of each archive member. \n\nThis setting may be overwritten by the more specific `#codeart-binexplore.commandBuildArgs#` setting.",
+            "scope": "resource"
+          },
+          "codeart-binexplore.args.adjust-vma.offset": {
+            "type": "string",
+            "default": "0x00",
+            "markdownDescription": "When dumping information, first add offset to all the section addresses.  This is useful if the section addresses do not correspond to the symbol table, which can happen when putting sections at particular addresses when using a format which can not represent section addresses, such as a.out. \n\nThis setting may be overwritten by the more specific `#codeart-binexplore.commandBuildArgs#` setting.",
+            "scope": "resource",
+            "pattern": "^0x[0-9a-fA-F]+$"
+          },
+          "codeart-binexplore.args.target": {
+            "type": "string",
+            "default": "auto",
+            "enum": [
+              "bfdname",
+              "auto"
+            ],
+            "enumDescriptions": [
+              "Specifies that the object-code format for the object files is bfdname.",
+              "objdump will automatically determine the object-code format for the object files."
+            ],
+            "markdownDescription": "Specifying the object-code format for the object-file. \n\nThis option may not be necessary as objdump can automatically recognize many formats. [More info](https://man7.org/linux/man-pages/man1/objdump.1.html) \n\nThis setting may be overwritten by the more specific `#codeart-binexplore.commandBuildArgs#` setting.",
+            "scope": "resource"
+          },
+          "codeart-binexplore.args.demangleStyle": {
+            "type": "string",
+            "default": "none",
+            "enum": [
+              "auto",
+              "gnu",
+              "gnu-v3",
+              "lucid",
+              "arm",
+              "hp",
+              "edg",
+              "java",
+              "gnat",
+              "none"
+            ],
+            "enumDescriptions": [
+              "Automatically chooses the appropriate demangling style based on the binary being processed.",
+              "Demangles symbols according to the older GNU C++ ABI, which was used by GCC 2.x and earlier versions.",
+              "Demangles symbols according to the GNU C++ ABI (Application Binary Interface) used by GCC 3.x and later versions.",
+              "Demangles symbols according to the Lucid C++ ABI. Lucid was a lesser-known C++ compiler, and this style is rarely used today.",
+              "Demangles symbols according to the ARM C++ ABI. This style is used for binaries compiled for ARM architecture using specific ARM C++ compilers.",
+              "Demangles symbols according to the HP C++ ABI used by older HP compilers.",
+              "Demangles symbols according to the EDG C++ ABI, which is used by the Edison Design Group C++ compiler front-end. Many other compilers (including Intel and Microsoft) use the EDG front-end, so this style can be relevant for binaries compiled with these compilers.",
+              "Demangles symbols for Java, though this is rarely needed since Java generally doesn't use name mangling in the same way as C++.",
+              "Demangles symbols according to the GNAT (GNU Ada) ABI. This is used for binaries compiled with GNAT, which is a part of the GCC suite for Ada programming.",
+              "objdump without demangling low-level symbol names."
+            ],
+            "markdownDescription": "Decode (demangle) low-level symbol names into user-level names.  Besides removing any initial underscore prepended by the system, this makes C++ function names readable. Different compilers have different mangling styles. The optional demangling style argument can be used to choose an appropriate demangling style for your compiler. \n\nThis setting may be overwritten by the more specific `#codeart-binexplore.commandBuildArgs#` setting.",
+            "scope": "resource"
+          },
+          "codeart-binexplore.args.recurseLimit": {
+            "type": "boolean",
+            "default": "true",
+            "markdownDescription": "Enables or disables a limit on the amount of recursion performed whilst demangling strings.  Since the name mangling formats allow for an infinite level of recursion it is possible to create strings whose decoding will exhaust the amount of stack space available on the host machine, triggering a memory fault.  The limit tries to prevent this from happening by restricting recursion to 2048 levels of nesting. \n\nThe default is for this limit to be enabled, but disabling it may be necessary in order to demangle truly complicated names.  Note however that if the recursion limit is disabled then stack exhaustion is possible and any bug reports about such an event will be rejected. \n\nThis setting may be overwritten by the more specific `#codeart-binexplore.commandBuildArgs#` setting.",
+            "scope": "resource"
+          },
+          "codeart-binexplore.args.debugging": {
+            "type": "boolean",
+            "default": false,
+            "markdownDescription": "Display debugging information.  This attempts to parse STABS debugging format information stored in the file and print it out using a C like syntax.  If no STABS debugging was found this option falls back on the -W option to print any DWARF information in the file. \n\nThis setting may be overwritten by the more specific `#codeart-binexplore.commandBuildArgs#` setting.",
+            "scope": "resource"
+          },
+          "codeart-binexplore.args.debugging-tags": {
+            "type": "boolean",
+            "default": false,
+            "markdownDescription": "Like `#codeart-binexplore.args.debugging#`, but the information is generated in a format compatible with ctags tool. \n\nThis setting may be overwritten by the more specific `#codeart-binexplore.commandBuildArgs#` setting.",
+            "scope": "resource"
+          },
+          "codeart-binexplore.args.disassemble-all": {
+            "type": "boolean",
+            "default": false,
+            "markdownDescription": "Like `#codeart-binexplore.args.disassemble#`, but disassemble the contents of all non-empty non-bss sections, not just those expected to contain instructions. \n\nThis option also has a subtle effect on the disassembly of instructions in code sections. When option `#codeart-binexplore.args.disassemble#` is in effect objdump will assume that any symbols present in a code section occur on the boundary between instructions and it will refuse to disassemble across such a boundary. When option `#codeart-binexplore.args.disassemble-all#` is in effect however this assumption is suppressed. This means that it is possible for the output of `#codeart-binexplore.args.disassemble#`, and `#codeart-binexplore.args.disassemble-all#` to differ if, for example, data is stored in code sections. \n\nIf the target is an ARM architecture this switch also has the effect of forcing the disassembler to decode pieces of data found in code sections as if they were instructions. \n\nNote if the `#codeart-binexplore.args.dwarf#`=follow-links option is enabled then any symbol tables in linked debug info files will be read in and used when disassembling. \n\nThis setting may be overwritten by the more specific `#codeart-binexplore.commandBuildArgs#` setting.",
+            "scope": "resource"
+          },
+          "codeart-binexplore.args.no-addresses": {
+            "type": "boolean",
+            "default": false,
+            "markdownDescription": "When disassembling, don't print addresses on each line or for symbols and relocation offsets. In combination with `#codeart-binexplore.args.no-show-raw-insn#` this may be useful for comparing compiler output. \n\nThis setting may be overwritten by the more specific `#codeart-binexplore.commandBuildArgs#` setting.",
+            "scope": "resource"
+          },
+          "codeart-binexplore.args.prefix-addresses": {
+            "type": "boolean",
+            "default": false,
+            "markdownDescription": "When disassembling, print the complete address on each line. This is the older disassembly format. \n\nThis setting may be overwritten by the more specific `#codeart-binexplore.commandBuildArgs#` setting.",
+            "scope": "resource"
+          },
+          "codeart-binexplore.args.endian": {
+            "type": "string",
+            "default": "auto",
+            "enum": [
+              "little",
+              "big",
+              "auto"
+            ],
+            "enumDescriptions": [
+              "Display data in little-endian format.",
+              "Display data in big-endian format.",
+              "Display data in the format of the host system."
+            ],
+            "markdownDescription": "Specify the endianness of the object files. This only affects disassembly. This can be useful when disassembling a file format which does not describe endianness information, such as S-records. \n\nThis setting may be overwritten by the more specific `#codeart-binexplore.commandBuildArgs#` setting.",
+            "scope": "resource"
+          },
+          "codeart-binexplore.args.file-headers": {
+            "type": "boolean",
+            "default": false,
+            "markdownDescription": "Display summary information from the overall header of each of the objfile files. \n\nThis setting may be overwritten by the more specific `#codeart-binexplore.commandBuildArgs#` setting.",
+            "scope": "resource"
+          },
+          "codeart-binexplore.args.file-offsets": {
+            "type": "boolean",
+            "default": false,
+            "markdownDescription": "when disassembling sections, whenever a symbol is displayed, also display the file offset of the region of data that is about to be dumped. If zeroes are being skipped, then when disassembly resumes, tell the user how many zeroes were skipped and the file offset of the location from where the disassembly resumes. When dumping sections, display the file offset of the location from where the dump starts. \n\nThis setting may be overwritten by the more specific `#codeart-binexplore.commandBuildArgs#` setting.",
+            "scope": "resource"
+          },
+          "codeart-binexplore.args.file-start-context": {
+            "types": "boolean",
+            "default": false,
+            "markdownDescription": "Specify that when displaying interlisted source code and disassembly, (assumes `#codeart-binexplore.args.source#` from a file that has not yet been displayed, extend the context to the start of the file. \n\nThis setting may be overwritten by the more specific `#codeart-binexplore.commandBuildArgs#` setting.",
+            "scope": "resource"
+          },
+          "codeart-binexplore.args.section-headers": {
+            "type": "boolean",
+            "default": false,
+            "markdownDescription": "Display summary information from the section headers of the objfile files. \n\nFile segments may be relocated to nonstandard addresses, for example by using the -Ttext, -Tdata, or -Tbss options to ld. However, some object file formats, such as a.out, do not store the starting address of the file segments. In those situations, although ld relocates the sections correctly, using `#codeart-binexplore.args.section-headers#` to list the file section headers cannot show the correct addresses. Instead it shows the usual addresses, which are implicit for the target. \n\nNote, in some cases it is possible for a section to have both the READONLY, and the NOREAD attributes set. In such cases the NOREAD attribute takes precedence, but objdump will report both since the exact setting of the flag bits might be important.  \n\nThis setting may be overwritten by the more specific `#codeart-binexplore.commandBuildArgs#` setting.",
+            "scope": "resource"
+          },
+          "codeart-binexplore.args.process-links": {
+            "type": "boolean",
+            "default": false,
+            "markdownDescription": "Display the contents of non-debug sections found in separate debuginfo files that are linked to the main file. This option automatically implies the -WK option, and only sections requested by other command line options will be displayed. \n\nThis setting may be overwritten by the more specific `#codeart-binexplore.commandBuildArgs#` setting.",
+            "scope": "resource"
+          },
+          "codeart-binexplore.args.line-numbers": {
+            "type": "boolean",
+            "default": false,
+            "markdownDescription": "Label the display (using debugging information) with the filename and source line numbers corresponding to the object code ore relocs shown. Only useful with -d, -D, or -r. \n\nThis setting may be overwritten by the more specific `#codeart-binexplore.commandBuildArgs#` setting.",
+            "scope": "resource"
+          },
+          "codeart-binexplore.args.disassembler-options": {
+            "type": "array",
+            "default": [],
+            "markdownDescription": "Pass target specific information to the disassembler. Only supported on some targets. \n\n This setting may be overwritten by the more specific `#codeart-binexplore.commandBuildArgs#` setting.",
+            "items": {
+              "type": "string",
+              "enum": [
+                "intel",
+                "att",
+                "no-aliases",
+                "visualize-jumps",
+                "force-thumb",
+                "force-arm",
+                "raw",
+                "vfp",
+                "disassemble-zeroes",
+                "msa"
+              ],
+              "enumDescriptions": [
+                "Use the Intel syntax for disassembly.",
+                "Use the AT&T syntax for disassembly.",
+                "Do not use aliases in the disassembly. This option will force objdump to display the canonical instead of the alias.",
+                "Display the target address of jump instructions in the output.",
+                "Disassemble as Thumb instructions, even if the architecture defaults to ARM.",
+                "Disassemble as ARM instructions, even if the architecture defaults to Thumb.",
+                "Disassemble raw binary data.",
+                "Enable disassembly of VFP (Vector Floating Point) instructions.",
+                "Disassemble sequences of zeroes (normally these are skipped).",
+                "Disassemble MSA (MIPS SIMD Architecture) instructions."
+              ]
+            },
+            "scope": "resource"
+          },
+          "codeart-binexplore.args.private-headers": {
+            "type": "boolean",
+            "default": false,
+            "markdownDescription": "Print information that is specific to the object file format. The exact information printed depends upon the object file format. For some object file formats, no additional information is printed. \n\nThis setting may be overwritten by the more specific `#codeart-binexplore.commandBuildArgs#` setting.",
+            "scope": "resource"
+          },
+          "codeart-binexplore.args.private": {
+            "type": "array",
+            "default": [],
+            "items": {
+              "type": "string",
+              "enum": [
+                "header",
+                "aout",
+                "sections",
+                "syms",
+                "relocs",
+                "lineno",
+                "loader",
+                "except",
+                "typchk",
+                "traceback",
+                "toc",
+                "ldinfo",
+                "header",
+                "sections"
+              ],
+              "enumDescriptions": [
+                "Displays the file header information, which includes metadata about the object file like the file type, target machine, number of sections, and timestamps.",
+                "Displays information about the auxiliary header, which is related to the executable part of the XCOFF file. This includes details like the entry point, text, and data segment sizes.",
+                "Prints details about the sections in the object file, such as their names, sizes, addresses, and attributes",
+                "Displays the symbol table, which includes all symbols defined in the object file, such as functions, variables, and labels.",
+                "Shows relocation entries, which describe how to adjust the code and data in the file when the program is loaded into memory.",
+                "Prints the line number information, which is used for debugging. It maps source code lines to corresponding machine instructions. ",
+                "Displays loader information, which includes details used by the system loader , such as module IDs and imported symbols",
+                "Shows exception table entries , which are used in exception handling to define the scope and actions for different types of exceptions.",
+                "Displays type-checking information, which provides details useful for debugging, such as stack frame pointers and save areas.",
+                "Prints traceback information, which provides details useful for debugging, such as stack frame pointers and save areas.",
+                "Displays the Table of Contents, which is used in some architectures to manage global and static variables.",
+                "Shows loader information, which includes data used by the system loader when the executable is loaded into memory.",
+                "Displays the file header information, which includes metdata about the PE file such as the machine type, number of sections, timestamps, and entry point.",
+                "Prints details about the sections in the PE file, including names, sizes, addresses, and attributes. This information is critical for understanding the layout of the executable in memory."
+              ]
+            },
+            "scope": "resource"
+          },
+          "codeart-binexplore.args.reloc": {
+            "type": "boolean",
+            "default": false,
+            "markdownDescription": "Print the relocation entries of the file. If used with `#codeart-binexplore.args.disassemble#` or `#codeart-binexplore.args.disassemble-all#`, the relocations are printed interspersed with the disassembly. \n\nThis setting may be overwritten by the more specific `#codeart-binexplore.commandBuildArgs#` setting.",
+            "scope": "resource"
+          },
+          "codeart-binexplore.args.dynamic-reloc": {
+            "type": "boolean",
+            "default": false,
+            "markdownDescription": "Print the dynamic relocation entries of the file. This is only meaningful for dynamic objects, such as certain types of shared libraries. As for `#codeart-binexplore.args.reloc#`, if used with `#codeart-binexplore.args.disassemble#` or `#codeart-binexplore.args.disassemble-all#`, the relocations are printed interspersed with the disassembly. \n\nThis setting may be overwritten by the more specific `#codeart-binexplore.commandBuildArgs#` setting.",
+            "scope": "resource"
+          },
+          "codeart-binexplore.args.full-contents": {
+            "type": "boolean",
+            "default": false,
+            "markdownDescription": "Display the full contents of sections, often used in combination with -j to request specific sections. By default all non-empty non-bss sections are displayed. By default compressed section will be displayed in its compressed form. In order to see the contents in a decompressed form add the -Z option to the command line. \n\nThis setting may be overwritten by the more specific `#codeart-binexplore.commandBuildArgs#` setting.",
+            "scope": "resource"
+          },
+          "codeart-binexplore.args.show-all-symbols": {
+            "type": "boolean",
+            "default": false,
+            "markdownDescription": "When disassembling, show all the symbols that match a given address, not just the first one. \n\nThis setting may be overwritten by the more specific `#codeart-binexplore.commandBuildArgs#` setting.",
+            "scope": "resource"
+          },
+          "codeart-binexplore.args.source-comment": {
+            "type": "boolean",
+            "default": "false",
+            "markdownDescription": "Like the -S option, but all source code lines are displayed with a prefix of `#codeart-binexplore.args.source-comment.prefix#`. Typically will be a comment string which can be used to distinguish the assembler code from the source code. \n\nThis setting may be overwritten by the more specific `#codeart-binexplore.commandBuildArgs#` setting.",
+            "scope": "resource"
+          },
+          "codeart-binexplore.args.source-comment.prefix": {
+            "type": "string",
+            "default": "#",
+            "markdownDescription": "The prefix to use for source code comments when `#codeart-binexplore.args.source-comment#` is enabled. \n\nThis setting may be overwritten by the more specific `#codeart-binexplore.commandBuildArgs#` setting.",
+            "scope": "resource"
+          },
+          "codeart-binexplore.args.prefix": {
+            "type": "string",
+            "default": "",
+            "markdownDescription": "Specify prefix to add the aboslute path when used with -S. \n\nThis setting may be overwritten by the more specific `#codeart-binexplore.commandBuildArgs#` setting.",
+            "scope": "resource"
+          },
+          "codeart-binexplore.args.prefix-strip": {
+            "type": "string",
+            "default": "",
+            "markdownDescription": "indicate how many initial directory names to strip off the hardwired absolute paths. It has no effect without `#codeart-binexplore.args.prefix#`. \n\nThis setting may be overwritten by the more specific `#codeart-binexplore.commandBuildArgs#` setting.",
+            "scope": "resource"
+          },
+          "codeart-binexplore.args.show-raw-insn": {
+            "type": "boolean",
+            "default": false,
+            "markdownDescription": "When disassembling instructions, print the instruction in hex as well as in symbolic form. \n\nThis is the default except when `#codeart-binexplore.args.prefix-address#` is used. \n\nThis setting may be overwritten by the more specific `#codeart-binexplore.commandBuildArgs#` setting.",
+            "scope": "resource"
+          },
+          "codeart-binexplore.args.insn-width": {
+            "type": "number",
+            "default": 0,
+            "markdownDescription": "Display width bytes on a single line when disassembling instructions. \n\nThis setting may be overwritten by the more specific `#codeart-binexplore.commandBuildArgs#` setting.",
+            "scope": "resource"
+          },
+          "codeart-binexplore.args.visualize-jumps": {
+            "type": "string",
+            "default": "off",
+            "enum": [
+              "off",
+              "color",
+              "extended-color"
+            ],
+            "enumDescriptions": [
+              "Do not visualize jumps.",
+              "Visualize jumps using simple terminal colors.",
+              "Visualize jumps using 8bit colors, might not work on all terminals."
+            ],
+            "markdownDescription": "Visualize jumps that stay inside a function by drawing art between the start and target addresses. \n\nThis setting may be overwritten by the more specific `#codeart-binexplore.commandBuildArgs#` setting.",
+            "scope": "resource"
+          },
+          "codeart-binexplore.args.disassembler-color": {
+            "type": "string",
+            "default": "off",
+            "enum": [
+              "off",
+              "terminal",
+              "color",
+              "extended-color"
+            ],
+            "enumDescriptions": [
+              "Do not colorize disassembly.",
+              "Colorize disassembly using simple terminal colors.",
+              "Colorize disassembly using simple terminal colors.",
+              "Colorize disassembly using 24bit colors, might not work on all terminals."
+            ],
+            "markdownDescription": "Enables or disables the use of colored syntax highlighting in disassembly output. The default behavior is determined a configure time option. Note, not all architectures support colored sytax highlighting, and depending upon the terminal used, colored output may not actually be legible. \n\nThis setting may be overwritten by the more specific `#codeart-binexplore.commandBuildArgs#` setting.",
+            "scope": "resource"
+          },
+          "codeart-binexplore.args.dwarf": {
+            "type": "array",
+            "default": [],
+            "items": {
+              "type": "string",
+              "enum": [
+                "abbrev",
+                "addr",
+                "cu_index",
+                "frames",
+                "frames-interp",
+                "gdb_index",
+                "info",
+                "links",
+                "follow-links",
+                "no-follow-links",
+                "use-debuginfod",
+                "do-not-use-debuginfod",
+                "rawline",
+                "decodedline",
+                "macro",
+                "loc",
+                "str-offsets",
+                "pubnames",
+                "aranges",
+                "Ranges",
+                "str",
+                "pubtypes",
+                "trace_aranges",
+                "trace_abbrev",
+                "trace_info"
+              ],
+              "enumDescriptions": [
+                "Displays the contents of the .debug_abbrev section.",
+                "Displays the contents of the .debug_addr section.",
+                "Displays the contents of the .debug_cu_index and/or .debug_tu_index sections.",
+                "Displays the raw contents of the .debug_frame section.",
+                "Displays the interpreted contents of the .debug_frame section.",
+                "Displays the contents of the .gdb_index and/or .debug_names sections.",
+                "Displays the contents of the .debug_info section. Note: the output from this option can also be restricted by the use of the --dwarf-depth and --dwarf-start options.",
+                "Displays the contents of the .gnu_debuglink, .gnu_debugaltlink and .debug_sup sections, if any of them are present. Also displays any links to separate dwarf object files (dwo), if they are specified by the DW_AT_GNU_dwo_name or DW_AT_dwo_name attributes in the .debug_info section.",
+                "Displays the contents of any selected debug sections that are found in linked, separate debug info file(s). This can result in multiple versions of the same debug section being displayed if it exists in more that one file.",
+                "Disables the following of links to separate debug info files.",
+                "Enables contacting debuginfod servers if there is a need to follow debug links. This is the default behavior.",
+                "Disables contacting debuginfod servers when there is a need to follow debug links.",
+                "Displays the contents of the .debug_line section in a raw format.",
+                "Displays the interpreted contents of the .debug_line section.",
+                "Displays the contents of the .debug_macro and/or .debug_macinfo sections.",
+                "Displays the contents of the .debug_loc and/or .debug_loclists sections.",
+                "Displays the contents of the .debug_str_offsets section.",
+                "Displays the contents of the .debug_pubnames and/or .debug_gnu_pubnames sections.",
+                "Displays the contents of the .debug_aranges section.",
+                "Displays the contents of the .debug_ranges and/or .debug_rnglists sections.",
+                "Displays the contents of the .debug_str, .debug_line_str, and/or .debug_str_offsets sections.",
+                "Displays the contents of the .debug_pubtypes and/or .debug_gnu_pubtypes sections.",
+                "Displays the contents of the .trace_aranges section.",
+                "Displays the contents of the .trace_abbrev section.",
+                "Displays the contents of the .trace_info section.",
+                "Displays the contents of the .trace_line section."
+              ]
+            },
+            "markdownDescription": "Displays the contents of the DWARF debug sections in the file, if any are present. Compressed debug sections are automatically decompressed (temporarily) before they are displayed. If one or more of the optional letters or words follows the switch then only those type(s) of data will be dumped. \n\nThis setting may be overwritten by the more specific `#codeart-binexplore.commandBuildArgs#` setting.",
+            "scope": "resource"
+          }
+        }
+      }
+    ]
+  },
   "activationEvents": [
     "onStartupFinished"
   ],
