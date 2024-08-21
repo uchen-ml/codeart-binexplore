@@ -3,9 +3,7 @@ import * as fs from 'fs';
 import * as dump from './objdump/dumper';
 
 const objDumpPathKey = 'codeart-binexplore.objdumpPath';
-const buildArgsKey = 'codeart-binexplore.commandBuildArgs';
-
-const argsKey = 'codeart-binexplore.args';
+const buildArgsKey = 'codeart-binexplore.buildArgs';
 
 const defaultObjDumpPath = '/usr/bin/objdump';
 
@@ -174,89 +172,14 @@ export class ObjDumpResult {
   private static getArgs(
     configuration: vscode.WorkspaceConfiguration
   ): string[] {
-    const cliBuildArgs = configuration.get<Array<string>>(buildArgsKey, []);
+    const cliBuildArgs = configuration
+      .get<string>(buildArgsKey, '-d -S')
+      .split(' ');
 
     if (cliBuildArgs.length > 0) {
       return cliBuildArgs;
     }
 
-    return this.handleSeparatedArgs(configuration);
-  }
-
-  private static handleSeparatedArgs(
-    configuration: vscode.WorkspaceConfiguration
-  ): string[] {
-    const argsList = [
-      'archive-headers',
-      'target',
-      'demangle',
-      'disassemble',
-      'disassemble-all',
-      'disassemble-zeroes',
-      'file-headers',
-      'file-offsets',
-      'file-start-context',
-      'debugging',
-      'debugging-tags',
-      'section-headers',
-      'info',
-      'line-numbers',
-      'source',
-      'private-headers',
-      'reloc',
-      'dynamic-reloc',
-      'full-contents',
-      'decompress',
-      'process-links',
-      'stabs',
-      'syms',
-      'dynamic-syms',
-      'all-headers',
-      'wide',
-      'no-addresses',
-      'prefix-addresses',
-      // TODO: Handle show-raw-insn
-      'show-raw-insn',
-      'show-all-symbols',
-      'special-syms',
-    ];
-
-    // TODO: Handle demangle
-    // TODO: Handle disassemble
-    // TODO: Handle Endian
-    // TODO: Handle Section
-    // TODO: Handle Source comments
-    // TODO: Handle architecture
-    // TODO: Handle disassembler options
-    // TODO: Handle private
-    // TODO: Handle --dwarf
-    // TODO: Handle --ctf
-    // TODO: Handle --sframe
-    // TODO: Handle --start-address
-    // TODO: Handle --stop-address
-    // TODO: Handle --adjust-vma
-    // TODO: Handle --dwarf-depth
-    // TODO: Handle --dwarf-start
-    // TODO: Handle --ctf-parent
-    // TODO: Handle --prefix
-    // TODO: Handle --prefix-strip
-    // TODO: Handle --insn-width
-    // TODO: Handle --visualize-jumps
-    // TODO: Handle --unicode
-
-    // TODO: Handle Version Check
-    // TODO: Handle recurse limit
-
-    // TODO: Handle disassembler color
-
-    const args = [];
-    for (const arg of argsList) {
-      const value = configuration.get<boolean>(`${argsKey}.${arg}`, false);
-      if (value) {
-        args.push(`--${arg}`);
-      }
-    }
-
-    return args;
+    return ['-d'];
   }
 }
