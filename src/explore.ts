@@ -6,8 +6,10 @@ const objDumpPathKey = 'codeart-binexplore.objdumpPath';
 const buildArgsKey = 'codeart-binexplore.buildArgs';
 
 const defaultObjDumpPath = '/usr/bin/objdump';
+const defaultBuildArgs = '-d -S';
 
 let outputChannel: vscode.OutputChannel;
+let statusBar: vscode.StatusBarItem;
 
 /**
  * This method is called when the extension is activated.
@@ -22,24 +24,57 @@ export async function activate(
   );
   context.subscriptions.push(disposable);
 
-  const configuration = vscode.workspace.getConfiguration();
-  const objDumpPath = configuration.get<string>(
-    objDumpPathKey,
-    defaultObjDumpPath
-  );
-
   outputChannel = extensionOutputChannel;
 
-  const isObjDumpPathValid = await validateObjDumpPath(objDumpPath);
-  if (!isObjDumpPathValid) {
-    resetObjDumpPath();
-  }
+  statusBar = vscode.window.createStatusBarItem(
+    vscode.StatusBarAlignment.Right,
+    100
+  );
+
+  await vscode.window.onDidChangeActiveTextEditor(
+    await handleStatusBarVisibility
+  );
+
+  await validateObjDumpBinary();
 }
 
 /**
  * This method is called when the extension is deactivated.
  */
 export function deactivate() {}
+
+/**
+ * Validates the objDump binary.
+ */
+async function validateObjDumpBinary() {
+  const configuration = vscode.workspace.getConfiguration();
+  const objDumpPath = configuration.get<string>(
+    objDumpPathKey,
+    defaultObjDumpPath
+  );
+
+  const isObjDumpPathValid = await validateObjDumpPath(objDumpPath);
+
+  if (!isObjDumpPathValid) {
+    vscode.window.showWarningMessage(
+      `Invalid objDump path: ${objDumpPath}. 
+        Fetching the path from the system $PATH.`
+    );
+    await resetObjDumpPath();
+    return;
+  }
+
+  const objDumpVersion = await dump.getObjDumpVersion(objDumpPath);
+  outputChannel.appendLine(`objdump path: ${objDumpPath}`);
+  if (objDumpVersion !== 'ERROR') {
+    outputChannel.appendLine(`objdump version: ${objDumpVersion}`);
+    statusBar.text = `${objDumpPath} (${objDumpVersion})`;
+  } else {
+    statusBar.text = `${objDumpPath} (Invalid Version)`;
+  }
+
+  outputChannel.appendLine('');
+}
 
 /**
  * Validates the objDump path.
@@ -65,14 +100,17 @@ async function validateObjDumpPath(path: string): Promise<boolean> {
       );
     }
 
-    const stats = await fs.promises.stat(path);
-    const isExecutable = (stats.mode & 0o111) !== 0;
+    if (await isExecutable(path)) {
+      const isObjDumpBinary = await dump.isObjDumpBinary(path);
+      return isObjDumpBinary;
+    }
 
-    return isExecutable;
+    return false;
   } catch (error: Error | unknown) {
     if (error instanceof Error) {
       outputChannel.appendLine(
-        `Error validating objdump path "${path}": ${error.message}`
+        `Error validating objdump path "${path}": 
+        ${error.message}`
       );
       return false;
     }
@@ -84,11 +122,28 @@ async function validateObjDumpPath(path: string): Promise<boolean> {
 /**
  * Resets the objDump path to the default value.
  */
-function resetObjDumpPath() {
+async function resetObjDumpPath() {
   const configuration = vscode.workspace.getConfiguration();
+
+  const command = 'which objdump';
+  const commandResult = await dump.execute(command);
+
+  let resolvedPath = commandResult.stdout.trim();
+  if (resolvedPath === '') {
+    vscode.window.showErrorMessage(
+      'Failed to find objdump in system path. check output for more details.'
+    );
+    outputChannel.appendLine(
+      `Failed to find objdump in system path. Setting it as the default value of 
+      '${defaultObjDumpPath}'. 
+      If this path is not valid on your system, please set the correct path manually.`
+    );
+    resolvedPath = defaultObjDumpPath;
+  }
+
   configuration.update(
     objDumpPathKey,
-    defaultObjDumpPath,
+    resolvedPath,
     vscode.ConfigurationTarget.Global
   );
 }
@@ -101,20 +156,33 @@ async function handleConfigurationChange(
   event: vscode.ConfigurationChangeEvent
 ) {
   if (event.affectsConfiguration(objDumpPathKey)) {
-    const configuration = vscode.workspace.getConfiguration();
-    const objDumpPath = configuration.get<string>(
-      objDumpPathKey,
-      defaultObjDumpPath
-    );
+    await validateObjDumpBinary();
+  }
 
-    const isObjDumpPathValid = await validateObjDumpPath(objDumpPath);
+  // TODO: Handle changes in buildArgsKey.
+}
 
-    if (!isObjDumpPathValid) {
-      vscode.window.showWarningMessage(
-        `Invalid objDump path: ${objDumpPath}. Resetting to default.`
-      );
-      resetObjDumpPath();
+/**
+ * Handles the visibility of the status bar.
+ */
+async function handleStatusBarVisibility(
+  editor: vscode.TextEditor | undefined
+) {
+  const document = editor?.document;
+  if (document) {
+    const isFile = document.uri.scheme === 'file';
+    const isExecutableFile = isFile && (await isExecutable(document.fileName));
+
+    if (
+      isExecutableFile ||
+      document.uri.path.includes('CodeArt: Binary Explore')
+    ) {
+      statusBar.show();
+    } else {
+      statusBar.hide();
     }
+  } else {
+    statusBar.hide();
   }
 }
 
@@ -166,20 +234,41 @@ export class ObjDumpResult {
 
   /**
    * Gets the arguments to pass to the objDump command.
+   * @param configuration The workspace configuration.
    * @returns The arguments to pass to the objDump command.
-   * @returns An ['-d'] if no arguments are provided, as default argument.
+   * @default ['-d', '-S']
    */
   private static getArgs(
     configuration: vscode.WorkspaceConfiguration
   ): string[] {
-    const cliBuildArgs = configuration
-      .get<string>(buildArgsKey, '-d -S')
-      .split(' ');
+    const cliBuildArgs = configuration.get<string>(
+      buildArgsKey,
+      defaultBuildArgs
+    );
 
     if (cliBuildArgs.length > 0) {
-      return cliBuildArgs;
+      return cliBuildArgs.split(' ');
     }
 
-    return ['-d'];
+    return defaultBuildArgs.split(' ');
+  }
+}
+
+/**
+ * Checks if a file is a binary executable.
+ * @param filePath The path to the file.
+ * @returns True if the file is a binary executable, false otherwise.
+ */
+export async function isExecutable(filePath: string): Promise<boolean> {
+  try {
+    const stats = await fs.promises.stat(filePath);
+    const isExecutable = (stats.mode & 0o111) !== 0;
+
+    return isExecutable;
+  } catch (error: Error | unknown) {
+    if (error instanceof Error) {
+      outputChannel.appendLine(`Error accessing ${filePath}: ${error.message}`);
+    }
+    return false;
   }
 }

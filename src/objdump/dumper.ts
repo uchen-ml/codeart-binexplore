@@ -1,6 +1,8 @@
+import {exec as execCallback} from 'child_process';
+import {promisify} from 'util';
 import * as vscode from 'vscode';
 
-const exec = require('child_process').exec;
+const exec = promisify(execCallback);
 
 let outputChannel: vscode.OutputChannel | undefined;
 
@@ -48,9 +50,8 @@ export class ObjDumper {
     } catch (error: Error | unknown) {
       if (error instanceof Error) {
         if (outputChannel) {
-          outputChannel.appendLine(
-            `Error running objDump command: ${error.message}`
-          );
+          outputChannel.appendLine('Error running objDump command:');
+          outputChannel.appendLine(error.message);
           outputChannel.show();
         } else {
           console.error(error);
@@ -76,17 +77,68 @@ export interface ExecOutput {
  * @param command - The command to execute.
  * @returns The output of the command.
  */
-export function execute(command: string): Promise<ExecOutput> {
-  return new Promise((resolve, reject) => {
-    exec(command, (error: Error | unknown, stdout: string, stderr: string) => {
-      if (error) {
-        reject(error);
+export async function execute(command: string): Promise<ExecOutput> {
+  try {
+    const {stdout, stderr} = await exec(command);
+    const output: ExecOutput = {stdout, stderr};
+    return output;
+  } catch (error: Error | unknown) {
+    if (error instanceof Error) {
+      if (outputChannel) {
+        outputChannel.appendLine(`Error executing command: ${error.message}`);
       } else {
-        resolve({
-          stdout,
-          stderr,
-        });
+        console.error(error);
       }
-    });
-  });
+    }
+    return {stdout: '', stderr: ''};
+  }
+}
+
+/**
+ * Checks if objdump path is actually an objdump binary.
+ * @param path - The path to the objdump binary.
+ * @returns True if the path is a valid objdump binary, false otherwise.
+ */
+export async function isObjDumpBinary(path: string): Promise<boolean> {
+  try {
+    const command = `${path} --help`;
+    const output = await execute(command);
+    return output.stdout.includes('objdump [options] <input object files>');
+  } catch (error: Error | unknown) {
+    if (error instanceof Error) {
+      if (outputChannel) {
+        outputChannel.appendLine(
+          `Error checking if "${path}" is an objdump binary: ${error.message}`
+        );
+      } else {
+        console.error(error);
+      }
+    }
+    return false;
+  }
+}
+
+/**
+ * Checks objdump version.
+ * @param path - The path to the objdump binary.
+ * @returns The version of the objdump binary.
+ * @returns "ERROR" if the command fails.
+ */
+export async function getObjDumpVersion(path: string): Promise<string> {
+  try {
+    const command = `${path} --version`;
+    const output = await execute(command);
+    return output.stdout.split('\n')[0];
+  } catch (error: Error | unknown) {
+    if (error instanceof Error) {
+      if (outputChannel) {
+        outputChannel.appendLine(
+          `Error getting objdump version for "${path}": ${error.message}`
+        );
+      } else {
+        console.error(error);
+      }
+    }
+    return 'ERROR';
+  }
 }

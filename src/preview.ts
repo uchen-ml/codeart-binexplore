@@ -19,12 +19,21 @@ class BinaryInspectorContentProvider
    * @returns The content of the document as a string.
    */
   public provideTextDocumentContent(uri: vscode.Uri): string {
-    if (!uri.path.includes(`${previewTitle} - `)) {
-      outputChannel.appendLine(`Invalid URI: ${uri}`);
+    try {
+      if (!uri.path.includes(`${previewTitle} - `)) {
+        outputChannel.appendLine(`Invalid URI: ${uri}`);
+        return '';
+      }
+
+      return this.content || '';
+    } catch (error: Error | unknown) {
+      if (error instanceof Error) {
+        outputChannel.appendLine(
+          `Error providing content for ${uri.path}: ${error.message}`
+        );
+      }
       return '';
     }
-
-    return this.content || '';
   }
 
   /**
@@ -64,7 +73,7 @@ export async function activate(
   context: vscode.ExtensionContext,
   extensionOutputChannel: vscode.OutputChannel
 ) {
-  const disposable = vscode.workspace.registerTextDocumentContentProvider(
+  const disposable = await vscode.workspace.registerTextDocumentContentProvider(
     extensionScheme,
     provider
   );
@@ -79,8 +88,8 @@ export async function activate(
 /**
  * This method is called when the extension is deactivated.
  */
-export function deactivate() {
-  explore.deactivate();
+export async function deactivate() {
+  await explore.deactivate();
 }
 
 /**
@@ -90,17 +99,17 @@ export async function previewOutput(fileName: string) {
   const isExplored = await provider.exploreFile(fileName);
 
   if (!isExplored) {
-    vscode.window.showWarningMessage(
+    await vscode.window.showWarningMessage(
       `Failed to explore ${path.basename(fileName)}, check output for more details.`
     );
     return;
   }
 
-  const uri = vscode.Uri.parse(
+  const uri = await vscode.Uri.parse(
     `${extensionScheme}://authority/${previewTitle} - ${path.basename(fileName)}`
   );
 
-  provider.update(uri);
+  await provider.update(uri);
 
   try {
     await vscode.commands.executeCommand(
@@ -122,7 +131,7 @@ export async function previewOutput(fileName: string) {
     const codeArtDocument = await vscode.workspace.openTextDocument(uri);
 
     if (codeArtDocument) {
-      vscode.window.showTextDocument(codeArtDocument, {
+      await vscode.window.showTextDocument(codeArtDocument, {
         preview: false,
         viewColumn: vscode.ViewColumn.Two,
         preserveFocus: false,
@@ -140,4 +149,13 @@ export async function previewOutput(fileName: string) {
     }
     return;
   }
+}
+
+/**
+ * Checks if a file is a binary executable.
+ * @param filePath The path to the file.
+ * @returns True if the file is a binary executable, false otherwise.
+ */
+export async function isExecutable(filePath: string): Promise<boolean> {
+  return await explore.isExecutable(filePath);
 }
