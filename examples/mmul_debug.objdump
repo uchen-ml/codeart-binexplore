@@ -11,11 +11,7 @@ private:
 };
 
 Matrix mul(const Matrix &lhs, const Matrix &rhs) {
-<<<<<<< HEAD
    0:	f3 0f 1e fa          	endbr64 
-=======
-   0:	f3 0f 1e fa          	endbr64
->>>>>>> main
    4:	55                   	push   %rbp
    5:	48 89 e5             	mov    %rsp,%rbp
    8:	53                   	push   %rbx
@@ -121,10 +117,5 @@ Matrix mul(const Matrix &lhs, const Matrix &rhs) {
  152:	74 05                	je     159 <_ZN10binexplore3mulERKNS_6MatrixES2_+0x159>
  154:	e8 00 00 00 00       	call   159 <_ZN10binexplore3mulERKNS_6MatrixES2_+0x159>
  159:	48 8b 5d f8          	mov    -0x8(%rbp),%rbx
-<<<<<<< HEAD
  15d:	c9                   	leave  
  15e:	c3                   	ret    
-=======
- 15d:	c9                   	leave
- 15e:	c3                   	ret
->>>>>>> main
