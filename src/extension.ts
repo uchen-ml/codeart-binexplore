@@ -1,6 +1,8 @@
 import * as vscode from 'vscode';
 import * as os from 'os';
 import * as preview from './preview';
+import * as explore from './explore';
+import * as dump from './objdump/dumper';
 
 const outputChannel = vscode.window.createOutputChannel(
   'CodeArt: Binary Explore'
@@ -12,6 +14,7 @@ const outputChannel = vscode.window.createOutputChannel(
  */
 export function activate(context: vscode.ExtensionContext) {
   const disposable = vscode.workspace.onDidOpenTextDocument(async document => {
+    console.log(`onDidOpenTextDocument: ${document.uri.fsPath}`);
     if (document.uri.scheme !== 'file') {
       return;
     }

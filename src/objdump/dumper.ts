@@ -57,8 +57,6 @@ export class ObjDumper {
           outputChannel.appendLine('Error running objDump command:');
           outputChannel.appendLine(error.message);
           outputChannel.show();
-        } else {
-          console.error(error);
         }
       }
       return 'ERROR';
@@ -91,8 +89,6 @@ export async function execute(command: string): Promise<ExecOutput> {
     if (error instanceof Error) {
       if (outputChannel) {
         outputChannel.appendLine(`Error executing command: ${error.message}`);
-      } else {
-        console.error(error);
       }
       stderr = error.message;
     }
@@ -116,8 +112,6 @@ export async function isObjDumpBinary(path: string): Promise<boolean> {
         outputChannel.appendLine(
           `Error checking if "${path}" is an objdump binary: ${error.message}`
         );
-      } else {
-        console.error(error);
       }
     }
     return false;
@@ -147,8 +141,6 @@ export async function getObjDumpVersion(path: string): Promise<string> {
         outputChannel.appendLine(
           `Error getting objdump version for "${path}": ${error.message}`
         );
-      } else {
-        console.error(error);
       }
     }
     return 'ERROR';
