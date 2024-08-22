@@ -7,7 +7,7 @@ import * as preview from '../src/preview';
 import * as explore from '../src/explore';
 
 const objDumpPathKey = 'codeart-binexplore.objdumpPath';
-const buildArgsKey = 'codeart-binexplore.buildArgs';
+const objDumpOptionsKey = 'codeart-binexplore.objdumpOptions';
 
 suite('Extension Test Suite', () => {
   test('Opening Binary File', async () => {
@@ -23,7 +23,7 @@ suite('Extension Test Suite', () => {
 
     const configuration = await vscode.workspace.getConfiguration();
     await configuration.update(objDumpPathKey, objdumpPath);
-    await configuration.update(buildArgsKey, args.join(' '));
+    await configuration.update(objDumpOptionsKey, args.join(' '));
 
     await preview.previewOutput(filePath);
   });
@@ -41,7 +41,7 @@ suite('Extension Test Suite', () => {
 
     const configuration = await vscode.workspace.getConfiguration();
     await configuration.update(objDumpPathKey, objdumpPath);
-    await configuration.update(buildArgsKey, args.join(' '));
+    await configuration.update(objDumpOptionsKey, args.join(' '));
 
     await preview.previewOutput(filePath);
   });

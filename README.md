@@ -17,7 +17,7 @@ VSCode extension for analyzing compiled binaries and object files.
 ## Extension Settings
 
 - `Objdump Path`: Path to the `objdump` executable. Default is `objdump` to be fetched from system `$PATH`.
-- `Build Args`: Arguments to pass to `objdump`. Default is `-d -S`.
+- `ObjDump Options`: Options of `objdump` command. Default is `-d -S`.
 
 ## Installation and Usage
 - Currently the extension is not published on the VSCode marketplace. It can be only installed manually as .vsix file.

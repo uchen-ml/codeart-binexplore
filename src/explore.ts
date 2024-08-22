@@ -3,10 +3,10 @@ import * as fs from 'fs';
 import * as dump from './objdump/dumper';
 
 const objDumpPathKey = 'codeart-binexplore.objdumpPath';
-const buildArgsKey = 'codeart-binexplore.buildArgs';
+const objDumpOptionsKey = 'codeart-binexplore.objdumpOptions';
 
 const defaultObjDumpPath = '/usr/bin/objdump';
-const defaultBuildArgs = '-d -S';
+const defaultObjDumpOptions = '-d -S';
 
 let outputChannel: vscode.OutputChannel;
 let statusBar: vscode.StatusBarItem;
@@ -159,7 +159,7 @@ async function handleConfigurationChange(
     await validateObjDumpBinary();
   }
 
-  // TODO: Handle changes in buildArgsKey.
+  // TODO: Handle changes in objDumpOptionsKey.
 }
 
 /**
@@ -241,16 +241,16 @@ export class ObjDumpResult {
   private static getArgs(
     configuration: vscode.WorkspaceConfiguration
   ): string[] {
-    const cliBuildArgs = configuration.get<string>(
-      buildArgsKey,
-      defaultBuildArgs
+    const cliObjDumpOptions = configuration.get<string>(
+      objDumpOptionsKey,
+      defaultObjDumpOptions
     );
 
-    if (cliBuildArgs.length > 0) {
-      return cliBuildArgs.split(' ');
+    if (cliObjDumpOptions.length > 0) {
+      return cliObjDumpOptions.split(' ');
     }
 
-    return defaultBuildArgs.split(' ');
+    return defaultObjDumpOptions.split(' ');
   }
 }
 
