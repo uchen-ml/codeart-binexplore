@@ -115,7 +115,7 @@ export async function previewOutput(fileName: string) {
     await vscode.commands.executeCommand(
       'vscode.open',
       uri,
-      vscode.ViewColumn.Two,
+      vscode.ViewColumn.Active,
       'Binary Inspector'
     );
   } catch (error: Error | unknown) {
@@ -133,7 +133,7 @@ export async function previewOutput(fileName: string) {
     if (codeArtDocument) {
       await vscode.window.showTextDocument(codeArtDocument, {
         preview: false,
-        viewColumn: vscode.ViewColumn.Two,
+        viewColumn: vscode.ViewColumn.Active,
         preserveFocus: false,
       });
     } else {
