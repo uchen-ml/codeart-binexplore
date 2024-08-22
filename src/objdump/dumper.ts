@@ -105,7 +105,20 @@ export async function isObjDumpBinary(path: string): Promise<boolean> {
   try {
     const command = `${path} --help`;
     const output = await execute(command);
-    return output.stdout.includes('objdump [options] <input object files>');
+
+    // TODO: Add more valid objdump outputs based on different supported versions, and OS.
+    const validObjdumpOutputs = [
+      'objdump [options] <input object files>',
+      `Usage: ${path} <option(s)> <file(s)>`,
+    ];
+
+    for (const validOutput of validObjdumpOutputs) {
+      if (output.stdout.includes(validOutput)) {
+        return true;
+      }
+    }
+
+    return false;
   } catch (error: Error | unknown) {
     if (error instanceof Error) {
       if (outputChannel) {

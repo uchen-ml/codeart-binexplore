@@ -13,12 +13,12 @@ suite('ObjDumper Tests', () => {
   teardown(() => {});
 
   test('Dump: valid executable - debug', async () => {
-    const filePath = 'examples/build/macos/vector_debug';
+    const filePath = 'examples/vector_debug';
     const objDumpPath = '/usr/bin/objdump';
     const args = ['-d', '-S'];
 
     const expectedOutput = await fs.promises
-      .readFile('examples/build/macos/vector_debug.objdump')
+      .readFile('examples/vector_debug.objdump')
       .then(data => data.toString());
     const executeStub = async (command: string): Promise<ExecOutput> => {
       assert.strictEqual(
@@ -35,12 +35,12 @@ suite('ObjDumper Tests', () => {
   });
 
   test('Dump: Valid executable - release', async () => {
-    const filePath = 'examples/build/macos/vector_release';
+    const filePath = 'examples/vector_release';
     const objDumpPath = '/usr/bin/objdump';
     const args = ['-d'];
 
     const expectedOutput = await fs.promises
-      .readFile('examples/build/macos/vector_release.objdump')
+      .readFile('examples/vector_release.objdump')
       .then(data => data.toString());
     const executeStub = async (command: string): Promise<ExecOutput> => {
       assert.strictEqual(
@@ -57,12 +57,12 @@ suite('ObjDumper Tests', () => {
   });
 
   test('Dump: Valid object - debug', async () => {
-    const filePath = 'examples/build/macos/mmul_debug.o';
+    const filePath = 'examples/mmul_debug.o';
     const objDumpPath = '/usr/bin/objdump';
     const args = ['-d', '-S'];
 
     const expectedOutput = await fs.promises
-      .readFile('examples/build/macos/mmul_debug.objdump')
+      .readFile('examples/mmul_debug.objdump')
       .then(data => data.toString());
     const executeStub = async (command: string): Promise<ExecOutput> => {
       assert.strictEqual(
@@ -79,12 +79,12 @@ suite('ObjDumper Tests', () => {
   });
 
   test('Dump: Valid object - release', async () => {
-    const filePath = 'examples/build/macos/mmul_release.o';
+    const filePath = 'examples/mmul_release.o';
     const objDumpPath = '/usr/bin/objdump';
     const args = ['-d'];
 
     const expectedOutput = await fs.promises
-      .readFile('examples/build/macos/mmul_release.objdump')
+      .readFile('examples/mmul_release.objdump')
       .then(data => data.toString());
     const executeStub = async (command: string): Promise<ExecOutput> => {
       assert.strictEqual(
@@ -101,7 +101,7 @@ suite('ObjDumper Tests', () => {
   });
 
   test('Dump: Invalid file path', async () => {
-    const filePath = 'examples/build/macos/invalidFile';
+    const filePath = 'examples/invalidFile';
     const objDumpPath = '/usr/bin/objdump';
     const args = ['-d', '-S'];
 
@@ -117,7 +117,7 @@ suite('ObjDumper Tests', () => {
   });
 
   test('Dump: Invalid argument', async () => {
-    const filePath = 'examples/build/macos/vector_debug';
+    const filePath = 'examples/vector_debug';
     const objDumpPath = '/usr/bin/objdump';
     const args = ['-d', '-S', '--invalid-arg'];
 
@@ -133,7 +133,7 @@ suite('ObjDumper Tests', () => {
   });
 
   test('Dump: Invalid objdump path', async () => {
-    const filePath = 'examples/build/macos/vector_debug';
+    const filePath = 'examples/vector_debug';
     const objDumpPath = '/usr/invalidPath/objdump';
     const args = ['-d', '-S'];
 
@@ -149,7 +149,7 @@ suite('ObjDumper Tests', () => {
   });
 
   test('Dump: Invalid objdump executable', async () => {
-    const filePath = 'examples/build/macos/vector_debug';
+    const filePath = 'examples/vector_debug';
     const objDumpPath = '/usr/bin/gcc';
     const args = ['-d', '-S'];
 
@@ -205,7 +205,7 @@ suite('ObjDumper Tests', () => {
   test('Version: Valid objdump binary', async () => {
     const objDumpPath = '/usr/bin/objdump';
 
-    const expectedOutput = 'Apple LLVM version 16.0.0';
+    const expectedOutput = 'GNU objdump (GNU Binutils for Ubuntu) 2.38';
     const executeStub = async (command: string): Promise<ExecOutput> => {
       assert.strictEqual(command, `${objDumpPath} --version`);
       return {stdout: expectedOutput, stderr: ''};
