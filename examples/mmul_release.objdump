@@ -5,7 +5,11 @@ examples/mmul_release.o:     file format elf64-x86-64
 Disassembly of section .text:
 
 0000000000000000 <_ZN10binexplore3mulERKNS_6MatrixES2_>:
+<<<<<<< HEAD
    0:	f3 0f 1e fa          	endbr64 
+=======
+   0:	f3 0f 1e fa          	endbr64
+>>>>>>> main
    4:	41 57                	push   %r15
    6:	41 56                	push   %r14
    8:	49 89 f6             	mov    %rsi,%r14
@@ -24,10 +28,17 @@ Disassembly of section .text:
   2e:	4c 8d 7c 24 10       	lea    0x10(%rsp),%r15
   33:	e8 00 00 00 00       	call   38 <_ZN10binexplore3mulERKNS_6MatrixES2_+0x38>
   38:	48 89 ef             	mov    %rbp,%rdi
+<<<<<<< HEAD
   3b:	49 89 c4             	mov    %rax,%r12
   3e:	e8 00 00 00 00       	call   43 <_ZN10binexplore3mulERKNS_6MatrixES2_+0x43>
   43:	4c 89 ff             	mov    %r15,%rdi
   46:	4c 89 e2             	mov    %r12,%rdx
+=======
+  3b:	48 89 c3             	mov    %rax,%rbx
+  3e:	e8 00 00 00 00       	call   43 <_ZN10binexplore3mulERKNS_6MatrixES2_+0x43>
+  43:	4c 89 ff             	mov    %r15,%rdi
+  46:	48 89 da             	mov    %rbx,%rdx
+>>>>>>> main
   49:	48 89 c6             	mov    %rax,%rsi
   4c:	e8 00 00 00 00       	call   51 <_ZN10binexplore3mulERKNS_6MatrixES2_+0x51>
   51:	48 89 ef             	mov    %rbp,%rdi
@@ -41,11 +52,19 @@ Disassembly of section .text:
   73:	49 39 c4             	cmp    %rax,%r12
   76:	0f 83 7e 00 00 00    	jae    fa <_ZN10binexplore3mulERKNS_6MatrixES2_+0xfa>
   7c:	0f 1f 40 00          	nopl   0x0(%rax)
+<<<<<<< HEAD
   80:	c5 d8 57 e4          	vxorps %xmm4,%xmm4,%xmm4
   84:	31 db                	xor    %ebx,%ebx
   86:	c5 fa 11 64 24 08    	vmovss %xmm4,0x8(%rsp)
   8c:	eb 3a                	jmp    c8 <_ZN10binexplore3mulERKNS_6MatrixES2_+0xc8>
   8e:	66 90                	xchg   %ax,%ax
+=======
+  80:	31 db                	xor    %ebx,%ebx
+  82:	c7 44 24 08 00 00 00 	movl   $0x0,0x8(%rsp)
+  89:	00 
+  8a:	eb 3c                	jmp    c8 <_ZN10binexplore3mulERKNS_6MatrixES2_+0xc8>
+  8c:	0f 1f 40 00          	nopl   0x0(%rax)
+>>>>>>> main
   90:	48 89 da             	mov    %rbx,%rdx
   93:	4c 89 ee             	mov    %r13,%rsi
   96:	48 89 ef             	mov    %rbp,%rdi
@@ -90,5 +109,9 @@ Disassembly of section .text:
  12c:	41 5d                	pop    %r13
  12e:	41 5e                	pop    %r14
  130:	41 5f                	pop    %r15
+<<<<<<< HEAD
  132:	c3                   	ret    
+=======
+ 132:	c3                   	ret
+>>>>>>> main
  133:	e8 00 00 00 00       	call   138 <_ZN10binexplore3mulERKNS_6MatrixES2_+0x138>

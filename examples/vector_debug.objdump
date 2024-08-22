@@ -5,18 +5,29 @@ examples/vector_debug:     file format elf64-x86-64
 Disassembly of section .init:
 
 0000000000001000 <_init>:
+<<<<<<< HEAD
     1000:	f3 0f 1e fa          	endbr64 
     1004:	48 83 ec 08          	sub    $0x8,%rsp
     1008:	48 8b 05 d9 4f 00 00 	mov    0x4fd9(%rip),%rax        # 5fe8 <__gmon_start__@Base>
+=======
+    1000:	f3 0f 1e fa          	endbr64
+    1004:	48 83 ec 08          	sub    $0x8,%rsp
+    1008:	48 8b 05 e1 4f 00 00 	mov    0x4fe1(%rip),%rax        # 5ff0 <__gmon_start__@Base>
+>>>>>>> main
     100f:	48 85 c0             	test   %rax,%rax
     1012:	74 02                	je     1016 <_init+0x16>
     1014:	ff d0                	call   *%rax
     1016:	48 83 c4 08          	add    $0x8,%rsp
+<<<<<<< HEAD
     101a:	c3                   	ret    
+=======
+    101a:	c3                   	ret
+>>>>>>> main
 
 Disassembly of section .plt:
 
 0000000000001020 <.plt>:
+<<<<<<< HEAD
     1020:	ff 35 32 4f 00 00    	push   0x4f32(%rip)        # 5f58 <_GLOBAL_OFFSET_TABLE_+0x8>
     1026:	f2 ff 25 33 4f 00 00 	bnd jmp *0x4f33(%rip)        # 5f60 <_GLOBAL_OFFSET_TABLE_+0x10>
     102d:	0f 1f 00             	nopl   (%rax)
@@ -221,12 +232,201 @@ Disassembly of section .text:
     12c4:	e9 77 ff ff ff       	jmp    1240 <register_tm_clones>
 
 00000000000012c9 <_Zpl6VectorRKS_>:
+=======
+    1020:	ff 35 4a 4f 00 00    	push   0x4f4a(%rip)        # 5f70 <_GLOBAL_OFFSET_TABLE_+0x8>
+    1026:	ff 25 4c 4f 00 00    	jmp    *0x4f4c(%rip)        # 5f78 <_GLOBAL_OFFSET_TABLE_+0x10>
+    102c:	0f 1f 40 00          	nopl   0x0(%rax)
+    1030:	f3 0f 1e fa          	endbr64
+    1034:	68 00 00 00 00       	push   $0x0
+    1039:	e9 e2 ff ff ff       	jmp    1020 <_init+0x20>
+    103e:	66 90                	xchg   %ax,%ax
+    1040:	f3 0f 1e fa          	endbr64
+    1044:	68 01 00 00 00       	push   $0x1
+    1049:	e9 d2 ff ff ff       	jmp    1020 <_init+0x20>
+    104e:	66 90                	xchg   %ax,%ax
+    1050:	f3 0f 1e fa          	endbr64
+    1054:	68 02 00 00 00       	push   $0x2
+    1059:	e9 c2 ff ff ff       	jmp    1020 <_init+0x20>
+    105e:	66 90                	xchg   %ax,%ax
+    1060:	f3 0f 1e fa          	endbr64
+    1064:	68 03 00 00 00       	push   $0x3
+    1069:	e9 b2 ff ff ff       	jmp    1020 <_init+0x20>
+    106e:	66 90                	xchg   %ax,%ax
+    1070:	f3 0f 1e fa          	endbr64
+    1074:	68 04 00 00 00       	push   $0x4
+    1079:	e9 a2 ff ff ff       	jmp    1020 <_init+0x20>
+    107e:	66 90                	xchg   %ax,%ax
+    1080:	f3 0f 1e fa          	endbr64
+    1084:	68 05 00 00 00       	push   $0x5
+    1089:	e9 92 ff ff ff       	jmp    1020 <_init+0x20>
+    108e:	66 90                	xchg   %ax,%ax
+    1090:	f3 0f 1e fa          	endbr64
+    1094:	68 06 00 00 00       	push   $0x6
+    1099:	e9 82 ff ff ff       	jmp    1020 <_init+0x20>
+    109e:	66 90                	xchg   %ax,%ax
+    10a0:	f3 0f 1e fa          	endbr64
+    10a4:	68 07 00 00 00       	push   $0x7
+    10a9:	e9 72 ff ff ff       	jmp    1020 <_init+0x20>
+    10ae:	66 90                	xchg   %ax,%ax
+    10b0:	f3 0f 1e fa          	endbr64
+    10b4:	68 08 00 00 00       	push   $0x8
+    10b9:	e9 62 ff ff ff       	jmp    1020 <_init+0x20>
+    10be:	66 90                	xchg   %ax,%ax
+    10c0:	f3 0f 1e fa          	endbr64
+    10c4:	68 09 00 00 00       	push   $0x9
+    10c9:	e9 52 ff ff ff       	jmp    1020 <_init+0x20>
+    10ce:	66 90                	xchg   %ax,%ax
+    10d0:	f3 0f 1e fa          	endbr64
+    10d4:	68 0a 00 00 00       	push   $0xa
+    10d9:	e9 42 ff ff ff       	jmp    1020 <_init+0x20>
+    10de:	66 90                	xchg   %ax,%ax
+
+Disassembly of section .plt.got:
+
+00000000000010e0 <__cxa_finalize@plt>:
+    10e0:	f3 0f 1e fa          	endbr64
+    10e4:	ff 25 ee 4e 00 00    	jmp    *0x4eee(%rip)        # 5fd8 <__cxa_finalize@GLIBC_2.2.5>
+    10ea:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+
+Disassembly of section .plt.sec:
+
+00000000000010f0 <_ZSt17__throw_bad_allocv@plt>:
+    10f0:	f3 0f 1e fa          	endbr64
+    10f4:	ff 25 86 4e 00 00    	jmp    *0x4e86(%rip)        # 5f80 <_ZSt17__throw_bad_allocv@GLIBCXX_3.4>
+    10fa:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+
+0000000000001100 <_ZSt20__throw_length_errorPKc@plt>:
+    1100:	f3 0f 1e fa          	endbr64
+    1104:	ff 25 7e 4e 00 00    	jmp    *0x4e7e(%rip)        # 5f88 <_ZSt20__throw_length_errorPKc@GLIBCXX_3.4>
+    110a:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+
+0000000000001110 <_ZNSolsEf@plt>:
+    1110:	f3 0f 1e fa          	endbr64
+    1114:	ff 25 76 4e 00 00    	jmp    *0x4e76(%rip)        # 5f90 <_ZNSolsEf@GLIBCXX_3.4>
+    111a:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+
+0000000000001120 <_ZSt28__throw_bad_array_new_lengthv@plt>:
+    1120:	f3 0f 1e fa          	endbr64
+    1124:	ff 25 6e 4e 00 00    	jmp    *0x4e6e(%rip)        # 5f98 <_ZSt28__throw_bad_array_new_lengthv@GLIBCXX_3.4.29>
+    112a:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+
+0000000000001130 <_ZdlPv@plt>:
+    1130:	f3 0f 1e fa          	endbr64
+    1134:	ff 25 66 4e 00 00    	jmp    *0x4e66(%rip)        # 5fa0 <_ZdlPv@GLIBCXX_3.4>
+    113a:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+
+0000000000001140 <_Znwm@plt>:
+    1140:	f3 0f 1e fa          	endbr64
+    1144:	ff 25 5e 4e 00 00    	jmp    *0x4e5e(%rip)        # 5fa8 <_Znwm@GLIBCXX_3.4>
+    114a:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+
+0000000000001150 <_ZdlPvm@plt>:
+    1150:	f3 0f 1e fa          	endbr64
+    1154:	ff 25 56 4e 00 00    	jmp    *0x4e56(%rip)        # 5fb0 <_ZdlPvm@CXXABI_1.3.9>
+    115a:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+
+0000000000001160 <__stack_chk_fail@plt>:
+    1160:	f3 0f 1e fa          	endbr64
+    1164:	ff 25 4e 4e 00 00    	jmp    *0x4e4e(%rip)        # 5fb8 <__stack_chk_fail@GLIBC_2.4>
+    116a:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+
+0000000000001170 <_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c@plt>:
+    1170:	f3 0f 1e fa          	endbr64
+    1174:	ff 25 46 4e 00 00    	jmp    *0x4e46(%rip)        # 5fc0 <_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c@GLIBCXX_3.4>
+    117a:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+
+0000000000001180 <memmove@plt>:
+    1180:	f3 0f 1e fa          	endbr64
+    1184:	ff 25 3e 4e 00 00    	jmp    *0x4e3e(%rip)        # 5fc8 <memmove@GLIBC_2.2.5>
+    118a:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+
+0000000000001190 <_Unwind_Resume@plt>:
+    1190:	f3 0f 1e fa          	endbr64
+    1194:	ff 25 36 4e 00 00    	jmp    *0x4e36(%rip)        # 5fd0 <_Unwind_Resume@GCC_3.0>
+    119a:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+
+Disassembly of section .text:
+
+00000000000011a0 <_start>:
+    11a0:	f3 0f 1e fa          	endbr64
+    11a4:	31 ed                	xor    %ebp,%ebp
+    11a6:	49 89 d1             	mov    %rdx,%r9
+    11a9:	5e                   	pop    %rsi
+    11aa:	48 89 e2             	mov    %rsp,%rdx
+    11ad:	48 83 e4 f0          	and    $0xfffffffffffffff0,%rsp
+    11b1:	50                   	push   %rax
+    11b2:	54                   	push   %rsp
+    11b3:	45 31 c0             	xor    %r8d,%r8d
+    11b6:	31 c9                	xor    %ecx,%ecx
+    11b8:	48 8d 3d 0d 01 00 00 	lea    0x10d(%rip),%rdi        # 12cc <main>
+    11bf:	ff 15 1b 4e 00 00    	call   *0x4e1b(%rip)        # 5fe0 <__libc_start_main@GLIBC_2.34>
+    11c5:	f4                   	hlt
+    11c6:	66 2e 0f 1f 84 00 00 	cs nopw 0x0(%rax,%rax,1)
+    11cd:	00 00 00 
+
+00000000000011d0 <deregister_tm_clones>:
+    11d0:	48 8d 3d 41 4e 00 00 	lea    0x4e41(%rip),%rdi        # 6018 <__TMC_END__>
+    11d7:	48 8d 05 3a 4e 00 00 	lea    0x4e3a(%rip),%rax        # 6018 <__TMC_END__>
+    11de:	48 39 f8             	cmp    %rdi,%rax
+    11e1:	74 15                	je     11f8 <deregister_tm_clones+0x28>
+    11e3:	48 8b 05 fe 4d 00 00 	mov    0x4dfe(%rip),%rax        # 5fe8 <_ITM_deregisterTMCloneTable@Base>
+    11ea:	48 85 c0             	test   %rax,%rax
+    11ed:	74 09                	je     11f8 <deregister_tm_clones+0x28>
+    11ef:	ff e0                	jmp    *%rax
+    11f1:	0f 1f 80 00 00 00 00 	nopl   0x0(%rax)
+    11f8:	c3                   	ret
+    11f9:	0f 1f 80 00 00 00 00 	nopl   0x0(%rax)
+
+0000000000001200 <register_tm_clones>:
+    1200:	48 8d 3d 11 4e 00 00 	lea    0x4e11(%rip),%rdi        # 6018 <__TMC_END__>
+    1207:	48 8d 35 0a 4e 00 00 	lea    0x4e0a(%rip),%rsi        # 6018 <__TMC_END__>
+    120e:	48 29 fe             	sub    %rdi,%rsi
+    1211:	48 89 f0             	mov    %rsi,%rax
+    1214:	48 c1 ee 3f          	shr    $0x3f,%rsi
+    1218:	48 c1 f8 03          	sar    $0x3,%rax
+    121c:	48 01 c6             	add    %rax,%rsi
+    121f:	48 d1 fe             	sar    $1,%rsi
+    1222:	74 14                	je     1238 <register_tm_clones+0x38>
+    1224:	48 8b 05 cd 4d 00 00 	mov    0x4dcd(%rip),%rax        # 5ff8 <_ITM_registerTMCloneTable@Base>
+    122b:	48 85 c0             	test   %rax,%rax
+    122e:	74 08                	je     1238 <register_tm_clones+0x38>
+    1230:	ff e0                	jmp    *%rax
+    1232:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+    1238:	c3                   	ret
+    1239:	0f 1f 80 00 00 00 00 	nopl   0x0(%rax)
+
+0000000000001240 <__do_global_dtors_aux>:
+    1240:	f3 0f 1e fa          	endbr64
+    1244:	80 3d 05 4f 00 00 00 	cmpb   $0x0,0x4f05(%rip)        # 6150 <completed.0>
+    124b:	75 2b                	jne    1278 <__do_global_dtors_aux+0x38>
+    124d:	55                   	push   %rbp
+    124e:	48 83 3d 82 4d 00 00 	cmpq   $0x0,0x4d82(%rip)        # 5fd8 <__cxa_finalize@GLIBC_2.2.5>
+    1255:	00 
+    1256:	48 89 e5             	mov    %rsp,%rbp
+    1259:	74 0c                	je     1267 <__do_global_dtors_aux+0x27>
+    125b:	48 8b 3d a6 4d 00 00 	mov    0x4da6(%rip),%rdi        # 6008 <__dso_handle>
+    1262:	e8 79 fe ff ff       	call   10e0 <__cxa_finalize@plt>
+    1267:	e8 64 ff ff ff       	call   11d0 <deregister_tm_clones>
+    126c:	c6 05 dd 4e 00 00 01 	movb   $0x1,0x4edd(%rip)        # 6150 <completed.0>
+    1273:	5d                   	pop    %rbp
+    1274:	c3                   	ret
+    1275:	0f 1f 00             	nopl   (%rax)
+    1278:	c3                   	ret
+    1279:	0f 1f 80 00 00 00 00 	nopl   0x0(%rax)
+
+0000000000001280 <frame_dummy>:
+    1280:	f3 0f 1e fa          	endbr64
+    1284:	e9 77 ff ff ff       	jmp    1200 <register_tm_clones>
+
+0000000000001289 <_Zpl6VectorRKS_>:
+>>>>>>> main
 
 private:
   std::vector<float> data_;
 };
 
 Vector operator+(Vector lhs, const Vector &rhs) { return lhs += rhs; }
+<<<<<<< HEAD
     12c9:	f3 0f 1e fa          	endbr64 
     12cd:	55                   	push   %rbp
     12ce:	48 89 e5             	mov    %rsp,%rbp
@@ -249,10 +449,35 @@ Vector operator+(Vector lhs, const Vector &rhs) { return lhs += rhs; }
     130b:	c3                   	ret    
 
 000000000000130c <main>:
+=======
+    1289:	f3 0f 1e fa          	endbr64
+    128d:	55                   	push   %rbp
+    128e:	48 89 e5             	mov    %rsp,%rbp
+    1291:	48 83 ec 20          	sub    $0x20,%rsp
+    1295:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
+    1299:	48 89 75 f0          	mov    %rsi,-0x10(%rbp)
+    129d:	48 89 55 e8          	mov    %rdx,-0x18(%rbp)
+    12a1:	48 8b 55 e8          	mov    -0x18(%rbp),%rdx
+    12a5:	48 8b 45 f0          	mov    -0x10(%rbp),%rax
+    12a9:	48 89 d6             	mov    %rdx,%rsi
+    12ac:	48 89 c7             	mov    %rax,%rdi
+    12af:	e8 12 04 00 00       	call   16c6 <_ZN6VectorpLERKS_>
+    12b4:	48 89 c2             	mov    %rax,%rdx
+    12b7:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    12bb:	48 89 d6             	mov    %rdx,%rsi
+    12be:	48 89 c7             	mov    %rax,%rdi
+    12c1:	e8 7c 04 00 00       	call   1742 <_ZN6VectorC1ERKS_>
+    12c6:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    12ca:	c9                   	leave
+    12cb:	c3                   	ret
+
+00000000000012cc <main>:
+>>>>>>> main
 #include "vector.h"
 #include <iostream>
 
 int main() {
+<<<<<<< HEAD
     130c:	f3 0f 1e fa          	endbr64 
     1310:	55                   	push   %rbp
     1311:	48 89 e5             	mov    %rsp,%rbp
@@ -470,12 +695,226 @@ int main() {
     15ef:	90                   	nop
 
 00000000000015f0 <_ZNSt8__detail16__extent_storageILm18446744073709551615EEC1Em>:
+=======
+    12cc:	f3 0f 1e fa          	endbr64
+    12d0:	55                   	push   %rbp
+    12d1:	48 89 e5             	mov    %rsp,%rbp
+    12d4:	41 55                	push   %r13
+    12d6:	41 54                	push   %r12
+    12d8:	53                   	push   %rbx
+    12d9:	48 81 ec b8 00 00 00 	sub    $0xb8,%rsp
+    12e0:	64 48 8b 0c 25 28 00 	mov    %fs:0x28,%rcx
+    12e7:	00 00 
+    12e9:	48 89 4d d8          	mov    %rcx,-0x28(%rbp)
+    12ed:	31 c9                	xor    %ecx,%ecx
+  Vector v1{1.0f, 2.0f, 3.0f};
+    12ef:	f3 0f 10 05 51 1d 00 	movss  0x1d51(%rip),%xmm0        # 3048 <_ZNSt8__detail30__integer_to_chars_is_unsignedIyEE+0x3>
+    12f6:	00 
+    12f7:	f3 0f 11 45 cc       	movss  %xmm0,-0x34(%rbp)
+    12fc:	f3 0f 10 05 48 1d 00 	movss  0x1d48(%rip),%xmm0        # 304c <_ZNSt8__detail30__integer_to_chars_is_unsignedIyEE+0x7>
+    1303:	00 
+    1304:	f3 0f 11 45 d0       	movss  %xmm0,-0x30(%rbp)
+    1309:	f3 0f 10 05 3f 1d 00 	movss  0x1d3f(%rip),%xmm0        # 3050 <_ZNSt8__detail30__integer_to_chars_is_unsignedIyEE+0xb>
+    1310:	00 
+    1311:	f3 0f 11 45 d4       	movss  %xmm0,-0x2c(%rbp)
+    1316:	48 8d 4d cc          	lea    -0x34(%rbp),%rcx
+    131a:	48 89 c8             	mov    %rcx,%rax
+    131d:	ba 03 00 00 00       	mov    $0x3,%edx
+    1322:	48 89 c1             	mov    %rax,%rcx
+    1325:	48 89 d3             	mov    %rdx,%rbx
+    1328:	48 8d 85 50 ff ff ff 	lea    -0xb0(%rbp),%rax
+    132f:	48 89 ce             	mov    %rcx,%rsi
+    1332:	48 89 c7             	mov    %rax,%rdi
+    1335:	e8 74 02 00 00       	call   15ae <_ZN6VectorC1ESt16initializer_listIfE>
+  Vector v2{4.0f, 5.0f, 6.0f};
+    133a:	f3 0f 10 05 12 1d 00 	movss  0x1d12(%rip),%xmm0        # 3054 <_ZNSt8__detail30__integer_to_chars_is_unsignedIyEE+0xf>
+    1341:	00 
+    1342:	f3 0f 11 45 cc       	movss  %xmm0,-0x34(%rbp)
+    1347:	f3 0f 10 05 09 1d 00 	movss  0x1d09(%rip),%xmm0        # 3058 <_ZNSt8__detail30__integer_to_chars_is_unsignedIyEE+0x13>
+    134e:	00 
+    134f:	f3 0f 11 45 d0       	movss  %xmm0,-0x30(%rbp)
+    1354:	f3 0f 10 05 00 1d 00 	movss  0x1d00(%rip),%xmm0        # 305c <_ZNSt8__detail30__integer_to_chars_is_unsignedIyEE+0x17>
+    135b:	00 
+    135c:	f3 0f 11 45 d4       	movss  %xmm0,-0x2c(%rbp)
+    1361:	48 8d 45 cc          	lea    -0x34(%rbp),%rax
+    1365:	49 89 c4             	mov    %rax,%r12
+    1368:	41 bd 03 00 00 00    	mov    $0x3,%r13d
+    136e:	4c 89 e1             	mov    %r12,%rcx
+    1371:	4c 89 eb             	mov    %r13,%rbx
+    1374:	4c 89 e0             	mov    %r12,%rax
+    1377:	4c 89 ea             	mov    %r13,%rdx
+    137a:	48 8d 85 70 ff ff ff 	lea    -0x90(%rbp),%rax
+    1381:	48 89 ce             	mov    %rcx,%rsi
+    1384:	48 89 c7             	mov    %rax,%rdi
+    1387:	e8 22 02 00 00       	call   15ae <_ZN6VectorC1ESt16initializer_listIfE>
+  for (const auto &elem : (v1 + v2).data()) {
+    138c:	48 8d 95 50 ff ff ff 	lea    -0xb0(%rbp),%rdx
+    1393:	48 8d 45 90          	lea    -0x70(%rbp),%rax
+    1397:	48 89 d6             	mov    %rdx,%rsi
+    139a:	48 89 c7             	mov    %rax,%rdi
+    139d:	e8 a0 03 00 00       	call   1742 <_ZN6VectorC1ERKS_>
+    13a2:	48 8d 45 b0          	lea    -0x50(%rbp),%rax
+    13a6:	48 8d 95 70 ff ff ff 	lea    -0x90(%rbp),%rdx
+    13ad:	48 8d 4d 90          	lea    -0x70(%rbp),%rcx
+    13b1:	48 89 ce             	mov    %rcx,%rsi
+    13b4:	48 89 c7             	mov    %rax,%rdi
+    13b7:	e8 cd fe ff ff       	call   1289 <_Zpl6VectorRKS_>
+    13bc:	48 8d 45 b0          	lea    -0x50(%rbp),%rax
+    13c0:	48 89 c7             	mov    %rax,%rdi
+    13c3:	e8 ae 02 00 00       	call   1676 <_ZNK6Vector4dataEv>
+    13c8:	48 89 85 40 ff ff ff 	mov    %rax,-0xc0(%rbp)
+    13cf:	48 89 95 48 ff ff ff 	mov    %rdx,-0xb8(%rbp)
+    13d6:	48 8d 85 40 ff ff ff 	lea    -0xc0(%rbp),%rax
+    13dd:	48 89 85 30 ff ff ff 	mov    %rax,-0xd0(%rbp)
+    13e4:	48 8d 45 b0          	lea    -0x50(%rbp),%rax
+    13e8:	48 89 c7             	mov    %rax,%rdi
+    13eb:	e8 7c 03 00 00       	call   176c <_ZN6VectorD1Ev>
+    13f0:	48 8d 45 90          	lea    -0x70(%rbp),%rax
+    13f4:	48 89 c7             	mov    %rax,%rdi
+    13f7:	e8 70 03 00 00       	call   176c <_ZN6VectorD1Ev>
+    13fc:	48 8b 85 30 ff ff ff 	mov    -0xd0(%rbp),%rax
+    1403:	48 89 c7             	mov    %rax,%rdi
+    1406:	e8 e7 07 00 00       	call   1bf2 <_ZNKSt4spanIKfLm18446744073709551615EE5beginEv>
+    140b:	48 89 45 90          	mov    %rax,-0x70(%rbp)
+    140f:	48 8b 85 30 ff ff ff 	mov    -0xd0(%rbp),%rax
+    1416:	48 89 c7             	mov    %rax,%rdi
+    1419:	e8 20 08 00 00       	call   1c3e <_ZNKSt4spanIKfLm18446744073709551615EE3endEv>
+    141e:	48 89 45 b0          	mov    %rax,-0x50(%rbp)
+    1422:	eb 48                	jmp    146c <main+0x1a0>
+    1424:	48 8d 45 90          	lea    -0x70(%rbp),%rax
+    1428:	48 89 c7             	mov    %rax,%rdi
+    142b:	e8 ac 03 00 00       	call   17dc <_ZNK9__gnu_cxx17__normal_iteratorIPKfSt4spanIS1_Lm18446744073709551615EEEdeEv>
+    1430:	48 89 85 38 ff ff ff 	mov    %rax,-0xc8(%rbp)
+    std::cout << elem << ' ';
+    1437:	48 8b 85 38 ff ff ff 	mov    -0xc8(%rbp),%rax
+    143e:	8b 00                	mov    (%rax),%eax
+    1440:	66 0f 6e c0          	movd   %eax,%xmm0
+    1444:	48 8d 05 f5 4b 00 00 	lea    0x4bf5(%rip),%rax        # 6040 <_ZSt4cout@GLIBCXX_3.4>
+    144b:	48 89 c7             	mov    %rax,%rdi
+    144e:	e8 bd fc ff ff       	call   1110 <_ZNSolsEf@plt>
+    1453:	be 20 00 00 00       	mov    $0x20,%esi
+    1458:	48 89 c7             	mov    %rax,%rdi
+    145b:	e8 10 fd ff ff       	call   1170 <_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c@plt>
+  for (const auto &elem : (v1 + v2).data()) {
+    1460:	48 8d 45 90          	lea    -0x70(%rbp),%rax
+    1464:	48 89 c7             	mov    %rax,%rdi
+    1467:	e8 42 08 00 00       	call   1cae <_ZN9__gnu_cxx17__normal_iteratorIPKfSt4spanIS1_Lm18446744073709551615EEEppEv>
+    146c:	48 8d 55 b0          	lea    -0x50(%rbp),%rdx
+    1470:	48 8d 45 90          	lea    -0x70(%rbp),%rax
+    1474:	48 89 d6             	mov    %rdx,%rsi
+    1477:	48 89 c7             	mov    %rax,%rdi
+    147a:	e8 0c 03 00 00       	call   178b <_ZN9__gnu_cxxeqIPKfSt4spanIS1_Lm18446744073709551615EEEEbRKNS_17__normal_iteratorIT_T0_EESA_>
+    147f:	83 f0 01             	xor    $0x1,%eax
+    1482:	84 c0                	test   %al,%al
+    1484:	75 9e                	jne    1424 <main+0x158>
+  }
+  std::cout << '\n';
+    1486:	be 0a 00 00 00       	mov    $0xa,%esi
+    148b:	48 8d 05 ae 4b 00 00 	lea    0x4bae(%rip),%rax        # 6040 <_ZSt4cout@GLIBCXX_3.4>
+    1492:	48 89 c7             	mov    %rax,%rdi
+    1495:	e8 d6 fc ff ff       	call   1170 <_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_c@plt>
+  return 0;
+    149a:	bb 00 00 00 00       	mov    $0x0,%ebx
+    149f:	48 8d 85 70 ff ff ff 	lea    -0x90(%rbp),%rax
+    14a6:	48 89 c7             	mov    %rax,%rdi
+    14a9:	e8 be 02 00 00       	call   176c <_ZN6VectorD1Ev>
+    14ae:	48 8d 85 50 ff ff ff 	lea    -0xb0(%rbp),%rax
+    14b5:	48 89 c7             	mov    %rax,%rdi
+    14b8:	e8 af 02 00 00       	call   176c <_ZN6VectorD1Ev>
+    14bd:	89 d8                	mov    %ebx,%eax
+    14bf:	48 8b 55 d8          	mov    -0x28(%rbp),%rdx
+    14c3:	64 48 2b 14 25 28 00 	sub    %fs:0x28,%rdx
+    14ca:	00 00 
+    14cc:	74 69                	je     1537 <main+0x26b>
+    14ce:	eb 62                	jmp    1532 <main+0x266>
+    14d0:	f3 0f 1e fa          	endbr64
+  for (const auto &elem : (v1 + v2).data()) {
+    14d4:	48 89 c3             	mov    %rax,%rbx
+    14d7:	48 8d 45 90          	lea    -0x70(%rbp),%rax
+    14db:	48 89 c7             	mov    %rax,%rdi
+    14de:	e8 89 02 00 00       	call   176c <_ZN6VectorD1Ev>
+    14e3:	eb 07                	jmp    14ec <main+0x220>
+    14e5:	f3 0f 1e fa          	endbr64
+    14e9:	48 89 c3             	mov    %rax,%rbx
+    14ec:	48 8d 85 70 ff ff ff 	lea    -0x90(%rbp),%rax
+    14f3:	48 89 c7             	mov    %rax,%rdi
+    14f6:	e8 71 02 00 00       	call   176c <_ZN6VectorD1Ev>
+    14fb:	eb 07                	jmp    1504 <main+0x238>
+    14fd:	f3 0f 1e fa          	endbr64
+    1501:	48 89 c3             	mov    %rax,%rbx
+    1504:	48 8d 85 50 ff ff ff 	lea    -0xb0(%rbp),%rax
+    150b:	48 89 c7             	mov    %rax,%rdi
+    150e:	e8 59 02 00 00       	call   176c <_ZN6VectorD1Ev>
+    1513:	48 89 d8             	mov    %rbx,%rax
+    1516:	48 8b 55 d8          	mov    -0x28(%rbp),%rdx
+    151a:	64 48 2b 14 25 28 00 	sub    %fs:0x28,%rdx
+    1521:	00 00 
+    1523:	74 05                	je     152a <main+0x25e>
+    1525:	e8 36 fc ff ff       	call   1160 <__stack_chk_fail@plt>
+    152a:	48 89 c7             	mov    %rax,%rdi
+    152d:	e8 5e fc ff ff       	call   1190 <_Unwind_Resume@plt>
+    1532:	e8 29 fc ff ff       	call   1160 <__stack_chk_fail@plt>
+    1537:	48 81 c4 b8 00 00 00 	add    $0xb8,%rsp
+    153e:	5b                   	pop    %rbx
+    153f:	41 5c                	pop    %r12
+    1541:	41 5d                	pop    %r13
+    1543:	5d                   	pop    %rbp
+    1544:	c3                   	ret
+
+0000000000001545 <_ZSt23__is_constant_evaluatedv>:
+    1545:	f3 0f 1e fa          	endbr64
+    1549:	55                   	push   %rbp
+    154a:	48 89 e5             	mov    %rsp,%rbp
+    154d:	b8 00 00 00 00       	mov    $0x0,%eax
+    1552:	5d                   	pop    %rbp
+    1553:	c3                   	ret
+
+0000000000001554 <_ZSt21is_constant_evaluatedv>:
+
+  /// Returns true only when called during constant evaluation.
+  /// @since C++20
+  constexpr inline bool
+  is_constant_evaluated() noexcept
+  {
+    1554:	f3 0f 1e fa          	endbr64
+    1558:	55                   	push   %rbp
+    1559:	48 89 e5             	mov    %rsp,%rbp
+#if __cpp_if_consteval >= 202106L
+    if consteval { return true; } else { return false; }
+#else
+    return __builtin_is_constant_evaluated();
+    155c:	b8 00 00 00 00       	mov    $0x0,%eax
+#endif
+  }
+    1561:	5d                   	pop    %rbp
+    1562:	c3                   	ret
+
+0000000000001563 <_ZnwmPv>:
+#endif // __cpp_sized_deallocation
+#endif // __cpp_aligned_new
+
+// Default placement versions of operator new.
+_GLIBCXX_NODISCARD inline void* operator new(std::size_t, void* __p) _GLIBCXX_USE_NOEXCEPT
+{ return __p; }
+    1563:	f3 0f 1e fa          	endbr64
+    1567:	55                   	push   %rbp
+    1568:	48 89 e5             	mov    %rsp,%rbp
+    156b:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
+    156f:	48 89 75 f0          	mov    %rsi,-0x10(%rbp)
+    1573:	48 8b 45 f0          	mov    -0x10(%rbp),%rax
+    1577:	5d                   	pop    %rbp
+    1578:	c3                   	ret
+    1579:	90                   	nop
+
+000000000000157a <_ZNSt8__detail16__extent_storageILm18446744073709551615EEC1Em>:
+>>>>>>> main
     template<>
       class __extent_storage<dynamic_extent>
       {
       public:
 	constexpr
 	__extent_storage(size_t __extent) noexcept
+<<<<<<< HEAD
     15f0:	f3 0f 1e fa          	endbr64 
     15f4:	55                   	push   %rbp
     15f5:	48 89 e5             	mov    %rsp,%rbp
@@ -576,11 +1015,107 @@ int main() {
     16e5:	c3                   	ret    
 
 00000000000016e6 <_ZNKSt6ranges13__cust_access5_DataclIRKSt6vectorIfSaIfEEEEDaOT_>:
+=======
+    157a:	f3 0f 1e fa          	endbr64
+    157e:	55                   	push   %rbp
+    157f:	48 89 e5             	mov    %rsp,%rbp
+    1582:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
+    1586:	48 89 75 f0          	mov    %rsi,-0x10(%rbp)
+	: _M_extent_value(__extent)
+    158a:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    158e:	48 8b 55 f0          	mov    -0x10(%rbp),%rdx
+    1592:	48 89 10             	mov    %rdx,(%rax)
+	{ }
+    1595:	90                   	nop
+    1596:	5d                   	pop    %rbp
+    1597:	c3                   	ret
+
+0000000000001598 <_ZNKSt8__detail16__extent_storageILm18446744073709551615EE9_M_extentEv>:
+
+	constexpr size_t
+	_M_extent() const noexcept
+    1598:	f3 0f 1e fa          	endbr64
+    159c:	55                   	push   %rbp
+    159d:	48 89 e5             	mov    %rsp,%rbp
+    15a0:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
+	{ return this->_M_extent_value; }
+    15a4:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    15a8:	48 8b 00             	mov    (%rax),%rax
+    15ab:	5d                   	pop    %rbp
+    15ac:	c3                   	ret
+    15ad:	90                   	nop
+
+00000000000015ae <_ZN6VectorC1ESt16initializer_listIfE>:
+  Vector(std::initializer_list<float> init) : data_(std::move(init)) {}
+    15ae:	f3 0f 1e fa          	endbr64
+    15b2:	55                   	push   %rbp
+    15b3:	48 89 e5             	mov    %rsp,%rbp
+    15b6:	53                   	push   %rbx
+    15b7:	48 83 ec 48          	sub    $0x48,%rsp
+    15bb:	48 89 7d c8          	mov    %rdi,-0x38(%rbp)
+    15bf:	48 89 d1             	mov    %rdx,%rcx
+    15c2:	48 89 f0             	mov    %rsi,%rax
+    15c5:	48 89 fa             	mov    %rdi,%rdx
+    15c8:	48 89 ca             	mov    %rcx,%rdx
+    15cb:	48 89 45 b0          	mov    %rax,-0x50(%rbp)
+    15cf:	48 89 55 b8          	mov    %rdx,-0x48(%rbp)
+    15d3:	64 48 8b 04 25 28 00 	mov    %fs:0x28,%rax
+    15da:	00 00 
+    15dc:	48 89 45 e8          	mov    %rax,-0x18(%rbp)
+    15e0:	31 c0                	xor    %eax,%eax
+    15e2:	48 8b 5d c8          	mov    -0x38(%rbp),%rbx
+    15e6:	48 8d 45 df          	lea    -0x21(%rbp),%rax
+    15ea:	48 89 45 e0          	mov    %rax,-0x20(%rbp)
+      typedef std::true_type propagate_on_container_move_assignment;
+#endif
+
+      __attribute__((__always_inline__))
+      _GLIBCXX20_CONSTEXPR
+      __new_allocator() _GLIBCXX_USE_NOEXCEPT { }
+    15ee:	90                   	nop
+
+      // _GLIBCXX_RESOLVE_LIB_DEFECTS
+      // 3035. std::allocator's constructors should be constexpr
+      __attribute__((__always_inline__))
+      _GLIBCXX20_CONSTEXPR
+      allocator() _GLIBCXX_NOTHROW { }
+    15ef:	90                   	nop
+    15f0:	48 8d 45 b0          	lea    -0x50(%rbp),%rax
+    15f4:	48 89 c7             	mov    %rax,%rdi
+    15f7:	e8 f5 01 00 00       	call   17f1 <_ZSt4moveIRSt16initializer_listIfEEONSt16remove_referenceIT_E4typeEOS4_>
+    15fc:	48 8d 4d df          	lea    -0x21(%rbp),%rcx
+    1600:	48 8b 10             	mov    (%rax),%rdx
+    1603:	48 8b 40 08          	mov    0x8(%rax),%rax
+    1607:	48 89 d6             	mov    %rdx,%rsi
+    160a:	48 89 c2             	mov    %rax,%rdx
+    160d:	48 89 df             	mov    %rbx,%rdi
+    1610:	e8 ef 01 00 00       	call   1804 <_ZNSt6vectorIfSaIfEEC1ESt16initializer_listIfERKS0_>
+
+      __attribute__((__always_inline__))
+#if __cpp_constexpr_dynamic_alloc
+      constexpr
+#endif
+      ~allocator() _GLIBCXX_NOTHROW { }
+    1615:	90                   	nop
+    1616:	90                   	nop
+    1617:	48 8b 45 e8          	mov    -0x18(%rbp),%rax
+    161b:	64 48 2b 04 25 28 00 	sub    %fs:0x28,%rax
+    1622:	00 00 
+    1624:	74 05                	je     162b <_ZN6VectorC1ESt16initializer_listIfE+0x7d>
+    1626:	e8 35 fb ff ff       	call   1160 <__stack_chk_fail@plt>
+    162b:	48 8b 5d f8          	mov    -0x8(%rbp),%rbx
+    162f:	c9                   	leave
+    1630:	c3                   	ret
+    1631:	90                   	nop
+
+0000000000001632 <_ZNKSt6ranges13__cust_access5_DataclIRKSt6vectorIfSaIfEEEEDaOT_>:
+>>>>>>> main
 
     public:
       template<__maybe_borrowed_range _Tp>
 	requires __member_data<_Tp> || __begin_data<_Tp>
 	constexpr auto
+<<<<<<< HEAD
 	operator()(_Tp&& __t) const noexcept(_S_noexcept<_Tp>())
     16e6:	f3 0f 1e fa          	endbr64 
     16ea:	55                   	push   %rbp
@@ -811,12 +1346,163 @@ class Vector {
     1917:	48 83 ec 18          	sub    $0x18,%rsp
     191b:	48 89 7d e8          	mov    %rdi,-0x18(%rbp)
     191f:	48 89 75 e0          	mov    %rsi,-0x20(%rbp)
+=======
+	operator()[[nodiscard]](_Tp&& __t) const noexcept(_S_noexcept<_Tp>())
+    1632:	f3 0f 1e fa          	endbr64
+    1636:	55                   	push   %rbp
+    1637:	48 89 e5             	mov    %rsp,%rbp
+    163a:	48 83 ec 10          	sub    $0x10,%rsp
+    163e:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
+    1642:	48 89 75 f0          	mov    %rsi,-0x10(%rbp)
+	{
+	  if constexpr (__member_data<_Tp>)
+	    return __t.data();
+    1646:	48 8b 45 f0          	mov    -0x10(%rbp),%rax
+    164a:	48 89 c7             	mov    %rax,%rdi
+    164d:	e8 80 03 00 00       	call   19d2 <_ZNKSt6vectorIfSaIfEE4dataEv>
+	  else
+	    return std::to_address(_Begin{}(__t));
+	}
+    1652:	c9                   	leave
+    1653:	c3                   	ret
+
+0000000000001654 <_ZNKSt6ranges13__cust_access5_SizeclIRKSt6vectorIfSaIfEEEEDaOT_>:
+	operator()[[nodiscard]](_Tp&& __t) const noexcept(_S_noexcept<_Tp&>())
+    1654:	f3 0f 1e fa          	endbr64
+    1658:	55                   	push   %rbp
+    1659:	48 89 e5             	mov    %rsp,%rbp
+    165c:	48 83 ec 10          	sub    $0x10,%rsp
+    1660:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
+    1664:	48 89 75 f0          	mov    %rsi,-0x10(%rbp)
+	    return __t.size();
+    1668:	48 8b 45 f0          	mov    -0x10(%rbp),%rax
+    166c:	48 89 c7             	mov    %rax,%rdi
+    166f:	e8 86 03 00 00       	call   19fa <_ZNKSt6vectorIfSaIfEE4sizeEv>
+	}
+    1674:	c9                   	leave
+    1675:	c3                   	ret
+
+0000000000001676 <_ZNK6Vector4dataEv>:
+  std::span<const float> data() const { return data_; }
+    1676:	f3 0f 1e fa          	endbr64
+    167a:	55                   	push   %rbp
+    167b:	48 89 e5             	mov    %rsp,%rbp
+    167e:	48 83 ec 30          	sub    $0x30,%rsp
+    1682:	48 89 7d d8          	mov    %rdi,-0x28(%rbp)
+    1686:	64 48 8b 04 25 28 00 	mov    %fs:0x28,%rax
+    168d:	00 00 
+    168f:	48 89 45 f8          	mov    %rax,-0x8(%rbp)
+    1693:	31 c0                	xor    %eax,%eax
+    1695:	48 8b 55 d8          	mov    -0x28(%rbp),%rdx
+    1699:	48 8d 45 e0          	lea    -0x20(%rbp),%rax
+    169d:	48 89 d6             	mov    %rdx,%rsi
+    16a0:	48 89 c7             	mov    %rax,%rdi
+    16a3:	e8 7a 03 00 00       	call   1a22 <_ZNSt4spanIKfLm18446744073709551615EEC1IRKSt6vectorIfSaIfEEEEOT_>
+    16a8:	48 8b 45 e0          	mov    -0x20(%rbp),%rax
+    16ac:	48 8b 55 e8          	mov    -0x18(%rbp),%rdx
+    16b0:	48 8b 4d f8          	mov    -0x8(%rbp),%rcx
+    16b4:	64 48 2b 0c 25 28 00 	sub    %fs:0x28,%rcx
+    16bb:	00 00 
+    16bd:	74 05                	je     16c4 <_ZNK6Vector4dataEv+0x4e>
+    16bf:	e8 9c fa ff ff       	call   1160 <__stack_chk_fail@plt>
+    16c4:	c9                   	leave
+    16c5:	c3                   	ret
+
+00000000000016c6 <_ZN6VectorpLERKS_>:
+  Vector &operator+=(const Vector &rhs) {
+    16c6:	f3 0f 1e fa          	endbr64
+    16ca:	55                   	push   %rbp
+    16cb:	48 89 e5             	mov    %rsp,%rbp
+    16ce:	48 83 ec 30          	sub    $0x30,%rsp
+    16d2:	48 89 7d e8          	mov    %rdi,-0x18(%rbp)
+    16d6:	48 89 75 e0          	mov    %rsi,-0x20(%rbp)
+    for (size_t i = 0; i < data_.size(); ++i) {
+    16da:	48 c7 45 f8 00 00 00 	movq   $0x0,-0x8(%rbp)
+    16e1:	00 
+    16e2:	eb 41                	jmp    1725 <_ZN6VectorpLERKS_+0x5f>
+      data_[i] += rhs.data_[i];
+    16e4:	48 8b 45 e0          	mov    -0x20(%rbp),%rax
+    16e8:	48 8b 55 f8          	mov    -0x8(%rbp),%rdx
+    16ec:	48 89 d6             	mov    %rdx,%rsi
+    16ef:	48 89 c7             	mov    %rax,%rdi
+    16f2:	e8 af 03 00 00       	call   1aa6 <_ZNKSt6vectorIfSaIfEEixEm>
+    16f7:	f3 0f 10 08          	movss  (%rax),%xmm1
+    16fb:	f3 0f 11 4d dc       	movss  %xmm1,-0x24(%rbp)
+    1700:	48 8b 45 e8          	mov    -0x18(%rbp),%rax
+    1704:	48 8b 55 f8          	mov    -0x8(%rbp),%rdx
+    1708:	48 89 d6             	mov    %rdx,%rsi
+    170b:	48 89 c7             	mov    %rax,%rdi
+    170e:	e8 6f 03 00 00       	call   1a82 <_ZNSt6vectorIfSaIfEEixEm>
+    1713:	f3 0f 10 00          	movss  (%rax),%xmm0
+    1717:	f3 0f 58 45 dc       	addss  -0x24(%rbp),%xmm0
+    171c:	f3 0f 11 00          	movss  %xmm0,(%rax)
+    for (size_t i = 0; i < data_.size(); ++i) {
+    1720:	48 83 45 f8 01       	addq   $0x1,-0x8(%rbp)
+    1725:	48 8b 45 e8          	mov    -0x18(%rbp),%rax
+    1729:	48 89 c7             	mov    %rax,%rdi
+    172c:	e8 c9 02 00 00       	call   19fa <_ZNKSt6vectorIfSaIfEE4sizeEv>
+    1731:	48 39 45 f8          	cmp    %rax,-0x8(%rbp)
+    1735:	0f 92 c0             	setb   %al
+    1738:	84 c0                	test   %al,%al
+    173a:	75 a8                	jne    16e4 <_ZN6VectorpLERKS_+0x1e>
+    return *this;
+    173c:	48 8b 45 e8          	mov    -0x18(%rbp),%rax
+  }
+    1740:	c9                   	leave
+    1741:	c3                   	ret
+
+0000000000001742 <_ZN6VectorC1ERKS_>:
+class Vector {
+    1742:	f3 0f 1e fa          	endbr64
+    1746:	55                   	push   %rbp
+    1747:	48 89 e5             	mov    %rsp,%rbp
+    174a:	48 83 ec 10          	sub    $0x10,%rsp
+    174e:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
+    1752:	48 89 75 f0          	mov    %rsi,-0x10(%rbp)
+    1756:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    175a:	48 8b 55 f0          	mov    -0x10(%rbp),%rdx
+    175e:	48 89 d6             	mov    %rdx,%rsi
+    1761:	48 89 c7             	mov    %rax,%rdi
+    1764:	e8 61 03 00 00       	call   1aca <_ZNSt6vectorIfSaIfEEC1ERKS1_>
+    1769:	90                   	nop
+    176a:	c9                   	leave
+    176b:	c3                   	ret
+
+000000000000176c <_ZN6VectorD1Ev>:
+    176c:	f3 0f 1e fa          	endbr64
+    1770:	55                   	push   %rbp
+    1771:	48 89 e5             	mov    %rsp,%rbp
+    1774:	48 83 ec 10          	sub    $0x10,%rsp
+    1778:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
+    177c:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    1780:	48 89 c7             	mov    %rax,%rdi
+    1783:	e8 42 01 00 00       	call   18ca <_ZNSt6vectorIfSaIfEED1Ev>
+    1788:	90                   	nop
+    1789:	c9                   	leave
+    178a:	c3                   	ret
+
+000000000000178b <_ZN9__gnu_cxxeqIPKfSt4spanIS1_Lm18446744073709551615EEEEbRKNS_17__normal_iteratorIT_T0_EESA_>:
+    { return std::__detail::__synth3way(__lhs.base(), __rhs.base()); }
+
+  template<typename _Iterator, typename _Container>
+    [[nodiscard]]
+    constexpr bool
+    operator==(const __normal_iterator<_Iterator, _Container>& __lhs,
+    178b:	f3 0f 1e fa          	endbr64
+    178f:	55                   	push   %rbp
+    1790:	48 89 e5             	mov    %rsp,%rbp
+    1793:	53                   	push   %rbx
+    1794:	48 83 ec 18          	sub    $0x18,%rsp
+    1798:	48 89 7d e8          	mov    %rdi,-0x18(%rbp)
+    179c:	48 89 75 e0          	mov    %rsi,-0x20(%rbp)
+>>>>>>> main
 	       const __normal_iterator<_Iterator, _Container>& __rhs)
     noexcept(noexcept(__lhs.base() == __rhs.base()))
     requires requires {
       { __lhs.base() == __rhs.base() } -> std::convertible_to<bool>;
     }
     { return __lhs.base() == __rhs.base(); }
+<<<<<<< HEAD
     1923:	48 8b 45 e8          	mov    -0x18(%rbp),%rax
     1927:	48 89 c7             	mov    %rax,%rdi
     192a:	e8 cd ff ff ff       	call   18fc <_ZNK9__gnu_cxx17__normal_iteratorIPKfSt4spanIS1_Lm18446744073709551615EEE4baseEv>
@@ -863,12 +1549,53 @@ class Vector {
     1986:	c3                   	ret    
 
 0000000000001987 <_ZSt4moveIRSt16initializer_listIfEEONSt16remove_referenceIT_E4typeEOS4_>:
+=======
+    17a0:	48 8b 45 e8          	mov    -0x18(%rbp),%rax
+    17a4:	48 89 c7             	mov    %rax,%rdi
+    17a7:	e8 1e 00 00 00       	call   17ca <_ZNK9__gnu_cxx17__normal_iteratorIPKfSt4spanIS1_Lm18446744073709551615EEE4baseEv>
+    17ac:	48 8b 18             	mov    (%rax),%rbx
+    17af:	48 8b 45 e0          	mov    -0x20(%rbp),%rax
+    17b3:	48 89 c7             	mov    %rax,%rdi
+    17b6:	e8 0f 00 00 00       	call   17ca <_ZNK9__gnu_cxx17__normal_iteratorIPKfSt4spanIS1_Lm18446744073709551615EEE4baseEv>
+    17bb:	48 8b 00             	mov    (%rax),%rax
+    17be:	48 39 c3             	cmp    %rax,%rbx
+    17c1:	0f 94 c0             	sete   %al
+    17c4:	48 8b 5d f8          	mov    -0x8(%rbp),%rbx
+    17c8:	c9                   	leave
+    17c9:	c3                   	ret
+
+00000000000017ca <_ZNK9__gnu_cxx17__normal_iteratorIPKfSt4spanIS1_Lm18446744073709551615EEE4baseEv>:
+      base() const _GLIBCXX_NOEXCEPT
+    17ca:	f3 0f 1e fa          	endbr64
+    17ce:	55                   	push   %rbp
+    17cf:	48 89 e5             	mov    %rsp,%rbp
+    17d2:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
+      { return _M_current; }
+    17d6:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    17da:	5d                   	pop    %rbp
+    17db:	c3                   	ret
+
+00000000000017dc <_ZNK9__gnu_cxx17__normal_iteratorIPKfSt4spanIS1_Lm18446744073709551615EEEdeEv>:
+      operator*() const _GLIBCXX_NOEXCEPT
+    17dc:	f3 0f 1e fa          	endbr64
+    17e0:	55                   	push   %rbp
+    17e1:	48 89 e5             	mov    %rsp,%rbp
+    17e4:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
+      { return *_M_current; }
+    17e8:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    17ec:	48 8b 00             	mov    (%rax),%rax
+    17ef:	5d                   	pop    %rbp
+    17f0:	c3                   	ret
+
+00000000000017f1 <_ZSt4moveIRSt16initializer_listIfEEONSt16remove_referenceIT_E4typeEOS4_>:
+>>>>>>> main
    *  @return The parameter cast to an rvalue-reference to allow moving it.
   */
   template<typename _Tp>
     _GLIBCXX_NODISCARD
     constexpr typename std::remove_reference<_Tp>::type&&
     move(_Tp&& __t) noexcept
+<<<<<<< HEAD
     1987:	f3 0f 1e fa          	endbr64 
     198b:	55                   	push   %rbp
     198c:	48 89 e5             	mov    %rsp,%rbp
@@ -917,10 +1644,24 @@ class Vector {
 
 00000000000019ca <_ZNSt6vectorIfSaIfEEC1ESt16initializer_listIfERKS0_>:
        *  initializer_list @a __l.
+=======
+    17f1:	f3 0f 1e fa          	endbr64
+    17f5:	55                   	push   %rbp
+    17f6:	48 89 e5             	mov    %rsp,%rbp
+    17f9:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
+    { return static_cast<typename std::remove_reference<_Tp>::type&&>(__t); }
+    17fd:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    1801:	5d                   	pop    %rbp
+    1802:	c3                   	ret
+    1803:	90                   	nop
+
+0000000000001804 <_ZNSt6vectorIfSaIfEEC1ESt16initializer_listIfERKS0_>:
+>>>>>>> main
        *
        *  This will call the element type's copy constructor N times
        *  (where N is @a __l.size()) and do no memory reallocation.
        */
+<<<<<<< HEAD
       vector(initializer_list<value_type> __l,
     19ca:	f3 0f 1e fa          	endbr64 
     19ce:	55                   	push   %rbp
@@ -982,10 +1723,79 @@ class Vector {
 
 0000000000001a7c <_ZNSt6vectorIfSaIfEED1Ev>:
        *  The dtor only erases the elements, and note that if the
+=======
+      _GLIBCXX20_CONSTEXPR
+      vector(initializer_list<value_type> __l,
+    1804:	f3 0f 1e fa          	endbr64
+    1808:	55                   	push   %rbp
+    1809:	48 89 e5             	mov    %rsp,%rbp
+    180c:	53                   	push   %rbx
+    180d:	48 83 ec 38          	sub    $0x38,%rsp
+    1811:	48 89 7d d8          	mov    %rdi,-0x28(%rbp)
+    1815:	48 89 f0             	mov    %rsi,%rax
+    1818:	48 89 d6             	mov    %rdx,%rsi
+    181b:	48 89 f2             	mov    %rsi,%rdx
+    181e:	48 89 45 c0          	mov    %rax,-0x40(%rbp)
+    1822:	48 89 55 c8          	mov    %rdx,-0x38(%rbp)
+    1826:	48 89 4d d0          	mov    %rcx,-0x30(%rbp)
+    182a:	64 48 8b 04 25 28 00 	mov    %fs:0x28,%rax
+    1831:	00 00 
+    1833:	48 89 45 e8          	mov    %rax,-0x18(%rbp)
+    1837:	31 c0                	xor    %eax,%eax
+	     const allocator_type& __a = allocator_type())
+      : _Base(__a)
+    1839:	48 8b 45 d8          	mov    -0x28(%rbp),%rax
+    183d:	48 8b 55 d0          	mov    -0x30(%rbp),%rdx
+    1841:	48 89 d6             	mov    %rdx,%rsi
+    1844:	48 89 c7             	mov    %rax,%rdi
+    1847:	e8 9e 04 00 00       	call   1cea <_ZNSt12_Vector_baseIfSaIfEEC1ERKS0_>
+      {
+	_M_range_initialize(__l.begin(), __l.end(),
+    184c:	48 8d 45 c0          	lea    -0x40(%rbp),%rax
+    1850:	48 89 c7             	mov    %rax,%rdi
+    1853:	e8 24 05 00 00       	call   1d7c <_ZNKSt16initializer_listIfE3endEv>
+    1858:	48 89 c3             	mov    %rax,%rbx
+    185b:	48 8d 45 c0          	lea    -0x40(%rbp),%rax
+    185f:	48 89 c7             	mov    %rax,%rdi
+    1862:	e8 ff 04 00 00       	call   1d66 <_ZNKSt16initializer_listIfE5beginEv>
+    1867:	48 89 c1             	mov    %rax,%rcx
+    186a:	48 8b 45 d8          	mov    -0x28(%rbp),%rax
+    186e:	48 89 da             	mov    %rbx,%rdx
+    1871:	48 89 ce             	mov    %rcx,%rsi
+    1874:	48 89 c7             	mov    %rax,%rdi
+    1877:	e8 3a 05 00 00       	call   1db6 <_ZNSt6vectorIfSaIfEE19_M_range_initializeIPKfEEvT_S5_St20forward_iterator_tag>
+			    random_access_iterator_tag());
+      }
+    187c:	eb 32                	jmp    18b0 <_ZNSt6vectorIfSaIfEEC1ESt16initializer_listIfERKS0_+0xac>
+    187e:	f3 0f 1e fa          	endbr64
+    1882:	48 89 c3             	mov    %rax,%rbx
+    1885:	48 8b 45 d8          	mov    -0x28(%rbp),%rax
+    1889:	48 89 c7             	mov    %rax,%rdi
+    188c:	e8 83 04 00 00       	call   1d14 <_ZNSt12_Vector_baseIfSaIfEED1Ev>
+    1891:	48 89 d8             	mov    %rbx,%rax
+    1894:	48 8b 55 e8          	mov    -0x18(%rbp),%rdx
+    1898:	64 48 2b 14 25 28 00 	sub    %fs:0x28,%rdx
+    189f:	00 00 
+    18a1:	74 05                	je     18a8 <_ZNSt6vectorIfSaIfEEC1ESt16initializer_listIfERKS0_+0xa4>
+    18a3:	e8 b8 f8 ff ff       	call   1160 <__stack_chk_fail@plt>
+    18a8:	48 89 c7             	mov    %rax,%rdi
+    18ab:	e8 e0 f8 ff ff       	call   1190 <_Unwind_Resume@plt>
+    18b0:	48 8b 45 e8          	mov    -0x18(%rbp),%rax
+    18b4:	64 48 2b 04 25 28 00 	sub    %fs:0x28,%rax
+    18bb:	00 00 
+    18bd:	74 05                	je     18c4 <_ZNSt6vectorIfSaIfEEC1ESt16initializer_listIfERKS0_+0xc0>
+    18bf:	e8 9c f8 ff ff       	call   1160 <__stack_chk_fail@plt>
+    18c4:	48 8b 5d f8          	mov    -0x8(%rbp),%rbx
+    18c8:	c9                   	leave
+    18c9:	c3                   	ret
+
+00000000000018ca <_ZNSt6vectorIfSaIfEED1Ev>:
+>>>>>>> main
        *  elements themselves are pointers, the pointed-to memory is
        *  not touched in any way.  Managing the pointer is the user's
        *  responsibility.
        */
+<<<<<<< HEAD
       ~vector() _GLIBCXX_NOEXCEPT
     1a7c:	f3 0f 1e fa          	endbr64 
     1a80:	55                   	push   %rbp
@@ -1080,12 +1890,122 @@ class Vector {
     1b5f:	c3                   	ret    
 
 0000000000001b60 <_ZSt12__to_addressIKfEPT_S2_>:
+=======
+      _GLIBCXX20_CONSTEXPR
+      ~vector() _GLIBCXX_NOEXCEPT
+    18ca:	f3 0f 1e fa          	endbr64
+    18ce:	55                   	push   %rbp
+    18cf:	48 89 e5             	mov    %rsp,%rbp
+    18d2:	48 83 ec 30          	sub    $0x30,%rsp
+    18d6:	48 89 7d d8          	mov    %rdi,-0x28(%rbp)
+      {
+	std::_Destroy(this->_M_impl._M_start, this->_M_impl._M_finish,
+		      _M_get_Tp_allocator());
+    18da:	48 8b 45 d8          	mov    -0x28(%rbp),%rax
+    18de:	48 89 c7             	mov    %rax,%rdi
+    18e1:	e8 c2 05 00 00       	call   1ea8 <_ZNSt12_Vector_baseIfSaIfEE19_M_get_Tp_allocatorEv>
+	std::_Destroy(this->_M_impl._M_start, this->_M_impl._M_finish,
+    18e6:	48 8b 55 d8          	mov    -0x28(%rbp),%rdx
+    18ea:	48 8b 52 08          	mov    0x8(%rdx),%rdx
+    18ee:	48 8b 4d d8          	mov    -0x28(%rbp),%rcx
+    18f2:	48 8b 09             	mov    (%rcx),%rcx
+    18f5:	48 89 4d e8          	mov    %rcx,-0x18(%rbp)
+    18f9:	48 89 55 f0          	mov    %rdx,-0x10(%rbp)
+    18fd:	48 89 45 f8          	mov    %rax,-0x8(%rbp)
+    __attribute__((__always_inline__)) _GLIBCXX20_CONSTEXPR
+    inline void
+    _Destroy(_ForwardIterator __first, _ForwardIterator __last,
+	     allocator<_Tp>&)
+    {
+      std::_Destroy(__first, __last);
+    1901:	48 8b 55 f0          	mov    -0x10(%rbp),%rdx
+    1905:	48 8b 45 e8          	mov    -0x18(%rbp),%rax
+    1909:	48 89 d6             	mov    %rdx,%rsi
+    190c:	48 89 c7             	mov    %rax,%rdi
+    190f:	e8 e5 09 00 00       	call   22f9 <_ZSt8_DestroyIPfEvT_S1_>
+    }
+    1914:	90                   	nop
+	_GLIBCXX_ASAN_ANNOTATE_BEFORE_DEALLOC;
+      }
+    1915:	48 8b 45 d8          	mov    -0x28(%rbp),%rax
+    1919:	48 89 c7             	mov    %rax,%rdi
+    191c:	e8 f3 03 00 00       	call   1d14 <_ZNSt12_Vector_baseIfSaIfEED1Ev>
+    1921:	90                   	nop
+    1922:	c9                   	leave
+    1923:	c3                   	ret
+
+0000000000001924 <_ZNKSt6vectorIfSaIfEE5beginEv>:
+       *  first element in the %vector.  Iteration is done in ordinary
+       *  element order.
+       */
+      _GLIBCXX_NODISCARD _GLIBCXX20_CONSTEXPR
+      const_iterator
+      begin() const _GLIBCXX_NOEXCEPT
+    1924:	f3 0f 1e fa          	endbr64
+    1928:	55                   	push   %rbp
+    1929:	48 89 e5             	mov    %rsp,%rbp
+    192c:	48 83 ec 20          	sub    $0x20,%rsp
+    1930:	48 89 7d e8          	mov    %rdi,-0x18(%rbp)
+    1934:	64 48 8b 04 25 28 00 	mov    %fs:0x28,%rax
+    193b:	00 00 
+    193d:	48 89 45 f8          	mov    %rax,-0x8(%rbp)
+    1941:	31 c0                	xor    %eax,%eax
+      { return const_iterator(this->_M_impl._M_start); }
+    1943:	48 8b 55 e8          	mov    -0x18(%rbp),%rdx
+    1947:	48 8d 45 f0          	lea    -0x10(%rbp),%rax
+    194b:	48 89 d6             	mov    %rdx,%rsi
+    194e:	48 89 c7             	mov    %rax,%rdi
+    1951:	e8 64 05 00 00       	call   1eba <_ZN9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEEC1ERKS2_>
+    1956:	48 8b 45 f0          	mov    -0x10(%rbp),%rax
+    195a:	48 8b 55 f8          	mov    -0x8(%rbp),%rdx
+    195e:	64 48 2b 14 25 28 00 	sub    %fs:0x28,%rdx
+    1965:	00 00 
+    1967:	74 05                	je     196e <_ZNKSt6vectorIfSaIfEE5beginEv+0x4a>
+    1969:	e8 f2 f7 ff ff       	call   1160 <__stack_chk_fail@plt>
+    196e:	c9                   	leave
+    196f:	c3                   	ret
+
+0000000000001970 <_ZNKSt6vectorIfSaIfEE3endEv>:
+       *  the last element in the %vector.  Iteration is done in
+       *  ordinary element order.
+       */
+      _GLIBCXX_NODISCARD _GLIBCXX20_CONSTEXPR
+      const_iterator
+      end() const _GLIBCXX_NOEXCEPT
+    1970:	f3 0f 1e fa          	endbr64
+    1974:	55                   	push   %rbp
+    1975:	48 89 e5             	mov    %rsp,%rbp
+    1978:	48 83 ec 20          	sub    $0x20,%rsp
+    197c:	48 89 7d e8          	mov    %rdi,-0x18(%rbp)
+    1980:	64 48 8b 04 25 28 00 	mov    %fs:0x28,%rax
+    1987:	00 00 
+    1989:	48 89 45 f8          	mov    %rax,-0x8(%rbp)
+    198d:	31 c0                	xor    %eax,%eax
+      { return const_iterator(this->_M_impl._M_finish); }
+    198f:	48 8b 45 e8          	mov    -0x18(%rbp),%rax
+    1993:	48 8d 50 08          	lea    0x8(%rax),%rdx
+    1997:	48 8d 45 f0          	lea    -0x10(%rbp),%rax
+    199b:	48 89 d6             	mov    %rdx,%rsi
+    199e:	48 89 c7             	mov    %rax,%rdi
+    19a1:	e8 14 05 00 00       	call   1eba <_ZN9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEEC1ERKS2_>
+    19a6:	48 8b 45 f0          	mov    -0x10(%rbp),%rax
+    19aa:	48 8b 55 f8          	mov    -0x8(%rbp),%rdx
+    19ae:	64 48 2b 14 25 28 00 	sub    %fs:0x28,%rdx
+    19b5:	00 00 
+    19b7:	74 05                	je     19be <_ZNKSt6vectorIfSaIfEE3endEv+0x4e>
+    19b9:	e8 a2 f7 ff ff       	call   1160 <__stack_chk_fail@plt>
+    19be:	c9                   	leave
+    19bf:	c3                   	ret
+
+00000000000019c0 <_ZSt12__to_addressIKfEPT_S2_>:
+>>>>>>> main
   template<typename _Ptr, typename _Tp>
     using __ptr_rebind = typename pointer_traits<_Ptr>::template rebind<_Tp>;
 
   template<typename _Tp>
     constexpr _Tp*
     __to_address(_Tp* __ptr) noexcept
+<<<<<<< HEAD
     1b60:	f3 0f 1e fa          	endbr64 
     1b64:	55                   	push   %rbp
     1b65:	48 89 e5             	mov    %rsp,%rbp
@@ -1440,12 +2360,408 @@ class Vector {
     1ebf:	90                   	nop
 
 0000000000001ec0 <_ZNKSt16initializer_listIfE5beginEv>:
+=======
+    19c0:	f3 0f 1e fa          	endbr64
+    19c4:	55                   	push   %rbp
+    19c5:	48 89 e5             	mov    %rsp,%rbp
+    19c8:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
+    {
+      static_assert(!std::is_function<_Tp>::value, "not a function pointer");
+      return __ptr;
+    19cc:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    }
+    19d0:	5d                   	pop    %rbp
+    19d1:	c3                   	ret
+
+00000000000019d2 <_ZNKSt6vectorIfSaIfEE4dataEv>:
+      data() _GLIBCXX_NOEXCEPT
+      { return _M_data_ptr(this->_M_impl._M_start); }
+
+      _GLIBCXX_NODISCARD _GLIBCXX20_CONSTEXPR
+      const _Tp*
+      data() const _GLIBCXX_NOEXCEPT
+    19d2:	f3 0f 1e fa          	endbr64
+    19d6:	55                   	push   %rbp
+    19d7:	48 89 e5             	mov    %rsp,%rbp
+    19da:	48 83 ec 10          	sub    $0x10,%rsp
+    19de:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
+      { return _M_data_ptr(this->_M_impl._M_start); }
+    19e2:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    19e6:	48 8b 10             	mov    (%rax),%rdx
+    19e9:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    19ed:	48 89 d6             	mov    %rdx,%rsi
+    19f0:	48 89 c7             	mov    %rax,%rdi
+    19f3:	e8 e4 04 00 00       	call   1edc <_ZNKSt6vectorIfSaIfEE11_M_data_ptrIfEEPT_S4_>
+    19f8:	c9                   	leave
+    19f9:	c3                   	ret
+
+00000000000019fa <_ZNKSt6vectorIfSaIfEE4sizeEv>:
+      size() const _GLIBCXX_NOEXCEPT
+    19fa:	f3 0f 1e fa          	endbr64
+    19fe:	55                   	push   %rbp
+    19ff:	48 89 e5             	mov    %rsp,%rbp
+    1a02:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
+      { return size_type(this->_M_impl._M_finish - this->_M_impl._M_start); }
+    1a06:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    1a0a:	48 8b 50 08          	mov    0x8(%rax),%rdx
+    1a0e:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    1a12:	48 8b 00             	mov    (%rax),%rax
+    1a15:	48 29 c2             	sub    %rax,%rdx
+    1a18:	48 89 d0             	mov    %rdx,%rax
+    1a1b:	48 c1 f8 02          	sar    $0x2,%rax
+    1a1f:	5d                   	pop    %rbp
+    1a20:	c3                   	ret
+    1a21:	90                   	nop
+
+0000000000001a22 <_ZNSt4spanIKfLm18446744073709551615EEC1IRKSt6vectorIfSaIfEEEEOT_>:
+	  && (!is_array_v<remove_cvref_t<_Range>>)
+	  && ranges::contiguous_range<_Range> && ranges::sized_range<_Range>
+	  && (ranges::borrowed_range<_Range> || is_const_v<element_type>)
+	  && __is_compatible_ref<ranges::range_reference_t<_Range>>::value
+	constexpr explicit(extent != dynamic_extent)
+	span(_Range&& __range)
+    1a22:	f3 0f 1e fa          	endbr64
+    1a26:	55                   	push   %rbp
+    1a27:	48 89 e5             	mov    %rsp,%rbp
+    1a2a:	53                   	push   %rbx
+    1a2b:	48 83 ec 18          	sub    $0x18,%rsp
+    1a2f:	48 89 7d e8          	mov    %rdi,-0x18(%rbp)
+    1a33:	48 89 75 e0          	mov    %rsi,-0x20(%rbp)
+	noexcept(noexcept(ranges::data(__range))
+		  && noexcept(ranges::size(__range)))
+	: span(ranges::data(__range), ranges::size(__range))
+    1a37:	48 8b 45 e0          	mov    -0x20(%rbp),%rax
+    1a3b:	48 89 c6             	mov    %rax,%rsi
+    1a3e:	48 8d 05 bf 15 00 00 	lea    0x15bf(%rip),%rax        # 3004 <_ZNSt6ranges6__cust4sizeE>
+    1a45:	48 89 c7             	mov    %rax,%rdi
+    1a48:	e8 07 fc ff ff       	call   1654 <_ZNKSt6ranges13__cust_access5_SizeclIRKSt6vectorIfSaIfEEEEDaOT_>
+    1a4d:	48 89 c3             	mov    %rax,%rbx
+    1a50:	48 8b 45 e0          	mov    -0x20(%rbp),%rax
+    1a54:	48 89 c6             	mov    %rax,%rsi
+    1a57:	48 8d 05 a7 15 00 00 	lea    0x15a7(%rip),%rax        # 3005 <_ZNSt6ranges6__cust4dataE>
+    1a5e:	48 89 c7             	mov    %rax,%rdi
+    1a61:	e8 cc fb ff ff       	call   1632 <_ZNKSt6ranges13__cust_access5_DataclIRKSt6vectorIfSaIfEEEEDaOT_>
+    1a66:	48 89 c1             	mov    %rax,%rcx
+    1a69:	48 8b 45 e8          	mov    -0x18(%rbp),%rax
+    1a6d:	48 89 da             	mov    %rbx,%rdx
+    1a70:	48 89 ce             	mov    %rcx,%rsi
+    1a73:	48 89 c7             	mov    %rax,%rdi
+    1a76:	e8 77 04 00 00       	call   1ef2 <_ZNSt4spanIKfLm18446744073709551615EEC1IPS0_EET_m>
+	{
+	  if constexpr (extent != dynamic_extent)
+	    {
+	      __glibcxx_assert(ranges::size(__range) == extent);
+	    }
+	}
+    1a7b:	90                   	nop
+    1a7c:	48 8b 5d f8          	mov    -0x8(%rbp),%rbx
+    1a80:	c9                   	leave
+    1a81:	c3                   	ret
+
+0000000000001a82 <_ZNSt6vectorIfSaIfEEixEm>:
+      operator[](size_type __n) _GLIBCXX_NOEXCEPT
+    1a82:	f3 0f 1e fa          	endbr64
+    1a86:	55                   	push   %rbp
+    1a87:	48 89 e5             	mov    %rsp,%rbp
+    1a8a:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
+    1a8e:	48 89 75 f0          	mov    %rsi,-0x10(%rbp)
+	return *(this->_M_impl._M_start + __n);
+    1a92:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    1a96:	48 8b 00             	mov    (%rax),%rax
+    1a99:	48 8b 55 f0          	mov    -0x10(%rbp),%rdx
+    1a9d:	48 c1 e2 02          	shl    $0x2,%rdx
+    1aa1:	48 01 d0             	add    %rdx,%rax
+      }
+    1aa4:	5d                   	pop    %rbp
+    1aa5:	c3                   	ret
+
+0000000000001aa6 <_ZNKSt6vectorIfSaIfEEixEm>:
+      operator[](size_type __n) const _GLIBCXX_NOEXCEPT
+    1aa6:	f3 0f 1e fa          	endbr64
+    1aaa:	55                   	push   %rbp
+    1aab:	48 89 e5             	mov    %rsp,%rbp
+    1aae:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
+    1ab2:	48 89 75 f0          	mov    %rsi,-0x10(%rbp)
+	return *(this->_M_impl._M_start + __n);
+    1ab6:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    1aba:	48 8b 00             	mov    (%rax),%rax
+    1abd:	48 8b 55 f0          	mov    -0x10(%rbp),%rdx
+    1ac1:	48 c1 e2 02          	shl    $0x2,%rdx
+    1ac5:	48 01 d0             	add    %rdx,%rax
+      }
+    1ac8:	5d                   	pop    %rbp
+    1ac9:	c3                   	ret
+
+0000000000001aca <_ZNSt6vectorIfSaIfEEC1ERKS1_>:
+      vector(const vector& __x)
+    1aca:	f3 0f 1e fa          	endbr64
+    1ace:	55                   	push   %rbp
+    1acf:	48 89 e5             	mov    %rsp,%rbp
+    1ad2:	41 55                	push   %r13
+    1ad4:	41 54                	push   %r12
+    1ad6:	53                   	push   %rbx
+    1ad7:	48 83 ec 58          	sub    $0x58,%rsp
+    1adb:	48 89 7d 98          	mov    %rdi,-0x68(%rbp)
+    1adf:	48 89 75 90          	mov    %rsi,-0x70(%rbp)
+    1ae3:	64 48 8b 04 25 28 00 	mov    %fs:0x28,%rax
+    1aea:	00 00 
+    1aec:	48 89 45 d8          	mov    %rax,-0x28(%rbp)
+    1af0:	31 c0                	xor    %eax,%eax
+	_Alloc_traits::_S_select_on_copy(__x._M_get_Tp_allocator()))
+    1af2:	48 8b 5d 98          	mov    -0x68(%rbp),%rbx
+    1af6:	48 8b 45 90          	mov    -0x70(%rbp),%rax
+    1afa:	48 89 c7             	mov    %rax,%rdi
+    1afd:	e8 36 04 00 00       	call   1f38 <_ZNKSt12_Vector_baseIfSaIfEE19_M_get_Tp_allocatorEv>
+    1b02:	48 89 45 a8          	mov    %rax,-0x58(%rbp)
+    1b06:	48 8d 45 a7          	lea    -0x59(%rbp),%rax
+    1b0a:	48 8b 55 a8          	mov    -0x58(%rbp),%rdx
+    1b0e:	48 89 55 b0          	mov    %rdx,-0x50(%rbp)
+    1b12:	48 89 45 b8          	mov    %rax,-0x48(%rbp)
+    1b16:	48 8b 45 b0          	mov    -0x50(%rbp),%rax
+    1b1a:	48 89 45 c0          	mov    %rax,-0x40(%rbp)
+    1b1e:	48 8b 45 b8          	mov    -0x48(%rbp),%rax
+    1b22:	48 89 45 c8          	mov    %rax,-0x38(%rbp)
+    1b26:	48 8b 45 c0          	mov    -0x40(%rbp),%rax
+    1b2a:	48 89 45 d0          	mov    %rax,-0x30(%rbp)
+
+      __attribute__((__always_inline__))
+      _GLIBCXX20_CONSTEXPR
+      __new_allocator(const __new_allocator&) _GLIBCXX_USE_NOEXCEPT { }
+    1b2e:	90                   	nop
+      : __allocator_base<_Tp>(__a) { }
+    1b2f:	90                   	nop
+      { return __rhs; }
+    1b30:	90                   	nop
+      noexcept(noexcept(_Base_type::destroy(__a, std::__to_address(__p))))
+      { _Base_type::destroy(__a, std::__to_address(__p)); }
+
+    [[__gnu__::__always_inline__]]
+    static constexpr _Alloc _S_select_on_copy(const _Alloc& __a)
+    { return _Base_type::select_on_container_copy_construction(__a); }
+    1b31:	90                   	nop
+    1b32:	48 8b 45 90          	mov    -0x70(%rbp),%rax
+    1b36:	48 89 c7             	mov    %rax,%rdi
+    1b39:	e8 bc fe ff ff       	call   19fa <_ZNKSt6vectorIfSaIfEE4sizeEv>
+    1b3e:	48 89 c1             	mov    %rax,%rcx
+    1b41:	48 8d 45 a7          	lea    -0x59(%rbp),%rax
+    1b45:	48 89 c2             	mov    %rax,%rdx
+    1b48:	48 89 ce             	mov    %rcx,%rsi
+    1b4b:	48 89 df             	mov    %rbx,%rdi
+    1b4e:	e8 f7 03 00 00       	call   1f4a <_ZNSt12_Vector_baseIfSaIfEEC1EmRKS0_>
+      ~allocator() _GLIBCXX_NOTHROW { }
+    1b53:	90                   	nop
+				      _M_get_Tp_allocator());
+    1b54:	48 8b 45 98          	mov    -0x68(%rbp),%rax
+    1b58:	48 89 c7             	mov    %rax,%rdi
+    1b5b:	e8 48 03 00 00       	call   1ea8 <_ZNSt12_Vector_baseIfSaIfEE19_M_get_Tp_allocatorEv>
+    1b60:	49 89 c5             	mov    %rax,%r13
+	  std::__uninitialized_copy_a(__x.begin(), __x.end(),
+    1b63:	48 8b 45 98          	mov    -0x68(%rbp),%rax
+    1b67:	48 8b 18             	mov    (%rax),%rbx
+    1b6a:	48 8b 45 90          	mov    -0x70(%rbp),%rax
+    1b6e:	48 89 c7             	mov    %rax,%rdi
+    1b71:	e8 fa fd ff ff       	call   1970 <_ZNKSt6vectorIfSaIfEE3endEv>
+    1b76:	49 89 c4             	mov    %rax,%r12
+    1b79:	48 8b 45 90          	mov    -0x70(%rbp),%rax
+    1b7d:	48 89 c7             	mov    %rax,%rdi
+    1b80:	e8 9f fd ff ff       	call   1924 <_ZNKSt6vectorIfSaIfEE5beginEv>
+    1b85:	4c 89 e9             	mov    %r13,%rcx
+    1b88:	48 89 da             	mov    %rbx,%rdx
+    1b8b:	4c 89 e6             	mov    %r12,%rsi
+    1b8e:	48 89 c7             	mov    %rax,%rdi
+    1b91:	e8 19 04 00 00       	call   1faf <_ZSt22__uninitialized_copy_aIN9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEEEPffET0_T_SA_S9_RSaIT1_E>
+	this->_M_impl._M_finish =
+    1b96:	48 8b 55 98          	mov    -0x68(%rbp),%rdx
+    1b9a:	48 89 42 08          	mov    %rax,0x8(%rdx)
+      }
+    1b9e:	90                   	nop
+    1b9f:	48 8b 45 d8          	mov    -0x28(%rbp),%rax
+    1ba3:	64 48 2b 04 25 28 00 	sub    %fs:0x28,%rax
+    1baa:	00 00 
+    1bac:	74 39                	je     1be7 <_ZNSt6vectorIfSaIfEEC1ERKS1_+0x11d>
+    1bae:	eb 32                	jmp    1be2 <_ZNSt6vectorIfSaIfEEC1ERKS1_+0x118>
+    1bb0:	f3 0f 1e fa          	endbr64
+    1bb4:	48 89 c3             	mov    %rax,%rbx
+    1bb7:	48 8b 45 98          	mov    -0x68(%rbp),%rax
+    1bbb:	48 89 c7             	mov    %rax,%rdi
+    1bbe:	e8 51 01 00 00       	call   1d14 <_ZNSt12_Vector_baseIfSaIfEED1Ev>
+    1bc3:	48 89 d8             	mov    %rbx,%rax
+    1bc6:	48 8b 55 d8          	mov    -0x28(%rbp),%rdx
+    1bca:	64 48 2b 14 25 28 00 	sub    %fs:0x28,%rdx
+    1bd1:	00 00 
+    1bd3:	74 05                	je     1bda <_ZNSt6vectorIfSaIfEEC1ERKS1_+0x110>
+    1bd5:	e8 86 f5 ff ff       	call   1160 <__stack_chk_fail@plt>
+    1bda:	48 89 c7             	mov    %rax,%rdi
+    1bdd:	e8 ae f5 ff ff       	call   1190 <_Unwind_Resume@plt>
+    1be2:	e8 79 f5 ff ff       	call   1160 <__stack_chk_fail@plt>
+    1be7:	48 83 c4 58          	add    $0x58,%rsp
+    1beb:	5b                   	pop    %rbx
+    1bec:	41 5c                	pop    %r12
+    1bee:	41 5d                	pop    %r13
+    1bf0:	5d                   	pop    %rbp
+    1bf1:	c3                   	ret
+
+0000000000001bf2 <_ZNKSt4spanIKfLm18446744073709551615EE5beginEv>:
+
+      // iterator support
+
+      [[nodiscard]]
+      constexpr iterator
+      begin() const noexcept
+    1bf2:	f3 0f 1e fa          	endbr64
+    1bf6:	55                   	push   %rbp
+    1bf7:	48 89 e5             	mov    %rsp,%rbp
+    1bfa:	48 83 ec 20          	sub    $0x20,%rsp
+    1bfe:	48 89 7d e8          	mov    %rdi,-0x18(%rbp)
+    1c02:	64 48 8b 04 25 28 00 	mov    %fs:0x28,%rax
+    1c09:	00 00 
+    1c0b:	48 89 45 f8          	mov    %rax,-0x8(%rbp)
+    1c0f:	31 c0                	xor    %eax,%eax
+      { return iterator(this->_M_ptr); }
+    1c11:	48 8b 55 e8          	mov    -0x18(%rbp),%rdx
+    1c15:	48 8d 45 f0          	lea    -0x10(%rbp),%rax
+    1c19:	48 89 d6             	mov    %rdx,%rsi
+    1c1c:	48 89 c7             	mov    %rax,%rdi
+    1c1f:	e8 e4 03 00 00       	call   2008 <_ZN9__gnu_cxx17__normal_iteratorIPKfSt4spanIS1_Lm18446744073709551615EEEC1ERKS2_>
+    1c24:	48 8b 45 f0          	mov    -0x10(%rbp),%rax
+    1c28:	48 8b 55 f8          	mov    -0x8(%rbp),%rdx
+    1c2c:	64 48 2b 14 25 28 00 	sub    %fs:0x28,%rdx
+    1c33:	00 00 
+    1c35:	74 05                	je     1c3c <_ZNKSt4spanIKfLm18446744073709551615EE5beginEv+0x4a>
+    1c37:	e8 24 f5 ff ff       	call   1160 <__stack_chk_fail@plt>
+    1c3c:	c9                   	leave
+    1c3d:	c3                   	ret
+
+0000000000001c3e <_ZNKSt4spanIKfLm18446744073709551615EE3endEv>:
+
+      [[nodiscard]]
+      constexpr iterator
+      end() const noexcept
+    1c3e:	f3 0f 1e fa          	endbr64
+    1c42:	55                   	push   %rbp
+    1c43:	48 89 e5             	mov    %rsp,%rbp
+    1c46:	53                   	push   %rbx
+    1c47:	48 83 ec 38          	sub    $0x38,%rsp
+    1c4b:	48 89 7d c8          	mov    %rdi,-0x38(%rbp)
+    1c4f:	64 48 8b 04 25 28 00 	mov    %fs:0x28,%rax
+    1c56:	00 00 
+    1c58:	48 89 45 e8          	mov    %rax,-0x18(%rbp)
+    1c5c:	31 c0                	xor    %eax,%eax
+      { return iterator(this->_M_ptr + this->size()); }
+    1c5e:	48 8b 45 c8          	mov    -0x38(%rbp),%rax
+    1c62:	48 8b 18             	mov    (%rax),%rbx
+    1c65:	48 8b 45 c8          	mov    -0x38(%rbp),%rax
+    1c69:	48 89 c7             	mov    %rax,%rdi
+    1c6c:	e8 b9 03 00 00       	call   202a <_ZNKSt4spanIKfLm18446744073709551615EE4sizeEv>
+    1c71:	48 c1 e0 02          	shl    $0x2,%rax
+    1c75:	48 01 d8             	add    %rbx,%rax
+    1c78:	48 89 45 d8          	mov    %rax,-0x28(%rbp)
+    1c7c:	48 8d 55 d8          	lea    -0x28(%rbp),%rdx
+    1c80:	48 8d 45 e0          	lea    -0x20(%rbp),%rax
+    1c84:	48 89 d6             	mov    %rdx,%rsi
+    1c87:	48 89 c7             	mov    %rax,%rdi
+    1c8a:	e8 79 03 00 00       	call   2008 <_ZN9__gnu_cxx17__normal_iteratorIPKfSt4spanIS1_Lm18446744073709551615EEEC1ERKS2_>
+    1c8f:	48 8b 45 e0          	mov    -0x20(%rbp),%rax
+    1c93:	48 8b 55 e8          	mov    -0x18(%rbp),%rdx
+    1c97:	64 48 2b 14 25 28 00 	sub    %fs:0x28,%rdx
+    1c9e:	00 00 
+    1ca0:	74 05                	je     1ca7 <_ZNKSt4spanIKfLm18446744073709551615EE3endEv+0x69>
+    1ca2:	e8 b9 f4 ff ff       	call   1160 <__stack_chk_fail@plt>
+    1ca7:	48 8b 5d f8          	mov    -0x8(%rbp),%rbx
+    1cab:	c9                   	leave
+    1cac:	c3                   	ret
+    1cad:	90                   	nop
+
+0000000000001cae <_ZN9__gnu_cxx17__normal_iteratorIPKfSt4spanIS1_Lm18446744073709551615EEEppEv>:
+      operator++() _GLIBCXX_NOEXCEPT
+    1cae:	f3 0f 1e fa          	endbr64
+    1cb2:	55                   	push   %rbp
+    1cb3:	48 89 e5             	mov    %rsp,%rbp
+    1cb6:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
+	++_M_current;
+    1cba:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    1cbe:	48 8b 00             	mov    (%rax),%rax
+    1cc1:	48 8d 50 04          	lea    0x4(%rax),%rdx
+    1cc5:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    1cc9:	48 89 10             	mov    %rdx,(%rax)
+	return *this;
+    1ccc:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+      }
+    1cd0:	5d                   	pop    %rbp
+    1cd1:	c3                   	ret
+
+0000000000001cd2 <_ZNSt12_Vector_baseIfSaIfEE12_Vector_implD1Ev>:
+      struct _Vector_impl
+    1cd2:	f3 0f 1e fa          	endbr64
+    1cd6:	55                   	push   %rbp
+    1cd7:	48 89 e5             	mov    %rsp,%rbp
+    1cda:	48 89 7d e8          	mov    %rdi,-0x18(%rbp)
+    1cde:	48 8b 45 e8          	mov    -0x18(%rbp),%rax
+    1ce2:	48 89 45 f8          	mov    %rax,-0x8(%rbp)
+    1ce6:	90                   	nop
+    1ce7:	90                   	nop
+    1ce8:	5d                   	pop    %rbp
+    1ce9:	c3                   	ret
+
+0000000000001cea <_ZNSt12_Vector_baseIfSaIfEEC1ERKS0_>:
+      _Vector_base(const allocator_type& __a) _GLIBCXX_NOEXCEPT
+    1cea:	f3 0f 1e fa          	endbr64
+    1cee:	55                   	push   %rbp
+    1cef:	48 89 e5             	mov    %rsp,%rbp
+    1cf2:	48 83 ec 10          	sub    $0x10,%rsp
+    1cf6:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
+    1cfa:	48 89 75 f0          	mov    %rsi,-0x10(%rbp)
+      : _M_impl(__a) { }
+    1cfe:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    1d02:	48 8b 55 f0          	mov    -0x10(%rbp),%rdx
+    1d06:	48 89 d6             	mov    %rdx,%rsi
+    1d09:	48 89 c7             	mov    %rax,%rdi
+    1d0c:	e8 3b 03 00 00       	call   204c <_ZNSt12_Vector_baseIfSaIfEE12_Vector_implC1ERKS0_>
+    1d11:	90                   	nop
+    1d12:	c9                   	leave
+    1d13:	c3                   	ret
+
+0000000000001d14 <_ZNSt12_Vector_baseIfSaIfEED1Ev>:
+      ~_Vector_base() _GLIBCXX_NOEXCEPT
+    1d14:	f3 0f 1e fa          	endbr64
+    1d18:	55                   	push   %rbp
+    1d19:	48 89 e5             	mov    %rsp,%rbp
+    1d1c:	48 83 ec 10          	sub    $0x10,%rsp
+    1d20:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
+		      _M_impl._M_end_of_storage - _M_impl._M_start);
+    1d24:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    1d28:	48 8b 50 10          	mov    0x10(%rax),%rdx
+    1d2c:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    1d30:	48 8b 00             	mov    (%rax),%rax
+    1d33:	48 29 c2             	sub    %rax,%rdx
+    1d36:	48 89 d0             	mov    %rdx,%rax
+    1d39:	48 c1 f8 02          	sar    $0x2,%rax
+	_M_deallocate(_M_impl._M_start,
+    1d3d:	48 89 c2             	mov    %rax,%rdx
+    1d40:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    1d44:	48 8b 08             	mov    (%rax),%rcx
+    1d47:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    1d4b:	48 89 ce             	mov    %rcx,%rsi
+    1d4e:	48 89 c7             	mov    %rax,%rdi
+    1d51:	e8 3c 03 00 00       	call   2092 <_ZNSt12_Vector_baseIfSaIfEE13_M_deallocateEPfm>
+      }
+    1d56:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    1d5a:	48 89 c7             	mov    %rax,%rdi
+    1d5d:	e8 70 ff ff ff       	call   1cd2 <_ZNSt12_Vector_baseIfSaIfEE12_Vector_implD1Ev>
+    1d62:	90                   	nop
+    1d63:	c9                   	leave
+    1d64:	c3                   	ret
+    1d65:	90                   	nop
+
+0000000000001d66 <_ZNKSt16initializer_listIfE5beginEv>:
+>>>>>>> main
       constexpr size_type
       size() const noexcept { return _M_len; }
 
       // First element.
       constexpr const_iterator
       begin() const noexcept { return _M_array; }
+<<<<<<< HEAD
     1ec0:	f3 0f 1e fa          	endbr64 
     1ec4:	55                   	push   %rbp
     1ec5:	48 89 e5             	mov    %rsp,%rbp
@@ -1457,10 +2773,24 @@ class Vector {
     1ed5:	90                   	nop
 
 0000000000001ed6 <_ZNKSt16initializer_listIfE3endEv>:
+=======
+    1d66:	f3 0f 1e fa          	endbr64
+    1d6a:	55                   	push   %rbp
+    1d6b:	48 89 e5             	mov    %rsp,%rbp
+    1d6e:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
+    1d72:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    1d76:	48 8b 00             	mov    (%rax),%rax
+    1d79:	5d                   	pop    %rbp
+    1d7a:	c3                   	ret
+    1d7b:	90                   	nop
+
+0000000000001d7c <_ZNKSt16initializer_listIfE3endEv>:
+>>>>>>> main
 
       // One past the last element.
       constexpr const_iterator
       end() const noexcept { return begin() + size(); }
+<<<<<<< HEAD
     1ed6:	f3 0f 1e fa          	endbr64 
     1eda:	55                   	push   %rbp
     1edb:	48 89 e5             	mov    %rsp,%rbp
@@ -1558,10 +2888,107 @@ class Vector {
     1fb7:	48 01 c2             	add    %rax,%rdx
     1fba:	48 8b 45 d8          	mov    -0x28(%rbp),%rax
     1fbe:	48 89 50 10          	mov    %rdx,0x10(%rax)
+=======
+    1d7c:	f3 0f 1e fa          	endbr64
+    1d80:	55                   	push   %rbp
+    1d81:	48 89 e5             	mov    %rsp,%rbp
+    1d84:	53                   	push   %rbx
+    1d85:	48 83 ec 18          	sub    $0x18,%rsp
+    1d89:	48 89 7d e8          	mov    %rdi,-0x18(%rbp)
+    1d8d:	48 8b 45 e8          	mov    -0x18(%rbp),%rax
+    1d91:	48 89 c7             	mov    %rax,%rdi
+    1d94:	e8 cd ff ff ff       	call   1d66 <_ZNKSt16initializer_listIfE5beginEv>
+    1d99:	48 89 c3             	mov    %rax,%rbx
+    1d9c:	48 8b 45 e8          	mov    -0x18(%rbp),%rax
+    1da0:	48 89 c7             	mov    %rax,%rdi
+    1da3:	e8 6c 03 00 00       	call   2114 <_ZNKSt16initializer_listIfE4sizeEv>
+    1da8:	48 c1 e0 02          	shl    $0x2,%rax
+    1dac:	48 01 d8             	add    %rbx,%rax
+    1daf:	48 8b 5d f8          	mov    -0x8(%rbp),%rbx
+    1db3:	c9                   	leave
+    1db4:	c3                   	ret
+    1db5:	90                   	nop
+
+0000000000001db6 <_ZNSt6vectorIfSaIfEE19_M_range_initializeIPKfEEvT_S5_St20forward_iterator_tag>:
+
+      // Called by the second initialize_dispatch above
+      template<typename _ForwardIterator>
+	_GLIBCXX20_CONSTEXPR
+	void
+	_M_range_initialize(_ForwardIterator __first, _ForwardIterator __last,
+    1db6:	f3 0f 1e fa          	endbr64
+    1dba:	55                   	push   %rbp
+    1dbb:	48 89 e5             	mov    %rsp,%rbp
+    1dbe:	53                   	push   %rbx
+    1dbf:	48 83 ec 58          	sub    $0x58,%rsp
+    1dc3:	48 89 7d b8          	mov    %rdi,-0x48(%rbp)
+    1dc7:	48 89 75 b0          	mov    %rsi,-0x50(%rbp)
+    1dcb:	48 89 55 a8          	mov    %rdx,-0x58(%rbp)
+    1dcf:	64 48 8b 04 25 28 00 	mov    %fs:0x28,%rax
+    1dd6:	00 00 
+    1dd8:	48 89 45 e8          	mov    %rax,-0x18(%rbp)
+    1ddc:	31 c0                	xor    %eax,%eax
+    1dde:	48 8b 45 b0          	mov    -0x50(%rbp),%rax
+    1de2:	48 89 45 c0          	mov    %rax,-0x40(%rbp)
+    1de6:	48 8b 45 a8          	mov    -0x58(%rbp),%rax
+    1dea:	48 89 45 d0          	mov    %rax,-0x30(%rbp)
+  template<typename _Iter>
+    __attribute__((__always_inline__))
+    inline _GLIBCXX_CONSTEXPR
+    typename iterator_traits<_Iter>::iterator_category
+    __iterator_category(const _Iter&)
+    { return typename iterator_traits<_Iter>::iterator_category(); }
+    1dee:	90                   	nop
+    inline _GLIBCXX17_CONSTEXPR
+    typename iterator_traits<_InputIterator>::difference_type
+    distance(_InputIterator __first, _InputIterator __last)
+    {
+      // concept requirements -- taken care of in __distance
+      return std::__distance(__first, __last,
+    1def:	48 8b 45 c0          	mov    -0x40(%rbp),%rax
+    1df3:	48 89 45 d8          	mov    %rax,-0x28(%rbp)
+    1df7:	48 8b 45 d0          	mov    -0x30(%rbp),%rax
+    1dfb:	48 89 45 e0          	mov    %rax,-0x20(%rbp)
+      return __last - __first;
+    1dff:	48 8b 45 e0          	mov    -0x20(%rbp),%rax
+    1e03:	48 2b 45 d8          	sub    -0x28(%rbp),%rax
+    1e07:	48 c1 f8 02          	sar    $0x2,%rax
+			     std::__iterator_category(__first));
+    1e0b:	90                   	nop
+			    std::forward_iterator_tag)
+	{
+	  const size_type __n = std::distance(__first, __last);
+    1e0c:	48 89 45 c8          	mov    %rax,-0x38(%rbp)
+	  this->_M_impl._M_start
+	    = this->_M_allocate(_S_check_init_len(__n, _M_get_Tp_allocator()));
+    1e10:	48 8b 5d b8          	mov    -0x48(%rbp),%rbx
+    1e14:	48 8b 45 b8          	mov    -0x48(%rbp),%rax
+    1e18:	48 89 c7             	mov    %rax,%rdi
+    1e1b:	e8 88 00 00 00       	call   1ea8 <_ZNSt12_Vector_baseIfSaIfEE19_M_get_Tp_allocatorEv>
+    1e20:	48 89 c2             	mov    %rax,%rdx
+    1e23:	48 8b 45 c8          	mov    -0x38(%rbp),%rax
+    1e27:	48 89 d6             	mov    %rdx,%rsi
+    1e2a:	48 89 c7             	mov    %rax,%rdi
+    1e2d:	e8 f8 02 00 00       	call   212a <_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_>
+    1e32:	48 89 c6             	mov    %rax,%rsi
+    1e35:	48 89 df             	mov    %rbx,%rdi
+    1e38:	e8 7f 03 00 00       	call   21bc <_ZNSt12_Vector_baseIfSaIfEE11_M_allocateEm>
+    1e3d:	48 8b 55 b8          	mov    -0x48(%rbp),%rdx
+    1e41:	48 89 02             	mov    %rax,(%rdx)
+	  this->_M_impl._M_end_of_storage = this->_M_impl._M_start + __n;
+    1e44:	48 8b 45 b8          	mov    -0x48(%rbp),%rax
+    1e48:	48 8b 00             	mov    (%rax),%rax
+    1e4b:	48 8b 55 c8          	mov    -0x38(%rbp),%rdx
+    1e4f:	48 c1 e2 02          	shl    $0x2,%rdx
+    1e53:	48 01 c2             	add    %rax,%rdx
+    1e56:	48 8b 45 b8          	mov    -0x48(%rbp),%rax
+    1e5a:	48 89 50 10          	mov    %rdx,0x10(%rax)
+>>>>>>> main
 	  this->_M_impl._M_finish =
 	    std::__uninitialized_copy_a(__first, __last,
 					this->_M_impl._M_start,
 					_M_get_Tp_allocator());
+<<<<<<< HEAD
     1fc2:	48 8b 45 d8          	mov    -0x28(%rbp),%rax
     1fc6:	48 89 c7             	mov    %rax,%rdi
     1fc9:	e8 2a 00 00 00       	call   1ff8 <_ZNSt12_Vector_baseIfSaIfEE19_M_get_Tp_allocatorEv>
@@ -1955,22 +3382,512 @@ class Vector {
     232f:	c3                   	ret    
 
 0000000000002330 <_ZSt8_DestroyIPfEvT_S1_>:
+=======
+    1e5e:	48 8b 45 b8          	mov    -0x48(%rbp),%rax
+    1e62:	48 89 c7             	mov    %rax,%rdi
+    1e65:	e8 3e 00 00 00       	call   1ea8 <_ZNSt12_Vector_baseIfSaIfEE19_M_get_Tp_allocatorEv>
+    1e6a:	48 89 c1             	mov    %rax,%rcx
+	    std::__uninitialized_copy_a(__first, __last,
+    1e6d:	48 8b 45 b8          	mov    -0x48(%rbp),%rax
+    1e71:	48 8b 10             	mov    (%rax),%rdx
+    1e74:	48 8b 75 a8          	mov    -0x58(%rbp),%rsi
+    1e78:	48 8b 45 b0          	mov    -0x50(%rbp),%rax
+    1e7c:	48 89 c7             	mov    %rax,%rdi
+    1e7f:	e8 1d 04 00 00       	call   22a1 <_ZSt22__uninitialized_copy_aIPKfPffET0_T_S4_S3_RSaIT1_E>
+	  this->_M_impl._M_finish =
+    1e84:	48 8b 55 b8          	mov    -0x48(%rbp),%rdx
+    1e88:	48 89 42 08          	mov    %rax,0x8(%rdx)
+	}
+    1e8c:	90                   	nop
+    1e8d:	48 8b 45 e8          	mov    -0x18(%rbp),%rax
+    1e91:	64 48 2b 04 25 28 00 	sub    %fs:0x28,%rax
+    1e98:	00 00 
+    1e9a:	74 05                	je     1ea1 <_ZNSt6vectorIfSaIfEE19_M_range_initializeIPKfEEvT_S5_St20forward_iterator_tag+0xeb>
+    1e9c:	e8 bf f2 ff ff       	call   1160 <__stack_chk_fail@plt>
+    1ea1:	48 8b 5d f8          	mov    -0x8(%rbp),%rbx
+    1ea5:	c9                   	leave
+    1ea6:	c3                   	ret
+    1ea7:	90                   	nop
+
+0000000000001ea8 <_ZNSt12_Vector_baseIfSaIfEE19_M_get_Tp_allocatorEv>:
+      _M_get_Tp_allocator() _GLIBCXX_NOEXCEPT
+    1ea8:	f3 0f 1e fa          	endbr64
+    1eac:	55                   	push   %rbp
+    1ead:	48 89 e5             	mov    %rsp,%rbp
+    1eb0:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
+      { return this->_M_impl; }
+    1eb4:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    1eb8:	5d                   	pop    %rbp
+    1eb9:	c3                   	ret
+
+0000000000001eba <_ZN9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEEC1ERKS2_>:
+      __normal_iterator(const _Iterator& __i) _GLIBCXX_NOEXCEPT
+    1eba:	f3 0f 1e fa          	endbr64
+    1ebe:	55                   	push   %rbp
+    1ebf:	48 89 e5             	mov    %rsp,%rbp
+    1ec2:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
+    1ec6:	48 89 75 f0          	mov    %rsi,-0x10(%rbp)
+      : _M_current(__i) { }
+    1eca:	48 8b 45 f0          	mov    -0x10(%rbp),%rax
+    1ece:	48 8b 10             	mov    (%rax),%rdx
+    1ed1:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    1ed5:	48 89 10             	mov    %rdx,(%rax)
+    1ed8:	90                   	nop
+    1ed9:	5d                   	pop    %rbp
+    1eda:	c3                   	ret
+    1edb:	90                   	nop
+
+0000000000001edc <_ZNKSt6vectorIfSaIfEE11_M_data_ptrIfEEPT_S4_>:
+#endif
+
+      template<typename _Up>
+	_GLIBCXX20_CONSTEXPR
+	_Up*
+	_M_data_ptr(_Up* __ptr) const _GLIBCXX_NOEXCEPT
+    1edc:	f3 0f 1e fa          	endbr64
+    1ee0:	55                   	push   %rbp
+    1ee1:	48 89 e5             	mov    %rsp,%rbp
+    1ee4:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
+    1ee8:	48 89 75 f0          	mov    %rsi,-0x10(%rbp)
+	{ return __ptr; }
+    1eec:	48 8b 45 f0          	mov    -0x10(%rbp),%rax
+    1ef0:	5d                   	pop    %rbp
+    1ef1:	c3                   	ret
+
+0000000000001ef2 <_ZNSt4spanIKfLm18446744073709551615EEC1IPS0_EET_m>:
+	span(_It __first, size_type __count)
+    1ef2:	f3 0f 1e fa          	endbr64
+    1ef6:	55                   	push   %rbp
+    1ef7:	48 89 e5             	mov    %rsp,%rbp
+    1efa:	48 83 ec 20          	sub    $0x20,%rsp
+    1efe:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
+    1f02:	48 89 75 f0          	mov    %rsi,-0x10(%rbp)
+    1f06:	48 89 55 e8          	mov    %rdx,-0x18(%rbp)
+	: _M_ptr(std::to_address(__first)), _M_extent(__count)
+    1f0a:	48 8b 45 f0          	mov    -0x10(%rbp),%rax
+    1f0e:	48 89 c7             	mov    %rax,%rdi
+    1f11:	e8 2a 04 00 00       	call   2340 <_ZSt10to_addressIKfEPT_S2_>
+    1f16:	48 8b 55 f8          	mov    -0x8(%rbp),%rdx
+    1f1a:	48 89 02             	mov    %rax,(%rdx)
+    1f1d:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    1f21:	48 8d 50 08          	lea    0x8(%rax),%rdx
+    1f25:	48 8b 45 e8          	mov    -0x18(%rbp),%rax
+    1f29:	48 89 c6             	mov    %rax,%rsi
+    1f2c:	48 89 d7             	mov    %rdx,%rdi
+    1f2f:	e8 46 f6 ff ff       	call   157a <_ZNSt8__detail16__extent_storageILm18446744073709551615EEC1Em>
+	}
+    1f34:	90                   	nop
+    1f35:	c9                   	leave
+    1f36:	c3                   	ret
+    1f37:	90                   	nop
+
+0000000000001f38 <_ZNKSt12_Vector_baseIfSaIfEE19_M_get_Tp_allocatorEv>:
+      _M_get_Tp_allocator() const _GLIBCXX_NOEXCEPT
+    1f38:	f3 0f 1e fa          	endbr64
+    1f3c:	55                   	push   %rbp
+    1f3d:	48 89 e5             	mov    %rsp,%rbp
+    1f40:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
+      { return this->_M_impl; }
+    1f44:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    1f48:	5d                   	pop    %rbp
+    1f49:	c3                   	ret
+
+0000000000001f4a <_ZNSt12_Vector_baseIfSaIfEEC1EmRKS0_>:
+      _Vector_base(size_t __n, const allocator_type& __a)
+    1f4a:	f3 0f 1e fa          	endbr64
+    1f4e:	55                   	push   %rbp
+    1f4f:	48 89 e5             	mov    %rsp,%rbp
+    1f52:	53                   	push   %rbx
+    1f53:	48 83 ec 28          	sub    $0x28,%rsp
+    1f57:	48 89 7d e8          	mov    %rdi,-0x18(%rbp)
+    1f5b:	48 89 75 e0          	mov    %rsi,-0x20(%rbp)
+    1f5f:	48 89 55 d8          	mov    %rdx,-0x28(%rbp)
+      : _M_impl(__a)
+    1f63:	48 8b 45 e8          	mov    -0x18(%rbp),%rax
+    1f67:	48 8b 55 d8          	mov    -0x28(%rbp),%rdx
+    1f6b:	48 89 d6             	mov    %rdx,%rsi
+    1f6e:	48 89 c7             	mov    %rax,%rdi
+    1f71:	e8 d6 00 00 00       	call   204c <_ZNSt12_Vector_baseIfSaIfEE12_Vector_implC1ERKS0_>
+      { _M_create_storage(__n); }
+    1f76:	48 8b 55 e0          	mov    -0x20(%rbp),%rdx
+    1f7a:	48 8b 45 e8          	mov    -0x18(%rbp),%rax
+    1f7e:	48 89 d6             	mov    %rdx,%rsi
+    1f81:	48 89 c7             	mov    %rax,%rdi
+    1f84:	e8 d5 03 00 00       	call   235e <_ZNSt12_Vector_baseIfSaIfEE17_M_create_storageEm>
+    1f89:	eb 1e                	jmp    1fa9 <_ZNSt12_Vector_baseIfSaIfEEC1EmRKS0_+0x5f>
+    1f8b:	f3 0f 1e fa          	endbr64
+    1f8f:	48 89 c3             	mov    %rax,%rbx
+    1f92:	48 8b 45 e8          	mov    -0x18(%rbp),%rax
+    1f96:	48 89 c7             	mov    %rax,%rdi
+    1f99:	e8 34 fd ff ff       	call   1cd2 <_ZNSt12_Vector_baseIfSaIfEE12_Vector_implD1Ev>
+    1f9e:	48 89 d8             	mov    %rbx,%rax
+    1fa1:	48 89 c7             	mov    %rax,%rdi
+    1fa4:	e8 e7 f1 ff ff       	call   1190 <_Unwind_Resume@plt>
+    1fa9:	48 8b 5d f8          	mov    -0x8(%rbp),%rbx
+    1fad:	c9                   	leave
+    1fae:	c3                   	ret
+
+0000000000001faf <_ZSt22__uninitialized_copy_aIN9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEEEPffET0_T_SA_S9_RSaIT1_E>:
+
+#if _GLIBCXX_HOSTED
+  template<typename _InputIterator, typename _ForwardIterator, typename _Tp>
+    _GLIBCXX20_CONSTEXPR
+    inline _ForwardIterator
+    __uninitialized_copy_a(_InputIterator __first, _InputIterator __last,
+    1faf:	f3 0f 1e fa          	endbr64
+    1fb3:	55                   	push   %rbp
+    1fb4:	48 89 e5             	mov    %rsp,%rbp
+    1fb7:	48 83 ec 20          	sub    $0x20,%rsp
+    1fbb:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
+    1fbf:	48 89 75 f0          	mov    %rsi,-0x10(%rbp)
+    1fc3:	48 89 55 e8          	mov    %rdx,-0x18(%rbp)
+    1fc7:	48 89 4d e0          	mov    %rcx,-0x20(%rbp)
+			   _ForwardIterator __result, allocator<_Tp>&)
+    {
+#ifdef __cpp_lib_is_constant_evaluated
+      if (std::is_constant_evaluated())
+    1fcb:	e8 84 f5 ff ff       	call   1554 <_ZSt21is_constant_evaluatedv>
+    1fd0:	84 c0                	test   %al,%al
+    1fd2:	74 19                	je     1fed <_ZSt22__uninitialized_copy_aIN9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEEEPffET0_T_SA_S9_RSaIT1_E+0x3e>
+	return std::__do_uninit_copy(__first, __last, __result);
+    1fd4:	48 8b 55 e8          	mov    -0x18(%rbp),%rdx
+    1fd8:	48 8b 4d f0          	mov    -0x10(%rbp),%rcx
+    1fdc:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    1fe0:	48 89 ce             	mov    %rcx,%rsi
+    1fe3:	48 89 c7             	mov    %rax,%rdi
+    1fe6:	e8 1f 04 00 00       	call   240a <_ZSt16__do_uninit_copyIN9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEEEPfET0_T_SA_S9_>
+    1feb:	eb 18                	jmp    2005 <_ZSt22__uninitialized_copy_aIN9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEEEPffET0_T_SA_S9_RSaIT1_E+0x56>
+#endif
+      return std::uninitialized_copy(__first, __last, __result);
+    1fed:	48 8b 55 e8          	mov    -0x18(%rbp),%rdx
+    1ff1:	48 8b 4d f0          	mov    -0x10(%rbp),%rcx
+    1ff5:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    1ff9:	48 89 ce             	mov    %rcx,%rsi
+    1ffc:	48 89 c7             	mov    %rax,%rdi
+    1fff:	e8 84 04 00 00       	call   2488 <_ZSt18uninitialized_copyIN9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEEEPfET0_T_SA_S9_>
+    2004:	90                   	nop
+    }
+    2005:	c9                   	leave
+    2006:	c3                   	ret
+    2007:	90                   	nop
+
+0000000000002008 <_ZN9__gnu_cxx17__normal_iteratorIPKfSt4spanIS1_Lm18446744073709551615EEEC1ERKS2_>:
+      __normal_iterator(const _Iterator& __i) _GLIBCXX_NOEXCEPT
+    2008:	f3 0f 1e fa          	endbr64
+    200c:	55                   	push   %rbp
+    200d:	48 89 e5             	mov    %rsp,%rbp
+    2010:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
+    2014:	48 89 75 f0          	mov    %rsi,-0x10(%rbp)
+      : _M_current(__i) { }
+    2018:	48 8b 45 f0          	mov    -0x10(%rbp),%rax
+    201c:	48 8b 10             	mov    (%rax),%rdx
+    201f:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    2023:	48 89 10             	mov    %rdx,(%rax)
+    2026:	90                   	nop
+    2027:	5d                   	pop    %rbp
+    2028:	c3                   	ret
+    2029:	90                   	nop
+
+000000000000202a <_ZNKSt4spanIKfLm18446744073709551615EE4sizeEv>:
+      size() const noexcept
+    202a:	f3 0f 1e fa          	endbr64
+    202e:	55                   	push   %rbp
+    202f:	48 89 e5             	mov    %rsp,%rbp
+    2032:	48 83 ec 10          	sub    $0x10,%rsp
+    2036:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
+      { return this->_M_extent._M_extent(); }
+    203a:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    203e:	48 83 c0 08          	add    $0x8,%rax
+    2042:	48 89 c7             	mov    %rax,%rdi
+    2045:	e8 4e f5 ff ff       	call   1598 <_ZNKSt8__detail16__extent_storageILm18446744073709551615EE9_M_extentEv>
+    204a:	c9                   	leave
+    204b:	c3                   	ret
+
+000000000000204c <_ZNSt12_Vector_baseIfSaIfEE12_Vector_implC1ERKS0_>:
+	_Vector_impl(_Tp_alloc_type const& __a) _GLIBCXX_NOEXCEPT
+    204c:	f3 0f 1e fa          	endbr64
+    2050:	55                   	push   %rbp
+    2051:	48 89 e5             	mov    %rsp,%rbp
+    2054:	48 83 ec 30          	sub    $0x30,%rsp
+    2058:	48 89 7d d8          	mov    %rdi,-0x28(%rbp)
+    205c:	48 89 75 d0          	mov    %rsi,-0x30(%rbp)
+    2060:	48 8b 45 d8          	mov    -0x28(%rbp),%rax
+    2064:	48 89 45 e0          	mov    %rax,-0x20(%rbp)
+    2068:	48 8b 45 d0          	mov    -0x30(%rbp),%rax
+    206c:	48 89 45 e8          	mov    %rax,-0x18(%rbp)
+    2070:	48 8b 45 e0          	mov    -0x20(%rbp),%rax
+    2074:	48 89 45 f0          	mov    %rax,-0x10(%rbp)
+    2078:	48 8b 45 e8          	mov    -0x18(%rbp),%rax
+    207c:	48 89 45 f8          	mov    %rax,-0x8(%rbp)
+    2080:	90                   	nop
+      : __allocator_base<_Tp>(__a) { }
+    2081:	90                   	nop
+	: _Tp_alloc_type(__a)
+    2082:	48 8b 45 d8          	mov    -0x28(%rbp),%rax
+    2086:	48 89 c7             	mov    %rax,%rdi
+    2089:	e8 34 04 00 00       	call   24c2 <_ZNSt12_Vector_baseIfSaIfEE17_Vector_impl_dataC1Ev>
+	{ }
+    208e:	90                   	nop
+    208f:	c9                   	leave
+    2090:	c3                   	ret
+    2091:	90                   	nop
+
+0000000000002092 <_ZNSt12_Vector_baseIfSaIfEE13_M_deallocateEPfm>:
+      _M_deallocate(pointer __p, size_t __n)
+    2092:	f3 0f 1e fa          	endbr64
+    2096:	55                   	push   %rbp
+    2097:	48 89 e5             	mov    %rsp,%rbp
+    209a:	48 83 ec 50          	sub    $0x50,%rsp
+    209e:	48 89 7d c8          	mov    %rdi,-0x38(%rbp)
+    20a2:	48 89 75 c0          	mov    %rsi,-0x40(%rbp)
+    20a6:	48 89 55 b8          	mov    %rdx,-0x48(%rbp)
+	if (__p)
+    20aa:	48 83 7d c0 00       	cmpq   $0x0,-0x40(%rbp)
+    20af:	74 5f                	je     2110 <_ZNSt12_Vector_baseIfSaIfEE13_M_deallocateEPfm+0x7e>
+	  _Tr::deallocate(_M_impl, __p, __n);
+    20b1:	48 8b 45 c8          	mov    -0x38(%rbp),%rax
+    20b5:	48 89 45 d0          	mov    %rax,-0x30(%rbp)
+    20b9:	48 8b 45 c0          	mov    -0x40(%rbp),%rax
+    20bd:	48 89 45 d8          	mov    %rax,-0x28(%rbp)
+    20c1:	48 8b 45 b8          	mov    -0x48(%rbp),%rax
+    20c5:	48 89 45 e0          	mov    %rax,-0x20(%rbp)
+    20c9:	48 8b 45 d0          	mov    -0x30(%rbp),%rax
+    20cd:	48 89 45 e8          	mov    %rax,-0x18(%rbp)
+    20d1:	48 8b 45 d8          	mov    -0x28(%rbp),%rax
+    20d5:	48 89 45 f0          	mov    %rax,-0x10(%rbp)
+    20d9:	48 8b 45 e0          	mov    -0x20(%rbp),%rax
+    20dd:	48 89 45 f8          	mov    %rax,-0x8(%rbp)
+
+      [[__gnu__::__always_inline__]]
+      constexpr void
+      deallocate(_Tp* __p, size_t __n)
+      {
+	if (std::__is_constant_evaluated())
+    20e1:	e8 5f f4 ff ff       	call   1545 <_ZSt23__is_constant_evaluatedv>
+    20e6:	84 c0                	test   %al,%al
+    20e8:	74 0e                	je     20f8 <_ZNSt12_Vector_baseIfSaIfEE13_M_deallocateEPfm+0x66>
+	  {
+	    ::operator delete(__p);
+    20ea:	48 8b 45 f0          	mov    -0x10(%rbp),%rax
+    20ee:	48 89 c7             	mov    %rax,%rdi
+    20f1:	e8 3a f0 ff ff       	call   1130 <_ZdlPv@plt>
+	    return;
+    20f6:	eb 17                	jmp    210f <_ZNSt12_Vector_baseIfSaIfEE13_M_deallocateEPfm+0x7d>
+	  }
+	__allocator_base<_Tp>::deallocate(__p, __n);
+    20f8:	48 8b 55 f8          	mov    -0x8(%rbp),%rdx
+    20fc:	48 8b 4d f0          	mov    -0x10(%rbp),%rcx
+    2100:	48 8b 45 e8          	mov    -0x18(%rbp),%rax
+    2104:	48 89 ce             	mov    %rcx,%rsi
+    2107:	48 89 c7             	mov    %rax,%rdi
+    210a:	e8 45 07 00 00       	call   2854 <_ZNSt15__new_allocatorIfE10deallocateEPfm>
+      { __a.deallocate(__p, __n); }
+    210f:	90                   	nop
+      }
+    2110:	90                   	nop
+    2111:	c9                   	leave
+    2112:	c3                   	ret
+    2113:	90                   	nop
+
+0000000000002114 <_ZNKSt16initializer_listIfE4sizeEv>:
+      size() const noexcept { return _M_len; }
+    2114:	f3 0f 1e fa          	endbr64
+    2118:	55                   	push   %rbp
+    2119:	48 89 e5             	mov    %rsp,%rbp
+    211c:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
+    2120:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    2124:	48 8b 40 08          	mov    0x8(%rax),%rax
+    2128:	5d                   	pop    %rbp
+    2129:	c3                   	ret
+
+000000000000212a <_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_>:
+      _S_check_init_len(size_type __n, const allocator_type& __a)
+    212a:	f3 0f 1e fa          	endbr64
+    212e:	55                   	push   %rbp
+    212f:	48 89 e5             	mov    %rsp,%rbp
+    2132:	48 83 ec 40          	sub    $0x40,%rsp
+    2136:	48 89 7d c8          	mov    %rdi,-0x38(%rbp)
+    213a:	48 89 75 c0          	mov    %rsi,-0x40(%rbp)
+    213e:	64 48 8b 04 25 28 00 	mov    %fs:0x28,%rax
+    2145:	00 00 
+    2147:	48 89 45 f8          	mov    %rax,-0x8(%rbp)
+    214b:	31 c0                	xor    %eax,%eax
+    214d:	48 8b 45 c0          	mov    -0x40(%rbp),%rax
+    2151:	48 89 45 e0          	mov    %rax,-0x20(%rbp)
+    2155:	48 8d 45 df          	lea    -0x21(%rbp),%rax
+    2159:	48 89 45 e8          	mov    %rax,-0x18(%rbp)
+    215d:	48 8b 45 e0          	mov    -0x20(%rbp),%rax
+    2161:	48 89 45 f0          	mov    %rax,-0x10(%rbp)
+    2165:	90                   	nop
+      : __allocator_base<_Tp>(__a) { }
+    2166:	90                   	nop
+	if (__n > _S_max_size(_Tp_alloc_type(__a)))
+    2167:	48 8d 45 df          	lea    -0x21(%rbp),%rax
+    216b:	48 89 c7             	mov    %rax,%rdi
+    216e:	e8 81 03 00 00       	call   24f4 <_ZNSt6vectorIfSaIfEE11_S_max_sizeERKS0_>
+    2173:	48 3b 45 c8          	cmp    -0x38(%rbp),%rax
+    2177:	0f 92 c0             	setb   %al
+      ~allocator() _GLIBCXX_NOTHROW { }
+    217a:	90                   	nop
+    217b:	84 c0                	test   %al,%al
+    217d:	74 23                	je     21a2 <_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_+0x78>
+	  __throw_length_error(
+    217f:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    2183:	64 48 2b 04 25 28 00 	sub    %fs:0x28,%rax
+    218a:	00 00 
+    218c:	74 05                	je     2193 <_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_+0x69>
+    218e:	e8 cd ef ff ff       	call   1160 <__stack_chk_fail@plt>
+    2193:	48 8d 05 6e 0e 00 00 	lea    0xe6e(%rip),%rax        # 3008 <_ZNSt6ranges6__cust4dataE+0x3>
+    219a:	48 89 c7             	mov    %rax,%rdi
+    219d:	e8 5e ef ff ff       	call   1100 <_ZSt20__throw_length_errorPKc@plt>
+	return __n;
+    21a2:	48 8b 45 c8          	mov    -0x38(%rbp),%rax
+      }
+    21a6:	48 8b 55 f8          	mov    -0x8(%rbp),%rdx
+    21aa:	64 48 2b 14 25 28 00 	sub    %fs:0x28,%rdx
+    21b1:	00 00 
+    21b3:	74 05                	je     21ba <_ZNSt6vectorIfSaIfEE17_S_check_init_lenEmRKS0_+0x90>
+    21b5:	e8 a6 ef ff ff       	call   1160 <__stack_chk_fail@plt>
+    21ba:	c9                   	leave
+    21bb:	c3                   	ret
+
+00000000000021bc <_ZNSt12_Vector_baseIfSaIfEE11_M_allocateEm>:
+      _M_allocate(size_t __n)
+    21bc:	f3 0f 1e fa          	endbr64
+    21c0:	55                   	push   %rbp
+    21c1:	48 89 e5             	mov    %rsp,%rbp
+    21c4:	48 83 ec 40          	sub    $0x40,%rsp
+    21c8:	48 89 7d c8          	mov    %rdi,-0x38(%rbp)
+    21cc:	48 89 75 c0          	mov    %rsi,-0x40(%rbp)
+    21d0:	64 48 8b 04 25 28 00 	mov    %fs:0x28,%rax
+    21d7:	00 00 
+    21d9:	48 89 45 f8          	mov    %rax,-0x8(%rbp)
+    21dd:	31 c0                	xor    %eax,%eax
+	return __n != 0 ? _Tr::allocate(_M_impl, __n) : pointer();
+    21df:	48 83 7d c0 00       	cmpq   $0x0,-0x40(%rbp)
+    21e4:	0f 84 9c 00 00 00    	je     2286 <_ZNSt12_Vector_baseIfSaIfEE11_M_allocateEm+0xca>
+    21ea:	48 8b 45 c8          	mov    -0x38(%rbp),%rax
+    21ee:	48 89 45 e0          	mov    %rax,-0x20(%rbp)
+    21f2:	48 8b 45 c0          	mov    -0x40(%rbp),%rax
+    21f6:	48 89 45 e8          	mov    %rax,-0x18(%rbp)
+    21fa:	48 8b 45 e0          	mov    -0x20(%rbp),%rax
+    21fe:	48 89 45 f0          	mov    %rax,-0x10(%rbp)
+    2202:	48 8b 45 e8          	mov    -0x18(%rbp),%rax
+    2206:	48 89 45 d8          	mov    %rax,-0x28(%rbp)
+	if (std::__is_constant_evaluated())
+    220a:	e8 36 f3 ff ff       	call   1545 <_ZSt23__is_constant_evaluatedv>
+    220f:	84 c0                	test   %al,%al
+    2211:	74 57                	je     226a <_ZNSt12_Vector_baseIfSaIfEE11_M_allocateEm+0xae>
+	    if (__builtin_mul_overflow(__n, sizeof(_Tp), &__n))
+    2213:	48 8b 45 d8          	mov    -0x28(%rbp),%rax
+    2217:	b9 00 00 00 00       	mov    $0x0,%ecx
+    221c:	48 8d 14 85 00 00 00 	lea    0x0(,%rax,4),%rdx
+    2223:	00 
+    2224:	48 c1 e8 3e          	shr    $0x3e,%rax
+    2228:	48 85 c0             	test   %rax,%rax
+    222b:	74 05                	je     2232 <_ZNSt12_Vector_baseIfSaIfEE11_M_allocateEm+0x76>
+    222d:	b9 01 00 00 00       	mov    $0x1,%ecx
+    2232:	48 89 d0             	mov    %rdx,%rax
+    2235:	48 89 45 d8          	mov    %rax,-0x28(%rbp)
+    2239:	48 89 c8             	mov    %rcx,%rax
+    223c:	83 e0 01             	and    $0x1,%eax
+    223f:	84 c0                	test   %al,%al
+    2241:	74 19                	je     225c <_ZNSt12_Vector_baseIfSaIfEE11_M_allocateEm+0xa0>
+	      std::__throw_bad_array_new_length();
+    2243:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    2247:	64 48 2b 04 25 28 00 	sub    %fs:0x28,%rax
+    224e:	00 00 
+    2250:	74 05                	je     2257 <_ZNSt12_Vector_baseIfSaIfEE11_M_allocateEm+0x9b>
+    2252:	e8 09 ef ff ff       	call   1160 <__stack_chk_fail@plt>
+    2257:	e8 c4 ee ff ff       	call   1120 <_ZSt28__throw_bad_array_new_lengthv@plt>
+	    return static_cast<_Tp*>(::operator new(__n));
+    225c:	48 8b 45 d8          	mov    -0x28(%rbp),%rax
+    2260:	48 89 c7             	mov    %rax,%rdi
+    2263:	e8 d8 ee ff ff       	call   1140 <_Znwm@plt>
+    2268:	eb 19                	jmp    2283 <_ZNSt12_Vector_baseIfSaIfEE11_M_allocateEm+0xc7>
+	return __allocator_base<_Tp>::allocate(__n, 0);
+    226a:	48 8b 4d d8          	mov    -0x28(%rbp),%rcx
+    226e:	48 8b 45 f0          	mov    -0x10(%rbp),%rax
+    2272:	ba 00 00 00 00       	mov    $0x0,%edx
+    2277:	48 89 ce             	mov    %rcx,%rsi
+    227a:	48 89 c7             	mov    %rax,%rdi
+    227d:	e8 08 06 00 00       	call   288a <_ZNSt15__new_allocatorIfE8allocateEmPKv>
+    2282:	90                   	nop
+      { return __a.allocate(__n); }
+    2283:	90                   	nop
+    2284:	eb 05                	jmp    228b <_ZNSt12_Vector_baseIfSaIfEE11_M_allocateEm+0xcf>
+    2286:	b8 00 00 00 00       	mov    $0x0,%eax
+      }
+    228b:	48 8b 55 f8          	mov    -0x8(%rbp),%rdx
+    228f:	64 48 2b 14 25 28 00 	sub    %fs:0x28,%rdx
+    2296:	00 00 
+    2298:	74 05                	je     229f <_ZNSt12_Vector_baseIfSaIfEE11_M_allocateEm+0xe3>
+    229a:	e8 c1 ee ff ff       	call   1160 <__stack_chk_fail@plt>
+    229f:	c9                   	leave
+    22a0:	c3                   	ret
+
+00000000000022a1 <_ZSt22__uninitialized_copy_aIPKfPffET0_T_S4_S3_RSaIT1_E>:
+    __uninitialized_copy_a(_InputIterator __first, _InputIterator __last,
+    22a1:	f3 0f 1e fa          	endbr64
+    22a5:	55                   	push   %rbp
+    22a6:	48 89 e5             	mov    %rsp,%rbp
+    22a9:	48 83 ec 20          	sub    $0x20,%rsp
+    22ad:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
+    22b1:	48 89 75 f0          	mov    %rsi,-0x10(%rbp)
+    22b5:	48 89 55 e8          	mov    %rdx,-0x18(%rbp)
+    22b9:	48 89 4d e0          	mov    %rcx,-0x20(%rbp)
+      if (std::is_constant_evaluated())
+    22bd:	e8 92 f2 ff ff       	call   1554 <_ZSt21is_constant_evaluatedv>
+    22c2:	84 c0                	test   %al,%al
+    22c4:	74 19                	je     22df <_ZSt22__uninitialized_copy_aIPKfPffET0_T_S4_S3_RSaIT1_E+0x3e>
+	return std::__do_uninit_copy(__first, __last, __result);
+    22c6:	48 8b 55 e8          	mov    -0x18(%rbp),%rdx
+    22ca:	48 8b 4d f0          	mov    -0x10(%rbp),%rcx
+    22ce:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    22d2:	48 89 ce             	mov    %rcx,%rsi
+    22d5:	48 89 c7             	mov    %rax,%rdi
+    22d8:	e8 86 02 00 00       	call   2563 <_ZSt16__do_uninit_copyIPKfPfET0_T_S4_S3_>
+    22dd:	eb 18                	jmp    22f7 <_ZSt22__uninitialized_copy_aIPKfPffET0_T_S4_S3_RSaIT1_E+0x56>
+      return std::uninitialized_copy(__first, __last, __result);
+    22df:	48 8b 55 e8          	mov    -0x18(%rbp),%rdx
+    22e3:	48 8b 4d f0          	mov    -0x10(%rbp),%rcx
+    22e7:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    22eb:	48 89 ce             	mov    %rcx,%rsi
+    22ee:	48 89 c7             	mov    %rax,%rdi
+    22f1:	e8 c7 02 00 00       	call   25bd <_ZSt18uninitialized_copyIPKfPfET0_T_S4_S3_>
+    22f6:	90                   	nop
+    }
+    22f7:	c9                   	leave
+    22f8:	c3                   	ret
+
+00000000000022f9 <_ZSt8_DestroyIPfEvT_S1_>:
+>>>>>>> main
    * a trivial destructor, the compiler should optimize all of this
    * away, otherwise the objects' destructors must be invoked.
    */
   template<typename _ForwardIterator>
     _GLIBCXX20_CONSTEXPR inline void
     _Destroy(_ForwardIterator __first, _ForwardIterator __last)
+<<<<<<< HEAD
     2330:	f3 0f 1e fa          	endbr64 
     2334:	55                   	push   %rbp
     2335:	48 89 e5             	mov    %rsp,%rbp
     2338:	48 83 ec 10          	sub    $0x10,%rsp
     233c:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
     2340:	48 89 75 f0          	mov    %rsi,-0x10(%rbp)
+=======
+    22f9:	f3 0f 1e fa          	endbr64
+    22fd:	55                   	push   %rbp
+    22fe:	48 89 e5             	mov    %rsp,%rbp
+    2301:	48 83 ec 10          	sub    $0x10,%rsp
+    2305:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
+    2309:	48 89 75 f0          	mov    %rsi,-0x10(%rbp)
+>>>>>>> main
       // A deleted destructor is trivial, this ensures we reject such types:
       static_assert(is_destructible<_Value_type>::value,
 		    "value type is destructible");
 #endif
+<<<<<<< HEAD
 #if __cplusplus > 201703L && defined __cpp_lib_is_constant_evaluated
       if (std::is_constant_evaluated())
     2344:	e8 97 f2 ff ff       	call   15e0 <_ZSt21is_constant_evaluatedv>
@@ -2331,22 +4248,473 @@ class Vector {
     2696:	c3                   	ret    
 
 0000000000002697 <_ZSt3minImERKT_S2_S2_>:
+=======
+#if __cplusplus >= 202002L
+      if (std::__is_constant_evaluated())
+    230d:	e8 33 f2 ff ff       	call   1545 <_ZSt23__is_constant_evaluatedv>
+    2312:	84 c0                	test   %al,%al
+    2314:	74 15                	je     232b <_ZSt8_DestroyIPfEvT_S1_+0x32>
+	return std::_Destroy_aux<false>::__destroy(__first, __last);
+    2316:	48 8b 55 f0          	mov    -0x10(%rbp),%rdx
+    231a:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    231e:	48 89 d6             	mov    %rdx,%rsi
+    2321:	48 89 c7             	mov    %rax,%rdi
+    2324:	e8 cd 02 00 00       	call   25f6 <_ZNSt12_Destroy_auxILb0EE9__destroyIPfEEvT_S3_>
+    2329:	eb 13                	jmp    233e <_ZSt8_DestroyIPfEvT_S1_+0x45>
+#endif
+      std::_Destroy_aux<__has_trivial_destructor(_Value_type)>::
+	__destroy(__first, __last);
+    232b:	48 8b 55 f0          	mov    -0x10(%rbp),%rdx
+    232f:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    2333:	48 89 d6             	mov    %rdx,%rsi
+    2336:	48 89 c7             	mov    %rax,%rdi
+    2339:	e8 f5 02 00 00       	call   2633 <_ZNSt12_Destroy_auxILb1EE9__destroyIPfEEvT_S3_>
+    }
+    233e:	c9                   	leave
+    233f:	c3                   	ret
+
+0000000000002340 <_ZSt10to_addressIKfEPT_S2_>:
+   * @return @c __ptr
+   * @ingroup pointer_abstractions
+  */
+  template<typename _Tp>
+    constexpr _Tp*
+    to_address(_Tp* __ptr) noexcept
+    2340:	f3 0f 1e fa          	endbr64
+    2344:	55                   	push   %rbp
+    2345:	48 89 e5             	mov    %rsp,%rbp
+    2348:	48 83 ec 10          	sub    $0x10,%rsp
+    234c:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
+    { return std::__to_address(__ptr); }
+    2350:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    2354:	48 89 c7             	mov    %rax,%rdi
+    2357:	e8 64 f6 ff ff       	call   19c0 <_ZSt12__to_addressIKfEPT_S2_>
+    235c:	c9                   	leave
+    235d:	c3                   	ret
+
+000000000000235e <_ZNSt12_Vector_baseIfSaIfEE17_M_create_storageEm>:
+      _M_create_storage(size_t __n)
+    235e:	f3 0f 1e fa          	endbr64
+    2362:	55                   	push   %rbp
+    2363:	48 89 e5             	mov    %rsp,%rbp
+    2366:	48 83 ec 10          	sub    $0x10,%rsp
+    236a:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
+    236e:	48 89 75 f0          	mov    %rsi,-0x10(%rbp)
+	this->_M_impl._M_start = this->_M_allocate(__n);
+    2372:	48 8b 55 f0          	mov    -0x10(%rbp),%rdx
+    2376:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    237a:	48 89 d6             	mov    %rdx,%rsi
+    237d:	48 89 c7             	mov    %rax,%rdi
+    2380:	e8 37 fe ff ff       	call   21bc <_ZNSt12_Vector_baseIfSaIfEE11_M_allocateEm>
+    2385:	48 8b 55 f8          	mov    -0x8(%rbp),%rdx
+    2389:	48 89 02             	mov    %rax,(%rdx)
+	this->_M_impl._M_finish = this->_M_impl._M_start;
+    238c:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    2390:	48 8b 10             	mov    (%rax),%rdx
+    2393:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    2397:	48 89 50 08          	mov    %rdx,0x8(%rax)
+	this->_M_impl._M_end_of_storage = this->_M_impl._M_start + __n;
+    239b:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    239f:	48 8b 00             	mov    (%rax),%rax
+    23a2:	48 8b 55 f0          	mov    -0x10(%rbp),%rdx
+    23a6:	48 c1 e2 02          	shl    $0x2,%rdx
+    23aa:	48 01 c2             	add    %rax,%rdx
+    23ad:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    23b1:	48 89 50 10          	mov    %rdx,0x10(%rax)
+      }
+    23b5:	90                   	nop
+    23b6:	c9                   	leave
+    23b7:	c3                   	ret
+
+00000000000023b8 <_ZN9__gnu_cxxeqIPKfSt6vectorIfSaIfEEEEbRKNS_17__normal_iteratorIT_T0_EESB_>:
+    operator==(const __normal_iterator<_Iterator, _Container>& __lhs,
+    23b8:	f3 0f 1e fa          	endbr64
+    23bc:	55                   	push   %rbp
+    23bd:	48 89 e5             	mov    %rsp,%rbp
+    23c0:	53                   	push   %rbx
+    23c1:	48 83 ec 18          	sub    $0x18,%rsp
+    23c5:	48 89 7d e8          	mov    %rdi,-0x18(%rbp)
+    23c9:	48 89 75 e0          	mov    %rsi,-0x20(%rbp)
+    { return __lhs.base() == __rhs.base(); }
+    23cd:	48 8b 45 e8          	mov    -0x18(%rbp),%rax
+    23d1:	48 89 c7             	mov    %rax,%rdi
+    23d4:	e8 1f 00 00 00       	call   23f8 <_ZNK9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEE4baseEv>
+    23d9:	48 8b 18             	mov    (%rax),%rbx
+    23dc:	48 8b 45 e0          	mov    -0x20(%rbp),%rax
+    23e0:	48 89 c7             	mov    %rax,%rdi
+    23e3:	e8 10 00 00 00       	call   23f8 <_ZNK9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEE4baseEv>
+    23e8:	48 8b 00             	mov    (%rax),%rax
+    23eb:	48 39 c3             	cmp    %rax,%rbx
+    23ee:	0f 94 c0             	sete   %al
+    23f1:	48 8b 5d f8          	mov    -0x8(%rbp),%rbx
+    23f5:	c9                   	leave
+    23f6:	c3                   	ret
+    23f7:	90                   	nop
+
+00000000000023f8 <_ZNK9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEE4baseEv>:
+      base() const _GLIBCXX_NOEXCEPT
+    23f8:	f3 0f 1e fa          	endbr64
+    23fc:	55                   	push   %rbp
+    23fd:	48 89 e5             	mov    %rsp,%rbp
+    2400:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
+      { return _M_current; }
+    2404:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    2408:	5d                   	pop    %rbp
+    2409:	c3                   	ret
+
+000000000000240a <_ZSt16__do_uninit_copyIN9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEEEPfET0_T_SA_S9_>:
+    __do_uninit_copy(_InputIterator __first, _InputIterator __last,
+    240a:	f3 0f 1e fa          	endbr64
+    240e:	55                   	push   %rbp
+    240f:	48 89 e5             	mov    %rsp,%rbp
+    2412:	53                   	push   %rbx
+    2413:	48 83 ec 38          	sub    $0x38,%rsp
+    2417:	48 89 7d d8          	mov    %rdi,-0x28(%rbp)
+    241b:	48 89 75 d0          	mov    %rsi,-0x30(%rbp)
+    241f:	48 89 55 c8          	mov    %rdx,-0x38(%rbp)
+      _ForwardIterator __cur = __result;
+    2423:	48 8b 45 c8          	mov    -0x38(%rbp),%rax
+    2427:	48 89 45 e8          	mov    %rax,-0x18(%rbp)
+	  for (; __first != __last; ++__first, (void)++__cur)
+    242b:	eb 37                	jmp    2464 <_ZSt16__do_uninit_copyIN9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEEEPfET0_T_SA_S9_+0x5a>
+	    std::_Construct(std::__addressof(*__cur), *__first);
+    242d:	48 8d 45 d8          	lea    -0x28(%rbp),%rax
+    2431:	48 89 c7             	mov    %rax,%rdi
+    2434:	e8 43 02 00 00       	call   267c <_ZNK9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEEdeEv>
+    2439:	48 89 c3             	mov    %rax,%rbx
+    243c:	48 8b 45 e8          	mov    -0x18(%rbp),%rax
+    2440:	48 89 c7             	mov    %rax,%rdi
+    2443:	e8 22 02 00 00       	call   266a <_ZSt11__addressofIfEPT_RS0_>
+    2448:	48 89 de             	mov    %rbx,%rsi
+    244b:	48 89 c7             	mov    %rax,%rdi
+    244e:	e8 3e 02 00 00       	call   2691 <_ZSt10_ConstructIfJRKfEEvPT_DpOT0_>
+	  for (; __first != __last; ++__first, (void)++__cur)
+    2453:	48 8d 45 d8          	lea    -0x28(%rbp),%rax
+    2457:	48 89 c7             	mov    %rax,%rdi
+    245a:	e8 e7 01 00 00       	call   2646 <_ZN9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEEppEv>
+    245f:	48 83 45 e8 04       	addq   $0x4,-0x18(%rbp)
+    2464:	48 8d 55 d0          	lea    -0x30(%rbp),%rdx
+    2468:	48 8d 45 d8          	lea    -0x28(%rbp),%rax
+    246c:	48 89 d6             	mov    %rdx,%rsi
+    246f:	48 89 c7             	mov    %rax,%rdi
+    2472:	e8 41 ff ff ff       	call   23b8 <_ZN9__gnu_cxxeqIPKfSt6vectorIfSaIfEEEEbRKNS_17__normal_iteratorIT_T0_EESB_>
+    2477:	83 f0 01             	xor    $0x1,%eax
+    247a:	84 c0                	test   %al,%al
+    247c:	75 af                	jne    242d <_ZSt16__do_uninit_copyIN9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEEEPfET0_T_SA_S9_+0x23>
+	  return __cur;
+    247e:	48 8b 45 e8          	mov    -0x18(%rbp),%rax
+    }
+    2482:	48 8b 5d f8          	mov    -0x8(%rbp),%rbx
+    2486:	c9                   	leave
+    2487:	c3                   	ret
+
+0000000000002488 <_ZSt18uninitialized_copyIN9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEEEPfET0_T_SA_S9_>:
+    uninitialized_copy(_InputIterator __first, _InputIterator __last,
+    2488:	f3 0f 1e fa          	endbr64
+    248c:	55                   	push   %rbp
+    248d:	48 89 e5             	mov    %rsp,%rbp
+    2490:	48 83 ec 30          	sub    $0x30,%rsp
+    2494:	48 89 7d e8          	mov    %rdi,-0x18(%rbp)
+    2498:	48 89 75 e0          	mov    %rsi,-0x20(%rbp)
+    249c:	48 89 55 d8          	mov    %rdx,-0x28(%rbp)
+      const bool __can_memmove = __is_trivial(_ValueType1);
+    24a0:	c6 45 fe 01          	movb   $0x1,-0x2(%rbp)
+      const bool __assignable
+    24a4:	c6 45 ff 01          	movb   $0x1,-0x1(%rbp)
+	__uninit_copy(__first, __last, __result);
+    24a8:	48 8b 55 d8          	mov    -0x28(%rbp),%rdx
+    24ac:	48 8b 4d e0          	mov    -0x20(%rbp),%rcx
+    24b0:	48 8b 45 e8          	mov    -0x18(%rbp),%rax
+    24b4:	48 89 ce             	mov    %rcx,%rsi
+    24b7:	48 89 c7             	mov    %rax,%rdi
+    24ba:	e8 3e 02 00 00       	call   26fd <_ZNSt20__uninitialized_copyILb1EE13__uninit_copyIN9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEEEPfEET0_T_SC_SB_>
+    }
+    24bf:	c9                   	leave
+    24c0:	c3                   	ret
+    24c1:	90                   	nop
+
+00000000000024c2 <_ZNSt12_Vector_baseIfSaIfEE17_Vector_impl_dataC1Ev>:
+	_Vector_impl_data() _GLIBCXX_NOEXCEPT
+    24c2:	f3 0f 1e fa          	endbr64
+    24c6:	55                   	push   %rbp
+    24c7:	48 89 e5             	mov    %rsp,%rbp
+    24ca:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
+	: _M_start(), _M_finish(), _M_end_of_storage()
+    24ce:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    24d2:	48 c7 00 00 00 00 00 	movq   $0x0,(%rax)
+    24d9:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    24dd:	48 c7 40 08 00 00 00 	movq   $0x0,0x8(%rax)
+    24e4:	00 
+    24e5:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    24e9:	48 c7 40 10 00 00 00 	movq   $0x0,0x10(%rax)
+    24f0:	00 
+	{ }
+    24f1:	90                   	nop
+    24f2:	5d                   	pop    %rbp
+    24f3:	c3                   	ret
+
+00000000000024f4 <_ZNSt6vectorIfSaIfEE11_S_max_sizeERKS0_>:
+      _S_max_size(const _Tp_alloc_type& __a) _GLIBCXX_NOEXCEPT
+    24f4:	f3 0f 1e fa          	endbr64
+    24f8:	55                   	push   %rbp
+    24f9:	48 89 e5             	mov    %rsp,%rbp
+    24fc:	48 83 ec 30          	sub    $0x30,%rsp
+    2500:	48 89 7d d8          	mov    %rdi,-0x28(%rbp)
+    2504:	64 48 8b 04 25 28 00 	mov    %fs:0x28,%rax
+    250b:	00 00 
+    250d:	48 89 45 f8          	mov    %rax,-0x8(%rbp)
+    2511:	31 c0                	xor    %eax,%eax
+	const size_t __diffmax
+    2513:	48 b8 ff ff ff ff ff 	movabs $0x1fffffffffffffff,%rax
+    251a:	ff ff 1f 
+    251d:	48 89 45 e0          	mov    %rax,-0x20(%rbp)
+    2521:	48 8b 45 d8          	mov    -0x28(%rbp),%rax
+    2525:	48 89 45 f0          	mov    %rax,-0x10(%rbp)
+	return size_t(-1) / sizeof(value_type);
+    2529:	48 b8 ff ff ff ff ff 	movabs $0x3fffffffffffffff,%rax
+    2530:	ff ff 3f 
+	const size_t __allocmax = _Alloc_traits::max_size(__a);
+    2533:	48 89 45 e8          	mov    %rax,-0x18(%rbp)
+	return (std::min)(__diffmax, __allocmax);
+    2537:	48 8d 55 e8          	lea    -0x18(%rbp),%rdx
+    253b:	48 8d 45 e0          	lea    -0x20(%rbp),%rax
+    253f:	48 89 d6             	mov    %rdx,%rsi
+    2542:	48 89 c7             	mov    %rax,%rdi
+    2545:	e8 e4 01 00 00       	call   272e <_ZSt3minImERKT_S2_S2_>
+    254a:	48 8b 00             	mov    (%rax),%rax
+      }
+    254d:	48 8b 55 f8          	mov    -0x8(%rbp),%rdx
+    2551:	64 48 2b 14 25 28 00 	sub    %fs:0x28,%rdx
+    2558:	00 00 
+    255a:	74 05                	je     2561 <_ZNSt6vectorIfSaIfEE11_S_max_sizeERKS0_+0x6d>
+    255c:	e8 ff eb ff ff       	call   1160 <__stack_chk_fail@plt>
+    2561:	c9                   	leave
+    2562:	c3                   	ret
+
+0000000000002563 <_ZSt16__do_uninit_copyIPKfPfET0_T_S4_S3_>:
+    __do_uninit_copy(_InputIterator __first, _InputIterator __last,
+    2563:	f3 0f 1e fa          	endbr64
+    2567:	55                   	push   %rbp
+    2568:	48 89 e5             	mov    %rsp,%rbp
+    256b:	48 83 ec 30          	sub    $0x30,%rsp
+    256f:	48 89 7d e8          	mov    %rdi,-0x18(%rbp)
+    2573:	48 89 75 e0          	mov    %rsi,-0x20(%rbp)
+    2577:	48 89 55 d8          	mov    %rdx,-0x28(%rbp)
+      _ForwardIterator __cur = __result;
+    257b:	48 8b 45 d8          	mov    -0x28(%rbp),%rax
+    257f:	48 89 45 f8          	mov    %rax,-0x8(%rbp)
+	  for (; __first != __last; ++__first, (void)++__cur)
+    2583:	eb 28                	jmp    25ad <_ZSt16__do_uninit_copyIPKfPfET0_T_S4_S3_+0x4a>
+	    std::_Construct(std::__addressof(*__cur), *__first);
+    2585:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    2589:	48 89 c7             	mov    %rax,%rdi
+    258c:	e8 d9 00 00 00       	call   266a <_ZSt11__addressofIfEPT_RS0_>
+    2591:	48 89 c2             	mov    %rax,%rdx
+    2594:	48 8b 45 e8          	mov    -0x18(%rbp),%rax
+    2598:	48 89 c6             	mov    %rax,%rsi
+    259b:	48 89 d7             	mov    %rdx,%rdi
+    259e:	e8 ee 00 00 00       	call   2691 <_ZSt10_ConstructIfJRKfEEvPT_DpOT0_>
+	  for (; __first != __last; ++__first, (void)++__cur)
+    25a3:	48 83 45 e8 04       	addq   $0x4,-0x18(%rbp)
+    25a8:	48 83 45 f8 04       	addq   $0x4,-0x8(%rbp)
+    25ad:	48 8b 45 e8          	mov    -0x18(%rbp),%rax
+    25b1:	48 3b 45 e0          	cmp    -0x20(%rbp),%rax
+    25b5:	75 ce                	jne    2585 <_ZSt16__do_uninit_copyIPKfPfET0_T_S4_S3_+0x22>
+	  return __cur;
+    25b7:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    }
+    25bb:	c9                   	leave
+    25bc:	c3                   	ret
+
+00000000000025bd <_ZSt18uninitialized_copyIPKfPfET0_T_S4_S3_>:
+    uninitialized_copy(_InputIterator __first, _InputIterator __last,
+    25bd:	f3 0f 1e fa          	endbr64
+    25c1:	55                   	push   %rbp
+    25c2:	48 89 e5             	mov    %rsp,%rbp
+    25c5:	48 83 ec 30          	sub    $0x30,%rsp
+    25c9:	48 89 7d e8          	mov    %rdi,-0x18(%rbp)
+    25cd:	48 89 75 e0          	mov    %rsi,-0x20(%rbp)
+    25d1:	48 89 55 d8          	mov    %rdx,-0x28(%rbp)
+      const bool __can_memmove = __is_trivial(_ValueType1);
+    25d5:	c6 45 fe 01          	movb   $0x1,-0x2(%rbp)
+      const bool __assignable
+    25d9:	c6 45 ff 01          	movb   $0x1,-0x1(%rbp)
+	__uninit_copy(__first, __last, __result);
+    25dd:	48 8b 55 d8          	mov    -0x28(%rbp),%rdx
+    25e1:	48 8b 4d e0          	mov    -0x20(%rbp),%rcx
+    25e5:	48 8b 45 e8          	mov    -0x18(%rbp),%rax
+    25e9:	48 89 ce             	mov    %rcx,%rsi
+    25ec:	48 89 c7             	mov    %rax,%rdi
+    25ef:	e8 69 01 00 00       	call   275d <_ZNSt20__uninitialized_copyILb1EE13__uninit_copyIPKfPfEET0_T_S6_S5_>
+    }
+    25f4:	c9                   	leave
+    25f5:	c3                   	ret
+
+00000000000025f6 <_ZNSt12_Destroy_auxILb0EE9__destroyIPfEEvT_S3_>:
+	__destroy(_ForwardIterator __first, _ForwardIterator __last)
+    25f6:	f3 0f 1e fa          	endbr64
+    25fa:	55                   	push   %rbp
+    25fb:	48 89 e5             	mov    %rsp,%rbp
+    25fe:	48 83 ec 10          	sub    $0x10,%rsp
+    2602:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
+    2606:	48 89 75 f0          	mov    %rsi,-0x10(%rbp)
+	  for (; __first != __last; ++__first)
+    260a:	eb 19                	jmp    2625 <_ZNSt12_Destroy_auxILb0EE9__destroyIPfEEvT_S3_+0x2f>
+	    std::_Destroy(std::__addressof(*__first));
+    260c:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    2610:	48 89 c7             	mov    %rax,%rdi
+    2613:	e8 52 00 00 00       	call   266a <_ZSt11__addressofIfEPT_RS0_>
+    2618:	48 89 c7             	mov    %rax,%rdi
+    261b:	e8 6e 01 00 00       	call   278e <_ZSt8_DestroyIfEvPT_>
+	  for (; __first != __last; ++__first)
+    2620:	48 83 45 f8 04       	addq   $0x4,-0x8(%rbp)
+    2625:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    2629:	48 3b 45 f0          	cmp    -0x10(%rbp),%rax
+    262d:	75 dd                	jne    260c <_ZNSt12_Destroy_auxILb0EE9__destroyIPfEEvT_S3_+0x16>
+	}
+    262f:	90                   	nop
+    2630:	90                   	nop
+    2631:	c9                   	leave
+    2632:	c3                   	ret
+
+0000000000002633 <_ZNSt12_Destroy_auxILb1EE9__destroyIPfEEvT_S3_>:
+        __destroy(_ForwardIterator, _ForwardIterator) { }
+    2633:	f3 0f 1e fa          	endbr64
+    2637:	55                   	push   %rbp
+    2638:	48 89 e5             	mov    %rsp,%rbp
+    263b:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
+    263f:	48 89 75 f0          	mov    %rsi,-0x10(%rbp)
+    2643:	90                   	nop
+    2644:	5d                   	pop    %rbp
+    2645:	c3                   	ret
+
+0000000000002646 <_ZN9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEEppEv>:
+      operator++() _GLIBCXX_NOEXCEPT
+    2646:	f3 0f 1e fa          	endbr64
+    264a:	55                   	push   %rbp
+    264b:	48 89 e5             	mov    %rsp,%rbp
+    264e:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
+	++_M_current;
+    2652:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    2656:	48 8b 00             	mov    (%rax),%rax
+    2659:	48 8d 50 04          	lea    0x4(%rax),%rdx
+    265d:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    2661:	48 89 10             	mov    %rdx,(%rax)
+	return *this;
+    2664:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+      }
+    2668:	5d                   	pop    %rbp
+    2669:	c3                   	ret
+
+000000000000266a <_ZSt11__addressofIfEPT_RS0_>:
+    __addressof(_Tp& __r) _GLIBCXX_NOEXCEPT
+    266a:	f3 0f 1e fa          	endbr64
+    266e:	55                   	push   %rbp
+    266f:	48 89 e5             	mov    %rsp,%rbp
+    2672:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
+    { return __builtin_addressof(__r); }
+    2676:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    267a:	5d                   	pop    %rbp
+    267b:	c3                   	ret
+
+000000000000267c <_ZNK9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEEdeEv>:
+      operator*() const _GLIBCXX_NOEXCEPT
+    267c:	f3 0f 1e fa          	endbr64
+    2680:	55                   	push   %rbp
+    2681:	48 89 e5             	mov    %rsp,%rbp
+    2684:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
+      { return *_M_current; }
+    2688:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    268c:	48 8b 00             	mov    (%rax),%rax
+    268f:	5d                   	pop    %rbp
+    2690:	c3                   	ret
+
+0000000000002691 <_ZSt10_ConstructIfJRKfEEvPT_DpOT0_>:
+    _Construct(_Tp* __p, _Args&&... __args)
+    2691:	f3 0f 1e fa          	endbr64
+    2695:	55                   	push   %rbp
+    2696:	48 89 e5             	mov    %rsp,%rbp
+    2699:	53                   	push   %rbx
+    269a:	48 83 ec 18          	sub    $0x18,%rsp
+    269e:	48 89 7d e8          	mov    %rdi,-0x18(%rbp)
+    26a2:	48 89 75 e0          	mov    %rsi,-0x20(%rbp)
+      if (std::__is_constant_evaluated())
+    26a6:	e8 9a ee ff ff       	call   1545 <_ZSt23__is_constant_evaluatedv>
+    26ab:	84 c0                	test   %al,%al
+    26ad:	74 20                	je     26cf <_ZSt10_ConstructIfJRKfEEvPT_DpOT0_+0x3e>
+	  std::construct_at(__p, std::forward<_Args>(__args)...);
+    26af:	48 8b 45 e0          	mov    -0x20(%rbp),%rax
+    26b3:	48 89 c7             	mov    %rax,%rdi
+    26b6:	e8 f2 00 00 00       	call   27ad <_ZSt7forwardIRKfEOT_RNSt16remove_referenceIS2_E4typeE>
+    26bb:	48 89 c2             	mov    %rax,%rdx
+    26be:	48 8b 45 e8          	mov    -0x18(%rbp),%rax
+    26c2:	48 89 d6             	mov    %rdx,%rsi
+    26c5:	48 89 c7             	mov    %rax,%rdi
+    26c8:	e8 f2 00 00 00       	call   27bf <_ZSt12construct_atIfJRKfEEDTgsnwcvPvLi0E_T_pispcl7declvalIT0_EEEEPS3_DpOS4_>
+	  return;
+    26cd:	eb 28                	jmp    26f7 <_ZSt10_ConstructIfJRKfEEvPT_DpOT0_+0x66>
+      ::new((void*)__p) _Tp(std::forward<_Args>(__args)...);
+    26cf:	48 8b 45 e8          	mov    -0x18(%rbp),%rax
+    26d3:	48 89 c6             	mov    %rax,%rsi
+    26d6:	bf 04 00 00 00       	mov    $0x4,%edi
+    26db:	e8 83 ee ff ff       	call   1563 <_ZnwmPv>
+    26e0:	48 89 c3             	mov    %rax,%rbx
+    26e3:	48 8b 45 e0          	mov    -0x20(%rbp),%rax
+    26e7:	48 89 c7             	mov    %rax,%rdi
+    26ea:	e8 be 00 00 00       	call   27ad <_ZSt7forwardIRKfEOT_RNSt16remove_referenceIS2_E4typeE>
+    26ef:	f3 0f 10 00          	movss  (%rax),%xmm0
+    26f3:	f3 0f 11 03          	movss  %xmm0,(%rbx)
+    }
+    26f7:	48 8b 5d f8          	mov    -0x8(%rbp),%rbx
+    26fb:	c9                   	leave
+    26fc:	c3                   	ret
+
+00000000000026fd <_ZNSt20__uninitialized_copyILb1EE13__uninit_copyIN9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEEEPfEET0_T_SC_SB_>:
+        __uninit_copy(_InputIterator __first, _InputIterator __last,
+    26fd:	f3 0f 1e fa          	endbr64
+    2701:	55                   	push   %rbp
+    2702:	48 89 e5             	mov    %rsp,%rbp
+    2705:	48 83 ec 20          	sub    $0x20,%rsp
+    2709:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
+    270d:	48 89 75 f0          	mov    %rsi,-0x10(%rbp)
+    2711:	48 89 55 e8          	mov    %rdx,-0x18(%rbp)
+        { return std::copy(__first, __last, __result); }
+    2715:	48 8b 55 e8          	mov    -0x18(%rbp),%rdx
+    2719:	48 8b 4d f0          	mov    -0x10(%rbp),%rcx
+    271d:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    2721:	48 89 ce             	mov    %rcx,%rsi
+    2724:	48 89 c7             	mov    %rax,%rdi
+    2727:	e8 d9 00 00 00       	call   2805 <_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEEEPfET0_T_SA_S9_>
+    272c:	c9                   	leave
+    272d:	c3                   	ret
+
+000000000000272e <_ZSt3minImERKT_S2_S2_>:
+>>>>>>> main
    *  preprocessor macro.
   */
   template<typename _Tp>
     _GLIBCXX14_CONSTEXPR
     inline const _Tp&
     min(const _Tp& __a, const _Tp& __b)
+<<<<<<< HEAD
     2697:	f3 0f 1e fa          	endbr64 
     269b:	55                   	push   %rbp
     269c:	48 89 e5             	mov    %rsp,%rbp
     269f:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
     26a3:	48 89 75 f0          	mov    %rsi,-0x10(%rbp)
+=======
+    272e:	f3 0f 1e fa          	endbr64
+    2732:	55                   	push   %rbp
+    2733:	48 89 e5             	mov    %rsp,%rbp
+    2736:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
+    273a:	48 89 75 f0          	mov    %rsi,-0x10(%rbp)
+>>>>>>> main
     {
       // concept requirements
       __glibcxx_function_requires(_LessThanComparableConcept<_Tp>)
       //return __b < __a ? __b : __a;
       if (__b < __a)
+<<<<<<< HEAD
     26a7:	48 8b 45 f0          	mov    -0x10(%rbp),%rax
     26ab:	48 8b 10             	mov    (%rax),%rdx
     26ae:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
@@ -2409,12 +4777,102 @@ class Vector {
     2727:	c3                   	ret    
 
 0000000000002728 <_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEEEPfET0_T_SA_S9_>:
+=======
+    273e:	48 8b 45 f0          	mov    -0x10(%rbp),%rax
+    2742:	48 8b 10             	mov    (%rax),%rdx
+    2745:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    2749:	48 8b 00             	mov    (%rax),%rax
+    274c:	48 39 c2             	cmp    %rax,%rdx
+    274f:	73 06                	jae    2757 <_ZSt3minImERKT_S2_S2_+0x29>
+	return __b;
+    2751:	48 8b 45 f0          	mov    -0x10(%rbp),%rax
+    2755:	eb 04                	jmp    275b <_ZSt3minImERKT_S2_S2_+0x2d>
+      return __a;
+    2757:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    }
+    275b:	5d                   	pop    %rbp
+    275c:	c3                   	ret
+
+000000000000275d <_ZNSt20__uninitialized_copyILb1EE13__uninit_copyIPKfPfEET0_T_S6_S5_>:
+        __uninit_copy(_InputIterator __first, _InputIterator __last,
+    275d:	f3 0f 1e fa          	endbr64
+    2761:	55                   	push   %rbp
+    2762:	48 89 e5             	mov    %rsp,%rbp
+    2765:	48 83 ec 20          	sub    $0x20,%rsp
+    2769:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
+    276d:	48 89 75 f0          	mov    %rsi,-0x10(%rbp)
+    2771:	48 89 55 e8          	mov    %rdx,-0x18(%rbp)
+        { return std::copy(__first, __last, __result); }
+    2775:	48 8b 55 e8          	mov    -0x18(%rbp),%rdx
+    2779:	48 8b 4d f0          	mov    -0x10(%rbp),%rcx
+    277d:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    2781:	48 89 ce             	mov    %rcx,%rsi
+    2784:	48 89 c7             	mov    %rax,%rdi
+    2787:	e8 69 01 00 00       	call   28f5 <_ZSt4copyIPKfPfET0_T_S4_S3_>
+    278c:	c9                   	leave
+    278d:	c3                   	ret
+
+000000000000278e <_ZSt8_DestroyIfEvPT_>:
+    _Destroy(_Tp* __pointer)
+    278e:	f3 0f 1e fa          	endbr64
+    2792:	55                   	push   %rbp
+    2793:	48 89 e5             	mov    %rsp,%rbp
+    2796:	48 83 ec 10          	sub    $0x10,%rsp
+    279a:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
+      std::destroy_at(__pointer);
+    279e:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    27a2:	48 89 c7             	mov    %rax,%rdi
+    27a5:	e8 9a 01 00 00       	call   2944 <_ZSt10destroy_atIfEvPT_>
+    }
+    27aa:	90                   	nop
+    27ab:	c9                   	leave
+    27ac:	c3                   	ret
+
+00000000000027ad <_ZSt7forwardIRKfEOT_RNSt16remove_referenceIS2_E4typeE>:
+    forward(typename std::remove_reference<_Tp>::type& __t) noexcept
+    27ad:	f3 0f 1e fa          	endbr64
+    27b1:	55                   	push   %rbp
+    27b2:	48 89 e5             	mov    %rsp,%rbp
+    27b5:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
+    { return static_cast<_Tp&&>(__t); }
+    27b9:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    27bd:	5d                   	pop    %rbp
+    27be:	c3                   	ret
+
+00000000000027bf <_ZSt12construct_atIfJRKfEEDTgsnwcvPvLi0E_T_pispcl7declvalIT0_EEEEPS3_DpOS4_>:
+    construct_at(_Tp* __location, _Args&&... __args)
+    27bf:	f3 0f 1e fa          	endbr64
+    27c3:	55                   	push   %rbp
+    27c4:	48 89 e5             	mov    %rsp,%rbp
+    27c7:	53                   	push   %rbx
+    27c8:	48 83 ec 18          	sub    $0x18,%rsp
+    27cc:	48 89 7d e8          	mov    %rdi,-0x18(%rbp)
+    27d0:	48 89 75 e0          	mov    %rsi,-0x20(%rbp)
+    { return ::new((void*)__location) _Tp(std::forward<_Args>(__args)...); }
+    27d4:	48 8b 45 e8          	mov    -0x18(%rbp),%rax
+    27d8:	48 89 c6             	mov    %rax,%rsi
+    27db:	bf 04 00 00 00       	mov    $0x4,%edi
+    27e0:	e8 7e ed ff ff       	call   1563 <_ZnwmPv>
+    27e5:	48 89 c3             	mov    %rax,%rbx
+    27e8:	48 8b 45 e0          	mov    -0x20(%rbp),%rax
+    27ec:	48 89 c7             	mov    %rax,%rdi
+    27ef:	e8 b9 ff ff ff       	call   27ad <_ZSt7forwardIRKfEOT_RNSt16remove_referenceIS2_E4typeE>
+    27f4:	f3 0f 10 00          	movss  (%rax),%xmm0
+    27f8:	f3 0f 11 03          	movss  %xmm0,(%rbx)
+    27fc:	48 89 d8             	mov    %rbx,%rax
+    27ff:	48 8b 5d f8          	mov    -0x8(%rbp),%rbx
+    2803:	c9                   	leave
+    2804:	c3                   	ret
+
+0000000000002805 <_ZSt4copyIN9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEEEPfET0_T_SA_S9_>:
+>>>>>>> main
    *  within [first,last).
   */
   template<typename _II, typename _OI>
     _GLIBCXX20_CONSTEXPR
     inline _OI
     copy(_II __first, _II __last, _OI __result)
+<<<<<<< HEAD
     2728:	f3 0f 1e fa          	endbr64 
     272c:	55                   	push   %rbp
     272d:	48 89 e5             	mov    %rsp,%rbp
@@ -2425,10 +4883,23 @@ class Vector {
     273d:	48 89 55 d8          	mov    %rdx,-0x28(%rbp)
       __glibcxx_function_requires(_OutputIteratorConcept<_OI,
 	    typename iterator_traits<_II>::value_type>)
+=======
+    2805:	f3 0f 1e fa          	endbr64
+    2809:	55                   	push   %rbp
+    280a:	48 89 e5             	mov    %rsp,%rbp
+    280d:	53                   	push   %rbx
+    280e:	48 83 ec 28          	sub    $0x28,%rsp
+    2812:	48 89 7d e8          	mov    %rdi,-0x18(%rbp)
+    2816:	48 89 75 e0          	mov    %rsi,-0x20(%rbp)
+    281a:	48 89 55 d8          	mov    %rdx,-0x28(%rbp)
+      __glibcxx_function_requires(_OutputIteratorConcept<_OI,
+	    typename iterator_traits<_II>::reference>)
+>>>>>>> main
       __glibcxx_requires_can_increment_range(__first, __last, __result);
 
       return std::__copy_move_a<__is_move_iterator<_II>::__value>
 	     (std::__miter_base(__first), std::__miter_base(__last), __result);
+<<<<<<< HEAD
     2741:	48 8b 45 e0          	mov    -0x20(%rbp),%rax
     2745:	48 89 c7             	mov    %rax,%rdi
     2748:	e8 3c 01 00 00       	call   2889 <_ZSt12__miter_baseIN9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEEEET_S8_>
@@ -2450,10 +4921,33 @@ class Vector {
 
 0000000000002778 <_ZN9__gnu_cxx13new_allocatorIfE10deallocateEPfm>:
 	return static_cast<_Tp*>(::operator new(__n * sizeof(_Tp)));
+=======
+    281e:	48 8b 45 e0          	mov    -0x20(%rbp),%rax
+    2822:	48 89 c7             	mov    %rax,%rdi
+    2825:	e8 29 01 00 00       	call   2953 <_ZSt12__miter_baseIN9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEEEET_S8_>
+    282a:	48 89 c3             	mov    %rax,%rbx
+    282d:	48 8b 45 e8          	mov    -0x18(%rbp),%rax
+    2831:	48 89 c7             	mov    %rax,%rdi
+    2834:	e8 1a 01 00 00       	call   2953 <_ZSt12__miter_baseIN9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEEEET_S8_>
+    2839:	48 89 c1             	mov    %rax,%rcx
+    283c:	48 8b 45 d8          	mov    -0x28(%rbp),%rax
+    2840:	48 89 c2             	mov    %rax,%rdx
+    2843:	48 89 de             	mov    %rbx,%rsi
+    2846:	48 89 cf             	mov    %rcx,%rdi
+    2849:	e8 17 01 00 00       	call   2965 <_ZSt13__copy_move_aILb0EN9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEEEPfET1_T0_SA_S9_>
+    }
+    284e:	48 8b 5d f8          	mov    -0x8(%rbp),%rbx
+    2852:	c9                   	leave
+    2853:	c3                   	ret
+
+0000000000002854 <_ZNSt15__new_allocatorIfE10deallocateEPfm>:
+	return static_cast<_Tp*>(_GLIBCXX_OPERATOR_NEW(__n * sizeof(_Tp)));
+>>>>>>> main
       }
 
       // __p is not permitted to be a null pointer.
       void
+<<<<<<< HEAD
       deallocate(_Tp* __p, size_type __t __attribute__ ((__unused__)))
     2778:	f3 0f 1e fa          	endbr64 
     277c:	55                   	push   %rbp
@@ -2587,12 +5081,128 @@ class Vector {
     2888:	c3                   	ret    
 
 0000000000002889 <_ZSt12__miter_baseIN9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEEEET_S8_>:
+=======
+      deallocate(_Tp* __p, size_type __n __attribute__ ((__unused__)))
+    2854:	f3 0f 1e fa          	endbr64
+    2858:	55                   	push   %rbp
+    2859:	48 89 e5             	mov    %rsp,%rbp
+    285c:	48 83 ec 20          	sub    $0x20,%rsp
+    2860:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
+    2864:	48 89 75 f0          	mov    %rsi,-0x10(%rbp)
+    2868:	48 89 55 e8          	mov    %rdx,-0x18(%rbp)
+	    _GLIBCXX_OPERATOR_DELETE(_GLIBCXX_SIZED_DEALLOC(__p, __n),
+				     std::align_val_t(alignof(_Tp)));
+	    return;
+	  }
+#endif
+	_GLIBCXX_OPERATOR_DELETE(_GLIBCXX_SIZED_DEALLOC(__p, __n));
+    286c:	48 8b 45 e8          	mov    -0x18(%rbp),%rax
+    2870:	48 8d 14 85 00 00 00 	lea    0x0(,%rax,4),%rdx
+    2877:	00 
+    2878:	48 8b 45 f0          	mov    -0x10(%rbp),%rax
+    287c:	48 89 d6             	mov    %rdx,%rsi
+    287f:	48 89 c7             	mov    %rax,%rdi
+    2882:	e8 c9 e8 ff ff       	call   1150 <_ZdlPvm@plt>
+      }
+    2887:	c9                   	leave
+    2888:	c3                   	ret
+    2889:	90                   	nop
+
+000000000000288a <_ZNSt15__new_allocatorIfE8allocateEmPKv>:
+      allocate(size_type __n, const void* = static_cast<const void*>(0))
+    288a:	f3 0f 1e fa          	endbr64
+    288e:	55                   	push   %rbp
+    288f:	48 89 e5             	mov    %rsp,%rbp
+    2892:	48 83 ec 30          	sub    $0x30,%rsp
+    2896:	48 89 7d e8          	mov    %rdi,-0x18(%rbp)
+    289a:	48 89 75 e0          	mov    %rsi,-0x20(%rbp)
+    289e:	48 89 55 d8          	mov    %rdx,-0x28(%rbp)
+    28a2:	48 8b 45 e8          	mov    -0x18(%rbp),%rax
+    28a6:	48 89 45 f8          	mov    %rax,-0x8(%rbp)
+      __attribute__((__always_inline__))
+      _GLIBCXX_CONSTEXPR size_type
+      _M_max_size() const _GLIBCXX_USE_NOEXCEPT
+      {
+#if __PTRDIFF_MAX__ < __SIZE_MAX__
+	return std::size_t(__PTRDIFF_MAX__) / sizeof(_Tp);
+    28aa:	48 b8 ff ff ff ff ff 	movabs $0x1fffffffffffffff,%rax
+    28b1:	ff ff 1f 
+	if (__builtin_expect(__n > this->_M_max_size(), false))
+    28b4:	48 3b 45 e0          	cmp    -0x20(%rbp),%rax
+    28b8:	0f 92 c0             	setb   %al
+    28bb:	0f b6 c0             	movzbl %al,%eax
+    28be:	48 85 c0             	test   %rax,%rax
+    28c1:	0f 95 c0             	setne  %al
+    28c4:	84 c0                	test   %al,%al
+    28c6:	74 1a                	je     28e2 <_ZNSt15__new_allocatorIfE8allocateEmPKv+0x58>
+	    if (__n > (std::size_t(-1) / sizeof(_Tp)))
+    28c8:	48 b8 ff ff ff ff ff 	movabs $0x3fffffffffffffff,%rax
+    28cf:	ff ff 3f 
+    28d2:	48 3b 45 e0          	cmp    -0x20(%rbp),%rax
+    28d6:	73 05                	jae    28dd <_ZNSt15__new_allocatorIfE8allocateEmPKv+0x53>
+	      std::__throw_bad_array_new_length();
+    28d8:	e8 43 e8 ff ff       	call   1120 <_ZSt28__throw_bad_array_new_lengthv@plt>
+	    std::__throw_bad_alloc();
+    28dd:	e8 0e e8 ff ff       	call   10f0 <_ZSt17__throw_bad_allocv@plt>
+	return static_cast<_Tp*>(_GLIBCXX_OPERATOR_NEW(__n * sizeof(_Tp)));
+    28e2:	48 8b 45 e0          	mov    -0x20(%rbp),%rax
+    28e6:	48 c1 e0 02          	shl    $0x2,%rax
+    28ea:	48 89 c7             	mov    %rax,%rdi
+    28ed:	e8 4e e8 ff ff       	call   1140 <_Znwm@plt>
+    28f2:	90                   	nop
+      }
+    28f3:	c9                   	leave
+    28f4:	c3                   	ret
+
+00000000000028f5 <_ZSt4copyIPKfPfET0_T_S4_S3_>:
+    copy(_II __first, _II __last, _OI __result)
+    28f5:	f3 0f 1e fa          	endbr64
+    28f9:	55                   	push   %rbp
+    28fa:	48 89 e5             	mov    %rsp,%rbp
+    28fd:	53                   	push   %rbx
+    28fe:	48 83 ec 28          	sub    $0x28,%rsp
+    2902:	48 89 7d e8          	mov    %rdi,-0x18(%rbp)
+    2906:	48 89 75 e0          	mov    %rsi,-0x20(%rbp)
+    290a:	48 89 55 d8          	mov    %rdx,-0x28(%rbp)
+	     (std::__miter_base(__first), std::__miter_base(__last), __result);
+    290e:	48 8b 45 e0          	mov    -0x20(%rbp),%rax
+    2912:	48 89 c7             	mov    %rax,%rdi
+    2915:	e8 b9 00 00 00       	call   29d3 <_ZSt12__miter_baseIPKfET_S2_>
+    291a:	48 89 c3             	mov    %rax,%rbx
+    291d:	48 8b 45 e8          	mov    -0x18(%rbp),%rax
+    2921:	48 89 c7             	mov    %rax,%rdi
+    2924:	e8 aa 00 00 00       	call   29d3 <_ZSt12__miter_baseIPKfET_S2_>
+    2929:	48 89 c1             	mov    %rax,%rcx
+    292c:	48 8b 45 d8          	mov    -0x28(%rbp),%rax
+    2930:	48 89 c2             	mov    %rax,%rdx
+    2933:	48 89 de             	mov    %rbx,%rsi
+    2936:	48 89 cf             	mov    %rcx,%rdi
+    2939:	e8 a7 00 00 00       	call   29e5 <_ZSt13__copy_move_aILb0EPKfPfET1_T0_S4_S3_>
+    }
+    293e:	48 8b 5d f8          	mov    -0x8(%rbp),%rbx
+    2942:	c9                   	leave
+    2943:	c3                   	ret
+
+0000000000002944 <_ZSt10destroy_atIfEvPT_>:
+    destroy_at(_Tp* __location)
+    2944:	f3 0f 1e fa          	endbr64
+    2948:	55                   	push   %rbp
+    2949:	48 89 e5             	mov    %rsp,%rbp
+    294c:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
+    }
+    2950:	90                   	nop
+    2951:	5d                   	pop    %rbp
+    2952:	c3                   	ret
+
+0000000000002953 <_ZSt12__miter_baseIN9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEEEET_S8_>:
+>>>>>>> main
   // Fallback implementation of the function in bits/stl_iterator.h used to
   // remove the move_iterator wrapper.
   template<typename _Iterator>
     _GLIBCXX20_CONSTEXPR
     inline _Iterator
     __miter_base(_Iterator __it)
+<<<<<<< HEAD
     2889:	f3 0f 1e fa          	endbr64 
     288d:	55                   	push   %rbp
     288e:	48 89 e5             	mov    %rsp,%rbp
@@ -2692,12 +5302,114 @@ class Vector {
     2988:	c3                   	ret    
 
 0000000000002989 <_ZSt12__niter_baseIPKfSt6vectorIfSaIfEEET_N9__gnu_cxx17__normal_iteratorIS5_T0_EE>:
+=======
+    2953:	f3 0f 1e fa          	endbr64
+    2957:	55                   	push   %rbp
+    2958:	48 89 e5             	mov    %rsp,%rbp
+    295b:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
+    { return __it; }
+    295f:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    2963:	5d                   	pop    %rbp
+    2964:	c3                   	ret
+
+0000000000002965 <_ZSt13__copy_move_aILb0EN9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEEEPfET1_T0_SA_S9_>:
+    __copy_move_a(_II __first, _II __last, _OI __result)
+    2965:	f3 0f 1e fa          	endbr64
+    2969:	55                   	push   %rbp
+    296a:	48 89 e5             	mov    %rsp,%rbp
+    296d:	41 54                	push   %r12
+    296f:	53                   	push   %rbx
+    2970:	48 83 ec 20          	sub    $0x20,%rsp
+    2974:	48 89 7d e8          	mov    %rdi,-0x18(%rbp)
+    2978:	48 89 75 e0          	mov    %rsi,-0x20(%rbp)
+    297c:	48 89 55 d8          	mov    %rdx,-0x28(%rbp)
+      return std::__niter_wrap(__result,
+    2980:	48 8b 45 d8          	mov    -0x28(%rbp),%rax
+    2984:	48 89 c7             	mov    %rax,%rdi
+    2987:	e8 e8 00 00 00       	call   2a74 <_ZSt12__niter_baseIPfET_S1_>
+    298c:	49 89 c4             	mov    %rax,%r12
+    298f:	48 8b 45 e0          	mov    -0x20(%rbp),%rax
+    2993:	48 89 c7             	mov    %rax,%rdi
+    2996:	e8 b8 00 00 00       	call   2a53 <_ZSt12__niter_baseIPKfSt6vectorIfSaIfEEET_N9__gnu_cxx17__normal_iteratorIS5_T0_EE>
+    299b:	48 89 c3             	mov    %rax,%rbx
+    299e:	48 8b 45 e8          	mov    -0x18(%rbp),%rax
+    29a2:	48 89 c7             	mov    %rax,%rdi
+    29a5:	e8 a9 00 00 00       	call   2a53 <_ZSt12__niter_baseIPKfSt6vectorIfSaIfEEET_N9__gnu_cxx17__normal_iteratorIS5_T0_EE>
+    29aa:	4c 89 e2             	mov    %r12,%rdx
+    29ad:	48 89 de             	mov    %rbx,%rsi
+    29b0:	48 89 c7             	mov    %rax,%rdi
+    29b3:	e8 ce 00 00 00       	call   2a86 <_ZSt14__copy_move_a1ILb0EPKfPfET1_T0_S4_S3_>
+    29b8:	48 89 c2             	mov    %rax,%rdx
+    29bb:	48 8d 45 d8          	lea    -0x28(%rbp),%rax
+    29bf:	48 89 d6             	mov    %rdx,%rsi
+    29c2:	48 89 c7             	mov    %rax,%rdi
+    29c5:	e8 ed 00 00 00       	call   2ab7 <_ZSt12__niter_wrapIPfET_RKS1_S1_>
+    }
+    29ca:	48 83 c4 20          	add    $0x20,%rsp
+    29ce:	5b                   	pop    %rbx
+    29cf:	41 5c                	pop    %r12
+    29d1:	5d                   	pop    %rbp
+    29d2:	c3                   	ret
+
+00000000000029d3 <_ZSt12__miter_baseIPKfET_S2_>:
+    __miter_base(_Iterator __it)
+    29d3:	f3 0f 1e fa          	endbr64
+    29d7:	55                   	push   %rbp
+    29d8:	48 89 e5             	mov    %rsp,%rbp
+    29db:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
+    { return __it; }
+    29df:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    29e3:	5d                   	pop    %rbp
+    29e4:	c3                   	ret
+
+00000000000029e5 <_ZSt13__copy_move_aILb0EPKfPfET1_T0_S4_S3_>:
+    __copy_move_a(_II __first, _II __last, _OI __result)
+    29e5:	f3 0f 1e fa          	endbr64
+    29e9:	55                   	push   %rbp
+    29ea:	48 89 e5             	mov    %rsp,%rbp
+    29ed:	41 54                	push   %r12
+    29ef:	53                   	push   %rbx
+    29f0:	48 83 ec 20          	sub    $0x20,%rsp
+    29f4:	48 89 7d e8          	mov    %rdi,-0x18(%rbp)
+    29f8:	48 89 75 e0          	mov    %rsi,-0x20(%rbp)
+    29fc:	48 89 55 d8          	mov    %rdx,-0x28(%rbp)
+      return std::__niter_wrap(__result,
+    2a00:	48 8b 45 d8          	mov    -0x28(%rbp),%rax
+    2a04:	48 89 c7             	mov    %rax,%rdi
+    2a07:	e8 68 00 00 00       	call   2a74 <_ZSt12__niter_baseIPfET_S1_>
+    2a0c:	49 89 c4             	mov    %rax,%r12
+    2a0f:	48 8b 45 e0          	mov    -0x20(%rbp),%rax
+    2a13:	48 89 c7             	mov    %rax,%rdi
+    2a16:	e8 b2 00 00 00       	call   2acd <_ZSt12__niter_baseIPKfET_S2_>
+    2a1b:	48 89 c3             	mov    %rax,%rbx
+    2a1e:	48 8b 45 e8          	mov    -0x18(%rbp),%rax
+    2a22:	48 89 c7             	mov    %rax,%rdi
+    2a25:	e8 a3 00 00 00       	call   2acd <_ZSt12__niter_baseIPKfET_S2_>
+    2a2a:	4c 89 e2             	mov    %r12,%rdx
+    2a2d:	48 89 de             	mov    %rbx,%rsi
+    2a30:	48 89 c7             	mov    %rax,%rdi
+    2a33:	e8 4e 00 00 00       	call   2a86 <_ZSt14__copy_move_a1ILb0EPKfPfET1_T0_S4_S3_>
+    2a38:	48 89 c2             	mov    %rax,%rdx
+    2a3b:	48 8d 45 d8          	lea    -0x28(%rbp),%rax
+    2a3f:	48 89 d6             	mov    %rdx,%rsi
+    2a42:	48 89 c7             	mov    %rax,%rdi
+    2a45:	e8 6d 00 00 00       	call   2ab7 <_ZSt12__niter_wrapIPfET_RKS1_S1_>
+    }
+    2a4a:	48 83 c4 20          	add    $0x20,%rsp
+    2a4e:	5b                   	pop    %rbx
+    2a4f:	41 5c                	pop    %r12
+    2a51:	5d                   	pop    %rbp
+    2a52:	c3                   	ret
+
+0000000000002a53 <_ZSt12__niter_baseIPKfSt6vectorIfSaIfEEET_N9__gnu_cxx17__normal_iteratorIS5_T0_EE>:
+>>>>>>> main
 _GLIBCXX_BEGIN_NAMESPACE_VERSION
 
   template<typename _Iterator, typename _Container>
     _GLIBCXX20_CONSTEXPR
     _Iterator
     __niter_base(__gnu_cxx::__normal_iterator<_Iterator, _Container> __it)
+<<<<<<< HEAD
     2989:	f3 0f 1e fa          	endbr64 
     298d:	55                   	push   %rbp
     298e:	48 89 e5             	mov    %rsp,%rbp
@@ -2874,3 +5586,210 @@ Disassembly of section .fini:
     2b24:	48 83 ec 08          	sub    $0x8,%rsp
     2b28:	48 83 c4 08          	add    $0x8,%rsp
     2b2c:	c3                   	ret    
+=======
+    2a53:	f3 0f 1e fa          	endbr64
+    2a57:	55                   	push   %rbp
+    2a58:	48 89 e5             	mov    %rsp,%rbp
+    2a5b:	48 83 ec 10          	sub    $0x10,%rsp
+    2a5f:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
+    _GLIBCXX_NOEXCEPT_IF(std::is_nothrow_copy_constructible<_Iterator>::value)
+    { return __it.base(); }
+    2a63:	48 8d 45 f8          	lea    -0x8(%rbp),%rax
+    2a67:	48 89 c7             	mov    %rax,%rdi
+    2a6a:	e8 89 f9 ff ff       	call   23f8 <_ZNK9__gnu_cxx17__normal_iteratorIPKfSt6vectorIfSaIfEEE4baseEv>
+    2a6f:	48 8b 00             	mov    (%rax),%rax
+    2a72:	c9                   	leave
+    2a73:	c3                   	ret
+
+0000000000002a74 <_ZSt12__niter_baseIPfET_S1_>:
+    __niter_base(_Iterator __it)
+    2a74:	f3 0f 1e fa          	endbr64
+    2a78:	55                   	push   %rbp
+    2a79:	48 89 e5             	mov    %rsp,%rbp
+    2a7c:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
+    { return __it; }
+    2a80:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    2a84:	5d                   	pop    %rbp
+    2a85:	c3                   	ret
+
+0000000000002a86 <_ZSt14__copy_move_a1ILb0EPKfPfET1_T0_S4_S3_>:
+    __copy_move_a1(_II __first, _II __last, _OI __result)
+    2a86:	f3 0f 1e fa          	endbr64
+    2a8a:	55                   	push   %rbp
+    2a8b:	48 89 e5             	mov    %rsp,%rbp
+    2a8e:	48 83 ec 20          	sub    $0x20,%rsp
+    2a92:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
+    2a96:	48 89 75 f0          	mov    %rsi,-0x10(%rbp)
+    2a9a:	48 89 55 e8          	mov    %rdx,-0x18(%rbp)
+    { return std::__copy_move_a2<_IsMove>(__first, __last, __result); }
+    2a9e:	48 8b 55 e8          	mov    -0x18(%rbp),%rdx
+    2aa2:	48 8b 4d f0          	mov    -0x10(%rbp),%rcx
+    2aa6:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    2aaa:	48 89 ce             	mov    %rcx,%rsi
+    2aad:	48 89 c7             	mov    %rax,%rdi
+    2ab0:	e8 2a 00 00 00       	call   2adf <_ZSt14__copy_move_a2ILb0EPKfPfET1_T0_S4_S3_>
+    2ab5:	c9                   	leave
+    2ab6:	c3                   	ret
+
+0000000000002ab7 <_ZSt12__niter_wrapIPfET_RKS1_S1_>:
+    __niter_wrap(const _Iterator&, _Iterator __res)
+    2ab7:	f3 0f 1e fa          	endbr64
+    2abb:	55                   	push   %rbp
+    2abc:	48 89 e5             	mov    %rsp,%rbp
+    2abf:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
+    2ac3:	48 89 75 f0          	mov    %rsi,-0x10(%rbp)
+    { return __res; }
+    2ac7:	48 8b 45 f0          	mov    -0x10(%rbp),%rax
+    2acb:	5d                   	pop    %rbp
+    2acc:	c3                   	ret
+
+0000000000002acd <_ZSt12__niter_baseIPKfET_S2_>:
+    __niter_base(_Iterator __it)
+    2acd:	f3 0f 1e fa          	endbr64
+    2ad1:	55                   	push   %rbp
+    2ad2:	48 89 e5             	mov    %rsp,%rbp
+    2ad5:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
+    { return __it; }
+    2ad9:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    2add:	5d                   	pop    %rbp
+    2ade:	c3                   	ret
+
+0000000000002adf <_ZSt14__copy_move_a2ILb0EPKfPfET1_T0_S4_S3_>:
+    __copy_move_a2(_II __first, _II __last, _OI __result)
+    2adf:	f3 0f 1e fa          	endbr64
+    2ae3:	55                   	push   %rbp
+    2ae4:	48 89 e5             	mov    %rsp,%rbp
+    2ae7:	48 83 ec 20          	sub    $0x20,%rsp
+    2aeb:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
+    2aef:	48 89 75 f0          	mov    %rsi,-0x10(%rbp)
+    2af3:	48 89 55 e8          	mov    %rdx,-0x18(%rbp)
+      if (std::is_constant_evaluated())
+    2af7:	e8 58 ea ff ff       	call   1554 <_ZSt21is_constant_evaluatedv>
+    2afc:	84 c0                	test   %al,%al
+    2afe:	74 19                	je     2b19 <_ZSt14__copy_move_a2ILb0EPKfPfET1_T0_S4_S3_+0x3a>
+	  __copy_m(__first, __last, __result);
+    2b00:	48 8b 55 e8          	mov    -0x18(%rbp),%rdx
+    2b04:	48 8b 4d f0          	mov    -0x10(%rbp),%rcx
+    2b08:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    2b0c:	48 89 ce             	mov    %rcx,%rsi
+    2b0f:	48 89 c7             	mov    %rax,%rdi
+    2b12:	e8 1c 00 00 00       	call   2b33 <_ZNSt11__copy_moveILb0ELb0ESt26random_access_iterator_tagE8__copy_mIPKfPfEET0_T_S7_S6_>
+    2b17:	eb 18                	jmp    2b31 <_ZSt14__copy_move_a2ILb0EPKfPfET1_T0_S4_S3_+0x52>
+			      _Category>::__copy_m(__first, __last, __result);
+    2b19:	48 8b 55 e8          	mov    -0x18(%rbp),%rdx
+    2b1d:	48 8b 4d f0          	mov    -0x10(%rbp),%rcx
+    2b21:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    2b25:	48 89 ce             	mov    %rcx,%rsi
+    2b28:	48 89 c7             	mov    %rax,%rdi
+    2b2b:	e8 55 00 00 00       	call   2b85 <_ZNSt11__copy_moveILb0ELb1ESt26random_access_iterator_tagE8__copy_mIKffEEPT0_PT_S7_S5_>
+    2b30:	90                   	nop
+    }
+    2b31:	c9                   	leave
+    2b32:	c3                   	ret
+
+0000000000002b33 <_ZNSt11__copy_moveILb0ELb0ESt26random_access_iterator_tagE8__copy_mIPKfPfEET0_T_S7_S6_>:
+	__copy_m(_II __first, _II __last, _OI __result)
+    2b33:	f3 0f 1e fa          	endbr64
+    2b37:	55                   	push   %rbp
+    2b38:	48 89 e5             	mov    %rsp,%rbp
+    2b3b:	48 89 7d e8          	mov    %rdi,-0x18(%rbp)
+    2b3f:	48 89 75 e0          	mov    %rsi,-0x20(%rbp)
+    2b43:	48 89 55 d8          	mov    %rdx,-0x28(%rbp)
+	  for(_Distance __n = __last - __first; __n > 0; --__n)
+    2b47:	48 8b 45 e0          	mov    -0x20(%rbp),%rax
+    2b4b:	48 2b 45 e8          	sub    -0x18(%rbp),%rax
+    2b4f:	48 c1 f8 02          	sar    $0x2,%rax
+    2b53:	48 89 45 f8          	mov    %rax,-0x8(%rbp)
+    2b57:	eb 1f                	jmp    2b78 <_ZNSt11__copy_moveILb0ELb0ESt26random_access_iterator_tagE8__copy_mIPKfPfEET0_T_S7_S6_+0x45>
+	      *__result = *__first;
+    2b59:	48 8b 45 e8          	mov    -0x18(%rbp),%rax
+    2b5d:	f3 0f 10 00          	movss  (%rax),%xmm0
+    2b61:	48 8b 45 d8          	mov    -0x28(%rbp),%rax
+    2b65:	f3 0f 11 00          	movss  %xmm0,(%rax)
+	      ++__first;
+    2b69:	48 83 45 e8 04       	addq   $0x4,-0x18(%rbp)
+	      ++__result;
+    2b6e:	48 83 45 d8 04       	addq   $0x4,-0x28(%rbp)
+	  for(_Distance __n = __last - __first; __n > 0; --__n)
+    2b73:	48 83 6d f8 01       	subq   $0x1,-0x8(%rbp)
+    2b78:	48 83 7d f8 00       	cmpq   $0x0,-0x8(%rbp)
+    2b7d:	7f da                	jg     2b59 <_ZNSt11__copy_moveILb0ELb0ESt26random_access_iterator_tagE8__copy_mIPKfPfEET0_T_S7_S6_+0x26>
+	  return __result;
+    2b7f:	48 8b 45 d8          	mov    -0x28(%rbp),%rax
+	}
+    2b83:	5d                   	pop    %rbp
+    2b84:	c3                   	ret
+
+0000000000002b85 <_ZNSt11__copy_moveILb0ELb1ESt26random_access_iterator_tagE8__copy_mIKffEEPT0_PT_S7_S5_>:
+	__copy_m(_Tp* __first, _Tp* __last, _Up* __result)
+    2b85:	f3 0f 1e fa          	endbr64
+    2b89:	55                   	push   %rbp
+    2b8a:	48 89 e5             	mov    %rsp,%rbp
+    2b8d:	48 83 ec 30          	sub    $0x30,%rsp
+    2b91:	48 89 7d e8          	mov    %rdi,-0x18(%rbp)
+    2b95:	48 89 75 e0          	mov    %rsi,-0x20(%rbp)
+    2b99:	48 89 55 d8          	mov    %rdx,-0x28(%rbp)
+	  const ptrdiff_t _Num = __last - __first;
+    2b9d:	48 8b 45 e0          	mov    -0x20(%rbp),%rax
+    2ba1:	48 2b 45 e8          	sub    -0x18(%rbp),%rax
+    2ba5:	48 c1 f8 02          	sar    $0x2,%rax
+    2ba9:	48 89 45 f8          	mov    %rax,-0x8(%rbp)
+	  if (__builtin_expect(_Num > 1, true))
+    2bad:	48 83 7d f8 01       	cmpq   $0x1,-0x8(%rbp)
+    2bb2:	0f 9f c0             	setg   %al
+    2bb5:	0f b6 c0             	movzbl %al,%eax
+    2bb8:	48 85 c0             	test   %rax,%rax
+    2bbb:	74 21                	je     2bde <_ZNSt11__copy_moveILb0ELb1ESt26random_access_iterator_tagE8__copy_mIKffEEPT0_PT_S7_S5_+0x59>
+	    __builtin_memmove(__result, __first, sizeof(_Tp) * _Num);
+    2bbd:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    2bc1:	48 8d 14 85 00 00 00 	lea    0x0(,%rax,4),%rdx
+    2bc8:	00 
+    2bc9:	48 8b 4d e8          	mov    -0x18(%rbp),%rcx
+    2bcd:	48 8b 45 d8          	mov    -0x28(%rbp),%rax
+    2bd1:	48 89 ce             	mov    %rcx,%rsi
+    2bd4:	48 89 c7             	mov    %rax,%rdi
+    2bd7:	e8 a4 e5 ff ff       	call   1180 <memmove@plt>
+    2bdc:	eb 1a                	jmp    2bf8 <_ZNSt11__copy_moveILb0ELb1ESt26random_access_iterator_tagE8__copy_mIKffEEPT0_PT_S7_S5_+0x73>
+	  else if (_Num == 1)
+    2bde:	48 83 7d f8 01       	cmpq   $0x1,-0x8(%rbp)
+    2be3:	75 13                	jne    2bf8 <_ZNSt11__copy_moveILb0ELb1ESt26random_access_iterator_tagE8__copy_mIKffEEPT0_PT_S7_S5_+0x73>
+	      __assign_one(__result, __first);
+    2be5:	48 8b 55 e8          	mov    -0x18(%rbp),%rdx
+    2be9:	48 8b 45 d8          	mov    -0x28(%rbp),%rax
+    2bed:	48 89 d6             	mov    %rdx,%rsi
+    2bf0:	48 89 c7             	mov    %rax,%rdi
+    2bf3:	e8 15 00 00 00       	call   2c0d <_ZNSt11__copy_moveILb0ELb0ESt26random_access_iterator_tagE12__assign_oneIfKfEEvPT_PT0_>
+	  return __result + _Num;
+    2bf8:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    2bfc:	48 8d 14 85 00 00 00 	lea    0x0(,%rax,4),%rdx
+    2c03:	00 
+    2c04:	48 8b 45 d8          	mov    -0x28(%rbp),%rax
+    2c08:	48 01 d0             	add    %rdx,%rax
+	}
+    2c0b:	c9                   	leave
+    2c0c:	c3                   	ret
+
+0000000000002c0d <_ZNSt11__copy_moveILb0ELb0ESt26random_access_iterator_tagE12__assign_oneIfKfEEvPT_PT0_>:
+	__assign_one(_Tp* __to, _Up* __from)
+    2c0d:	f3 0f 1e fa          	endbr64
+    2c11:	55                   	push   %rbp
+    2c12:	48 89 e5             	mov    %rsp,%rbp
+    2c15:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
+    2c19:	48 89 75 f0          	mov    %rsi,-0x10(%rbp)
+	{ *__to = *__from; }
+    2c1d:	48 8b 45 f0          	mov    -0x10(%rbp),%rax
+    2c21:	f3 0f 10 00          	movss  (%rax),%xmm0
+    2c25:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+    2c29:	f3 0f 11 00          	movss  %xmm0,(%rax)
+    2c2d:	90                   	nop
+    2c2e:	5d                   	pop    %rbp
+    2c2f:	c3                   	ret
+
+Disassembly of section .fini:
+
+0000000000002c30 <_fini>:
+    2c30:	f3 0f 1e fa          	endbr64
+    2c34:	48 83 ec 08          	sub    $0x8,%rsp
+    2c38:	48 83 c4 08          	add    $0x8,%rsp
+    2c3c:	c3                   	ret
+>>>>>>> main
