@@ -159,3 +159,12 @@ export async function previewOutput(fileName: string) {
 export async function isExecutable(filePath: string): Promise<boolean> {
   return await explore.isExecutable(filePath);
 }
+
+/**
+ * Checks if a file is an object file.
+ * @param filePath The path to the file
+ * @returns True if the file is an object file, false otherwise.
+ */
+export async function isObjectFile(filePath: string): Promise<boolean> {
+  return await explore.isObjectFile(filePath);
+}

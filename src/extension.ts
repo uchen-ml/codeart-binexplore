@@ -18,7 +18,9 @@ export function activate(context: vscode.ExtensionContext) {
     }
 
     try {
-      if (await preview.isExecutable(document.fileName)) {
+      const isExecutable = await preview.isExecutable(document.fileName);
+      const isObjectFile = await preview.isObjectFile(document.fileName);
+      if (isExecutable || isObjectFile) {
         await preview.previewOutput(document.fileName);
       }
     } catch (error: Error | unknown) {

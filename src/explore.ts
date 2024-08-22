@@ -272,3 +272,29 @@ export async function isExecutable(filePath: string): Promise<boolean> {
     return false;
   }
 }
+
+/**
+ * Checks if a file is an object file.
+ * @param filePath The path to the file
+ * @returns True if the file is an object file, false otherwise.
+ */
+export async function isObjectFile(filePath: string): Promise<boolean> {
+  try {
+    const buffer = Buffer.alloc(4);
+    const fileHandle = await fs.promises.open(filePath, 'r');
+    await fileHandle.read(buffer, 0, 4, 0);
+    await fileHandle.close();
+
+    const elfMagic = Buffer.from([0x7f, 0x45, 0x4c, 0x46]);
+    const coffMagic = Buffer.from([0x4c, 0x01]);
+
+    const isObjectFile =
+      buffer.equals(elfMagic) || buffer.slice(0, 2).equals(coffMagic);
+    return isObjectFile;
+  } catch (error: Error | unknown) {
+    if (error instanceof Error) {
+      outputChannel.appendLine(`Error accessing ${filePath}: ${error.message}`);
+    }
+    return false;
+  }
+}
