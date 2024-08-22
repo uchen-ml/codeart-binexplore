@@ -46,6 +46,10 @@ export class ObjDumper {
       }
 
       const output = await execute(command);
+
+      if (output.stderr !== '') {
+        return 'ERROR';
+      }
       return output.stdout;
     } catch (error: Error | unknown) {
       if (error instanceof Error) {
@@ -83,14 +87,16 @@ export async function execute(command: string): Promise<ExecOutput> {
     const output: ExecOutput = {stdout, stderr};
     return output;
   } catch (error: Error | unknown) {
+    let stderr = 'ERROR';
     if (error instanceof Error) {
       if (outputChannel) {
         outputChannel.appendLine(`Error executing command: ${error.message}`);
       } else {
         console.error(error);
       }
+      stderr = error.message;
     }
-    return {stdout: '', stderr: ''};
+    return {stdout: '', stderr: stderr};
   }
 }
 
@@ -125,6 +131,12 @@ export async function isObjDumpBinary(path: string): Promise<boolean> {
  * @returns "ERROR" if the command fails.
  */
 export async function getObjDumpVersion(path: string): Promise<string> {
+  const isBinary = await isObjDumpBinary(path);
+
+  if (!isBinary) {
+    return 'ERROR';
+  }
+
   try {
     const command = `${path} --version`;
     const output = await execute(command);
