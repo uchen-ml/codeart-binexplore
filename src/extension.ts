@@ -1,7 +1,8 @@
 import * as vscode from 'vscode';
-import * as fs from 'fs';
 import * as os from 'os';
 import * as preview from './preview';
+import * as explore from './explore';
+import * as dump from './objdump/dumper';
 
 const outputChannel = vscode.window.createOutputChannel(
   'CodeArt: Binary Explore'
@@ -13,12 +14,24 @@ const outputChannel = vscode.window.createOutputChannel(
  */
 export function activate(context: vscode.ExtensionContext) {
   const disposable = vscode.workspace.onDidOpenTextDocument(async document => {
+    console.log(`onDidOpenTextDocument: ${document.uri.fsPath}`);
     if (document.uri.scheme !== 'file') {
       return;
     }
 
-    if (await isExecutable(document.fileName)) {
-      await preview.previewOutput(document.fileName);
+    try {
+      const isExecutable = await preview.isExecutable(document.fileName);
+      const isObjectFile = await preview.isObjectFile(document.fileName);
+      if (isExecutable || isObjectFile) {
+        await preview.previewOutput(document.fileName);
+      }
+    } catch (error: Error | unknown) {
+      if (error instanceof Error) {
+        outputChannel.appendLine(
+          `Error exploring ${document.fileName}: 
+          ${error.message}`
+        );
+      }
     }
   });
 
@@ -30,7 +43,8 @@ export function activate(context: vscode.ExtensionContext) {
   outputChannel.appendLine(`os.platform() = ${os.platform()}`);
   outputChannel.appendLine(`os.arch() = ${os.arch()}`);
   outputChannel.appendLine(`os.release() = ${os.release()}`);
-  outputChannel.show();
+  outputChannel.appendLine(`os.type() = ${os.type()}`);
+  outputChannel.appendLine('');
 }
 
 /**
@@ -38,23 +52,4 @@ export function activate(context: vscode.ExtensionContext) {
  */
 export function deactivate() {
   preview.deactivate();
-}
-
-/**
- * Checks if a file is a binary executable.
- * @param filePath The path to the file.
- * @returns True if the file is a binary executable, false otherwise.
- */
-async function isExecutable(filePath: string): Promise<boolean> {
-  try {
-    const stats = await fs.promises.stat(filePath);
-    const isExecutable = (stats.mode & 0o111) !== 0;
-
-    return isExecutable;
-  } catch (error: Error | unknown) {
-    if (error instanceof Error) {
-      outputChannel.appendLine(`Error accessing ${filePath}: ${error.message}`);
-    }
-    return false;
-  }
 }

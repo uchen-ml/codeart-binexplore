@@ -3,7 +3,7 @@
   "displayName": "Code Art - Binary Explore",
   "description": "VSCode extension for analyzing compiled binaries",
   "publisher": "uchenml",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/uchen-ml/codeart-binexplore"
@@ -14,8 +14,31 @@
     "node": ">=11.14.0"
   },
   "categories": [
-    "Other"
+    "Other",
+    "Debuggers"
   ],
+  "contributes": {
+    "configuration": [
+      {
+        "type": "object",
+        "properties": {
+          "codeart-binexplore.objdumpPath": {
+            "type": "string",
+            "default": "/usr/bin/objdump",
+            "markdownDescription": "Path to objdump executable to use",
+            "order": 0,
+            "scope": "resource"
+          },
+          "codeart-binexplore.objdumpOptions": {
+            "type": "string",
+            "markdownDescription": "Options of objdump command. At least one option from the list '-a,-d,-D,-e,-f,-g,-G,-h,-H,-p,-P,-r,-R,-s,-S,-t,-T,-V,-x' must be given. [More info](https://man7.org/linux/man-pages/man1/objdump.1.html).",
+            "default": "-d -S",
+            "scope": "resource"
+          }
+        }
+      }
+    ]
+  },
   "activationEvents": [
     "onStartupFinished"
   ],
@@ -42,6 +65,7 @@
     "@types/vscode": "^1.92.0",
     "@types/mocha": "^10.0.7",
     "@types/node": "20.16.1",
+    "@types/sinon": "^17.0.3",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0",
     "esbuild": "^0.23.0",
@@ -50,5 +74,8 @@
     "@vscode/test-cli": "^0.0.10",
     "@vscode/test-electron": "^2.4.0",
     "gts": "^5.3.1"
+  },
+  "dependencies": {
+    "sinon": "^18.0.0"
   }
 }

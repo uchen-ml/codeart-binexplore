@@ -1,5 +1,6 @@
 import * as path from 'path';
 import * as vscode from 'vscode';
+import * as explore from './explore';
 
 const extensionScheme = 'uchenml.codeart-binexplore';
 const previewTitle = 'CodeArt: Binary Explore';
@@ -18,12 +19,25 @@ class BinaryInspectorContentProvider
    * @returns The content of the document as a string.
    */
   public provideTextDocumentContent(uri: vscode.Uri): string {
-    if (!uri.path.includes(`${previewTitle} - `)) {
-      outputChannel.appendLine(`Invalid URI: ${uri}`);
+    try {
+      if (!uri.path.includes(`${previewTitle} - `)) {
+        outputChannel.appendLine(`Invalid URI: ${uri}`);
+        return '';
+      }
+
+      if (this.content && this.content.startsWith('\n')) {
+        this.content = this.content.slice(1);
+      }
+
+      return this.content || '';
+    } catch (error: Error | unknown) {
+      if (error instanceof Error) {
+        outputChannel.appendLine(
+          `Error providing content for ${uri.path}: ${error.message}`
+        );
+      }
       return '';
     }
-
-    return 'Lorem Ipsum';
   }
 
   /**
@@ -45,9 +59,11 @@ class BinaryInspectorContentProvider
    * Updates the displayed content for the opened binary file.
    * @param filePath The path to the binary file.
    */
-  public exploreFile(filePath: string) {
-    // TODO: Implement the logic to explore the binary file with objdump.
-    this.content = `Exploring ${filePath}`;
+  public async exploreFile(filePath: string): Promise<boolean> {
+    const objDumpResult = await explore.ObjDumpResult.create(filePath);
+    this.content = objDumpResult.output;
+
+    return this.content !== 'ERROR';
   }
 }
 
@@ -57,42 +73,53 @@ const provider = new BinaryInspectorContentProvider();
  * This method is called when the extension is activated.
  * @param context The context in which the extension is activated.
  */
-export function activate(
+export async function activate(
   context: vscode.ExtensionContext,
-  channel: vscode.OutputChannel
+  extensionOutputChannel: vscode.OutputChannel
 ) {
-  const disposable = vscode.workspace.registerTextDocumentContentProvider(
+  const disposable = await vscode.workspace.registerTextDocumentContentProvider(
     extensionScheme,
     provider
   );
 
   context.subscriptions.push(disposable);
 
-  outputChannel = channel;
+  await explore.activate(context, extensionOutputChannel);
+
+  outputChannel = extensionOutputChannel;
 }
 
 /**
  * This method is called when the extension is deactivated.
  */
-export function deactivate() {}
+export async function deactivate() {
+  await explore.deactivate();
+}
 
 /**
  * Previews the output in a new editor column.
  */
 export async function previewOutput(fileName: string) {
-  provider.exploreFile(fileName);
+  const isExplored = await provider.exploreFile(fileName);
 
-  const uri = vscode.Uri.parse(
+  if (!isExplored) {
+    await vscode.window.showWarningMessage(
+      `Failed to explore ${path.basename(fileName)}, check output for more details.`
+    );
+    return;
+  }
+
+  const uri = await vscode.Uri.parse(
     `${extensionScheme}://authority/${previewTitle} - ${path.basename(fileName)}`
   );
 
-  provider.update(uri);
+  await provider.update(uri);
 
   try {
     await vscode.commands.executeCommand(
       'vscode.open',
       uri,
-      vscode.ViewColumn.Two,
+      vscode.ViewColumn.Active,
       'Binary Inspector'
     );
   } catch (error: Error | unknown) {
@@ -108,9 +135,9 @@ export async function previewOutput(fileName: string) {
     const codeArtDocument = await vscode.workspace.openTextDocument(uri);
 
     if (codeArtDocument) {
-      vscode.window.showTextDocument(codeArtDocument, {
+      await vscode.window.showTextDocument(codeArtDocument, {
         preview: false,
-        viewColumn: vscode.ViewColumn.Two,
+        viewColumn: vscode.ViewColumn.Active,
         preserveFocus: false,
       });
     } else {
@@ -126,4 +153,22 @@ export async function previewOutput(fileName: string) {
     }
     return;
   }
+}
+
+/**
+ * Checks if a file is a binary executable.
+ * @param filePath The path to the file.
+ * @returns True if the file is a binary executable, false otherwise.
+ */
+export async function isExecutable(filePath: string): Promise<boolean> {
+  return await explore.isExecutable(filePath);
+}
+
+/**
+ * Checks if a file is an object file.
+ * @param filePath The path to the file
+ * @returns True if the file is an object file, false otherwise.
+ */
+export async function isObjectFile(filePath: string): Promise<boolean> {
+  return await explore.isObjectFile(filePath);
 }
