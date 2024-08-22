@@ -25,6 +25,10 @@ class BinaryInspectorContentProvider
         return '';
       }
 
+      if (this.content && this.content.startsWith('\n')) {
+        this.content = this.content.slice(1);
+      }
+
       return this.content || '';
     } catch (error: Error | unknown) {
       if (error instanceof Error) {

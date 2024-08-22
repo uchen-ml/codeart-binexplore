@@ -3,7 +3,7 @@
   "displayName": "Code Art - Binary Explore",
   "description": "VSCode extension for analyzing compiled binaries",
   "publisher": "uchenml",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/uchen-ml/codeart-binexplore"
