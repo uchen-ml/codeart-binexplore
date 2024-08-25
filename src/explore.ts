@@ -34,8 +34,6 @@ export async function activate(
   await vscode.window.onDidChangeActiveTextEditor(
     await handleStatusBarVisibility
   );
-
-  await validateObjDumpBinary();
 }
 
 /**
@@ -89,8 +87,7 @@ async function validateObjDumpPath(path: string): Promise<boolean> {
   try {
     // Special case for 'objdump' command, to be fetched from $PATH.
     if (path === 'objdump') {
-      const command = 'which objdump';
-      const commandResult = await dump.execute(command);
+      const commandResult = await dump.execute('which', ['objdump']);
       const resolvedPath = commandResult.stdout.trim();
 
       await fs.promises.access(resolvedPath, fs.constants.F_OK);
@@ -125,8 +122,7 @@ async function validateObjDumpPath(path: string): Promise<boolean> {
 async function resetObjDumpPath() {
   const configuration = vscode.workspace.getConfiguration();
 
-  const command = 'which objdump';
-  const commandResult = await dump.execute(command);
+  const commandResult = await dump.execute('which', ['objdump']);
 
   let resolvedPath = commandResult.stdout.trim();
   if (resolvedPath === '') {

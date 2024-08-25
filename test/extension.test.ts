@@ -1,7 +1,6 @@
 import * as assert from 'assert';
 import * as path from 'path';
 import * as vscode from 'vscode';
-import * as sinon from 'sinon';
 
 import * as preview from '../src/preview';
 import * as explore from '../src/explore';

@@ -14,14 +14,15 @@ const outputChannel = vscode.window.createOutputChannel(
  */
 export function activate(context: vscode.ExtensionContext) {
   const disposable = vscode.workspace.onDidOpenTextDocument(async document => {
-    console.log(`onDidOpenTextDocument: ${document.uri.fsPath}`);
     if (document.uri.scheme !== 'file') {
       return;
     }
 
     try {
-      const isExecutable = await preview.isExecutable(document.fileName);
-      const isObjectFile = await preview.isObjectFile(document.fileName);
+      const [isExecutable, isObjectFile] = await Promise.all([
+        explore.isExecutable(document.fileName),
+        explore.isObjectFile(document.fileName),
+      ]);
       if (isExecutable || isObjectFile) {
         await preview.previewOutput(document.fileName);
       }

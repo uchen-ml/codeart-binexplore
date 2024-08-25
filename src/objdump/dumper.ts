@@ -1,8 +1,5 @@
-import {exec as execCallback} from 'child_process';
-import {promisify} from 'util';
+import * as process from 'child_process';
 import * as vscode from 'vscode';
-
-const exec = promisify(execCallback);
 
 let outputChannel: vscode.OutputChannel | undefined;
 
@@ -11,10 +8,6 @@ let outputChannel: vscode.OutputChannel | undefined;
  * This class is responsible for running the objDump command on a given file.
  */
 export class ObjDumper {
-  private filePath: string;
-  private objDumpPath: string;
-  private args: string[] = [];
-
   /**
    * Create an ObjDumper.
    * @param {string} filePath - The path to the file to be analyzed.
@@ -22,14 +15,11 @@ export class ObjDumper {
    * @param {string[]} args - The arguments to pass to the objDump command.
    */
   constructor(
-    filePath: string,
-    objDumpPath: string,
-    args: string[],
+    private readonly filePath: string,
+    private readonly objDumpPath: string,
+    private readonly args: string[],
     extensionOutputChannel?: vscode.OutputChannel
   ) {
-    this.filePath = filePath;
-    this.objDumpPath = objDumpPath;
-    this.args = args;
     outputChannel = extensionOutputChannel;
   }
 
@@ -40,12 +30,7 @@ export class ObjDumper {
    */
   public async dump(): Promise<string> {
     try {
-      const command = `${this.objDumpPath} ${this.args.join(' ')} ${this.filePath}`;
-      if (outputChannel) {
-        outputChannel.appendLine(`Running: "${command}"`);
-      }
-
-      const output = await execute(command);
+      const output = await execute(this.objDumpPath, this.args, this.filePath);
 
       if (output.stderr !== '') {
         return 'ERROR';
@@ -79,11 +64,39 @@ export interface ExecOutput {
  * @param command - The command to execute.
  * @returns The output of the command.
  */
-export async function execute(command: string): Promise<ExecOutput> {
+export async function execute(
+  objDumpPath: string,
+  args: string[] = [],
+  filePath: string = ''
+): Promise<ExecOutput> {
   try {
-    const {stdout, stderr} = await exec(command);
-    const output: ExecOutput = {stdout, stderr};
-    return output;
+    const childProcess = process.spawn(objDumpPath, [...args, filePath]);
+    const result = await new Promise<ExecOutput>(resolve => {
+      let stdout = '';
+      let stderr = '';
+
+      childProcess.stdout.on('data', data => {
+        stdout += data.toString();
+      });
+
+      childProcess.stderr.on('data', data => {
+        stderr += data.toString();
+      });
+
+      childProcess.on('exit', code => {
+        resolve({stdout, stderr});
+      });
+
+      childProcess.on('error', error => {
+        stderr += error.message;
+        resolve({stdout, stderr});
+      });
+
+      childProcess.on('close', code => {
+        resolve({stdout, stderr});
+      });
+    });
+    return result;
   } catch (error: Error | unknown) {
     let stderr = 'ERROR';
     if (error instanceof Error) {
@@ -103,8 +116,7 @@ export async function execute(command: string): Promise<ExecOutput> {
  */
 export async function isObjDumpBinary(path: string): Promise<boolean> {
   try {
-    const command = `${path} --help`;
-    const output = await execute(command);
+    const output = await execute(path, ['--help']);
 
     // TODO: Add more valid objdump outputs based on different supported versions, and OS.
     const validObjdumpOutputs = [
@@ -145,8 +157,7 @@ export async function getObjDumpVersion(path: string): Promise<string> {
   }
 
   try {
-    const command = `${path} --version`;
-    const output = await execute(command);
+    const output = await execute(path, ['--version']);
     return output.stdout.split('\n')[0];
   } catch (error: Error | unknown) {
     if (error instanceof Error) {
