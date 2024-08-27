@@ -24,7 +24,7 @@
         "properties": {
           "codeart-binexplore.objdumpPath": {
             "type": "string",
-            "default": "/usr/bin/objdump",
+            "default": "objdump",
             "markdownDescription": "Path to objdump executable to use",
             "order": 0,
             "scope": "resource"

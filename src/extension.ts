@@ -1,8 +1,6 @@
 import * as vscode from 'vscode';
 import * as os from 'os';
 import * as preview from './preview';
-import * as explore from './explore';
-import * as dump from './objdump/dumper';
 
 const outputChannel = vscode.window.createOutputChannel(
   'CodeArt: Binary Explore'
@@ -13,31 +11,6 @@ const outputChannel = vscode.window.createOutputChannel(
  * @param context The context in which the extension is activated.
  */
 export function activate(context: vscode.ExtensionContext) {
-  const disposable = vscode.workspace.onDidOpenTextDocument(async document => {
-    if (document.uri.scheme !== 'file') {
-      return;
-    }
-
-    try {
-      const [isExecutable, isObjectFile] = await Promise.all([
-        explore.isExecutable(document.fileName),
-        explore.isObjectFile(document.fileName),
-      ]);
-      if (isExecutable || isObjectFile) {
-        await preview.previewOutput(document.fileName);
-      }
-    } catch (error: Error | unknown) {
-      if (error instanceof Error) {
-        outputChannel.appendLine(
-          `Error exploring ${document.fileName}: 
-          ${error.message}`
-        );
-      }
-    }
-  });
-
-  context.subscriptions.push(disposable);
-
   preview.activate(context, outputChannel);
 
   outputChannel.appendLine('CodeArt: Binary Explore is now active.');

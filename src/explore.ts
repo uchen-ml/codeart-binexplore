@@ -5,7 +5,7 @@ import * as dump from './objdump/dumper';
 const objDumpPathKey = 'codeart-binexplore.objdumpPath';
 const objDumpOptionsKey = 'codeart-binexplore.objdumpOptions';
 
-const defaultObjDumpPath = '/usr/bin/objdump';
+const defaultObjDumpPath = 'objdump';
 const defaultObjDumpOptions = '-d -S';
 
 let outputChannel: vscode.OutputChannel;
@@ -19,8 +19,8 @@ export async function activate(
   context: vscode.ExtensionContext,
   extensionOutputChannel: vscode.OutputChannel
 ) {
-  const disposable = vscode.workspace.onDidChangeConfiguration(
-    await handleConfigurationChange
+  const disposable = await vscode.workspace.onDidChangeConfiguration(
+    handleConfigurationChange
   );
   context.subscriptions.push(disposable);
 
@@ -31,9 +31,7 @@ export async function activate(
     100
   );
 
-  await vscode.window.onDidChangeActiveTextEditor(
-    await handleStatusBarVisibility
-  );
+  await vscode.window.onDidChangeActiveTextEditor(handleStatusBarVisibility);
 }
 
 /**
@@ -51,13 +49,13 @@ async function validateObjDumpBinary() {
     defaultObjDumpPath
   );
 
-  const isObjDumpPathValid = await validateObjDumpPath(objDumpPath);
+  let isObjDumpPathValid = objDumpPath === defaultObjDumpPath;
+  if (!isObjDumpPathValid) {
+    isObjDumpPathValid = await dump.isObjDumpBinary(objDumpPath);
+  }
 
   if (!isObjDumpPathValid) {
-    vscode.window.showWarningMessage(
-      `Invalid objDump path: ${objDumpPath}. 
-        Fetching the path from the system $PATH.`
-    );
+    vscode.window.showWarningMessage(`Invalid objDump path: ${objDumpPath}.`);
     await resetObjDumpPath();
     return;
   }
@@ -75,71 +73,14 @@ async function validateObjDumpBinary() {
 }
 
 /**
- * Validates the objDump path.
- * @param path - The path to validate.
- * @returns True if the path is valid and executable, false otherwise.
- */
-async function validateObjDumpPath(path: string): Promise<boolean> {
-  if (!path) {
-    return false;
-  }
-
-  try {
-    // Special case for 'objdump' command, to be fetched from $PATH.
-    if (path === 'objdump') {
-      const commandResult = await dump.execute('which', ['objdump']);
-      const resolvedPath = commandResult.stdout.trim();
-
-      await fs.promises.access(resolvedPath, fs.constants.F_OK);
-      path = resolvedPath;
-      outputChannel.appendLine(
-        `Using objdump from system path: ${resolvedPath}`
-      );
-    }
-
-    if (await isExecutable(path)) {
-      const isObjDumpBinary = await dump.isObjDumpBinary(path);
-      return isObjDumpBinary;
-    }
-
-    return false;
-  } catch (error: Error | unknown) {
-    if (error instanceof Error) {
-      outputChannel.appendLine(
-        `Error validating objdump path "${path}": 
-        ${error.message}`
-      );
-      return false;
-    }
-  }
-
-  return false;
-}
-
-/**
  * Resets the objDump path to the default value.
  */
 async function resetObjDumpPath() {
   const configuration = vscode.workspace.getConfiguration();
 
-  const commandResult = await dump.execute('which', ['objdump']);
-
-  let resolvedPath = commandResult.stdout.trim();
-  if (resolvedPath === '') {
-    vscode.window.showErrorMessage(
-      'Failed to find objdump in system path. check output for more details.'
-    );
-    outputChannel.appendLine(
-      `Failed to find objdump in system path. Setting it as the default value of 
-      '${defaultObjDumpPath}'. 
-      If this path is not valid on your system, please set the correct path manually.`
-    );
-    resolvedPath = defaultObjDumpPath;
-  }
-
   configuration.update(
     objDumpPathKey,
-    resolvedPath,
+    defaultObjDumpPath,
     vscode.ConfigurationTarget.Global
   );
 }

@@ -33,6 +33,11 @@ export class ObjDumper {
       const output = await execute(this.objDumpPath, this.args, this.filePath);
 
       if (output.stderr !== '') {
+        if (outputChannel) {
+          outputChannel.appendLine('Error running objDump command:');
+          outputChannel.appendLine(output.stderr);
+          outputChannel.show();
+        }
         return 'ERROR';
       }
       return output.stdout;
@@ -64,7 +69,7 @@ export interface ExecOutput {
  * @param command - The command to execute.
  * @returns The output of the command.
  */
-export async function execute(
+async function execute(
   objDumpPath: string,
   args: string[] = [],
   filePath: string = ''

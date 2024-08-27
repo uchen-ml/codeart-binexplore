@@ -63,6 +63,10 @@ class BinaryInspectorContentProvider
     const objDumpResult = await explore.ObjDumpResult.create(filePath);
     this.content = objDumpResult.output;
 
+    if (this.content === '') {
+      return false;
+    }
+
     return this.content !== 'ERROR';
   }
 }
@@ -77,7 +81,13 @@ export async function activate(
   context: vscode.ExtensionContext,
   extensionOutputChannel: vscode.OutputChannel
 ) {
-  const disposable = await vscode.workspace.registerTextDocumentContentProvider(
+  let disposable = await vscode.workspace.onDidOpenTextDocument(
+    analyzeOpenedDocument
+  );
+
+  context.subscriptions.push(disposable);
+
+  disposable = await vscode.workspace.registerTextDocumentContentProvider(
     extensionScheme,
     provider
   );
@@ -97,9 +107,36 @@ export async function deactivate() {
 }
 
 /**
+ * Analyzes the opened document and previews the output if it is an executable or object file.
+ * @param document The opened document.
+ */
+async function analyzeOpenedDocument(document: vscode.TextDocument) {
+  if (document.uri.scheme !== 'file') {
+    return;
+  }
+
+  try {
+    const [isExecutable, isObjectFile] = await Promise.all([
+      explore.isExecutable(document.fileName),
+      explore.isObjectFile(document.fileName),
+    ]);
+    if (isExecutable || isObjectFile) {
+      await previewOutput(document.fileName);
+    }
+  } catch (error: Error | unknown) {
+    if (error instanceof Error) {
+      outputChannel.appendLine(
+        `Error exploring ${document.fileName}: 
+          ${error.message}`
+      );
+    }
+  }
+}
+
+/**
  * Previews the output in a new editor column.
  */
-export async function previewOutput(fileName: string) {
+async function previewOutput(fileName: string) {
   const isExplored = await provider.exploreFile(fileName);
 
   if (!isExplored) {
@@ -153,22 +190,4 @@ export async function previewOutput(fileName: string) {
     }
     return;
   }
-}
-
-/**
- * Checks if a file is a binary executable.
- * @param filePath The path to the file.
- * @returns True if the file is a binary executable, false otherwise.
- */
-export async function isExecutable(filePath: string): Promise<boolean> {
-  return await explore.isExecutable(filePath);
-}
-
-/**
- * Checks if a file is an object file.
- * @param filePath The path to the file
- * @returns True if the file is an object file, false otherwise.
- */
-export async function isObjectFile(filePath: string): Promise<boolean> {
-  return await explore.isObjectFile(filePath);
 }
