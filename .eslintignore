@@ -1,4 +1,4 @@
 out/
-src/test/objectFilesGenerator
+test/objectFilesGenerator
 esbuild.js
 dist
