@@ -235,3 +235,40 @@ export async function isObjectFile(filePath: string): Promise<boolean> {
     return false;
   }
 }
+
+export interface CodeArtSymbol {
+  label: string;
+  kind: vscode.SymbolKind;
+  parent: string;
+  location: vscode.Location;
+}
+
+/**
+ * Gets the codeart symbols for a document.
+ * @param document The document.
+ * @returns The codeart symbols.
+ */
+export function getCodeArtSymbols(
+  document: vscode.TextDocument
+): CodeArtSymbol[] {
+  const items: CodeArtSymbol[] = [];
+
+  for (let line = 0; line < document.lineCount; line++) {
+    const text = document.lineAt(line).text;
+    // Handle regex match '0000000000001000 <_init>:' to get '_init'
+    const match = text.match(/<([^>]+)>:/);
+    if (match) {
+      const position = new vscode.Position(line, text.indexOf(match[1]));
+      const location = new vscode.Location(document.uri, position);
+      // TODO: Handle parent name.
+      items.push({
+        label: match[1],
+        kind: vscode.SymbolKind.Function,
+        parent: '',
+        location,
+      });
+    }
+  }
+
+  return items;
+}

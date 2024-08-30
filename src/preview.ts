@@ -7,9 +7,7 @@ const previewTitle = 'CodeArt: Binary Explore';
 
 let outputChannel: vscode.OutputChannel;
 
-class BinaryInspectorContentProvider
-  implements vscode.TextDocumentContentProvider
-{
+class CodeArtContentProvider implements vscode.TextDocumentContentProvider {
   private onDidChangeEmitter = new vscode.EventEmitter<vscode.Uri>();
   private content: string | undefined;
 
@@ -71,7 +69,32 @@ class BinaryInspectorContentProvider
   }
 }
 
-const provider = new BinaryInspectorContentProvider();
+class CodeArtSymbolProvider implements vscode.DocumentSymbolProvider {
+  provideDocumentSymbols(
+    document: vscode.TextDocument,
+    _token: vscode.CancellationToken
+  ): vscode.ProviderResult<vscode.SymbolInformation[]> {
+    const symbols: vscode.SymbolInformation[] = [];
+
+    const codeArtSymbols: explore.CodeArtSymbol[] =
+      explore.getCodeArtSymbols(document);
+
+    for (const item of codeArtSymbols) {
+      const codeArtSymbols = new vscode.SymbolInformation(
+        item.label,
+        item.kind,
+        item.parent,
+        item.location
+      );
+
+      symbols.push(codeArtSymbols);
+    }
+
+    return symbols;
+  }
+}
+
+const provider = new CodeArtContentProvider();
 
 /**
  * This method is called when the extension is activated.
@@ -84,14 +107,20 @@ export async function activate(
   let disposable = await vscode.workspace.onDidOpenTextDocument(
     analyzeOpenedDocument
   );
-
   context.subscriptions.push(disposable);
 
   disposable = await vscode.workspace.registerTextDocumentContentProvider(
     extensionScheme,
     provider
   );
+  context.subscriptions.push(disposable);
 
+  disposable = await vscode.languages.registerDocumentSymbolProvider(
+    {
+      scheme: extensionScheme,
+    },
+    new CodeArtSymbolProvider()
+  );
   context.subscriptions.push(disposable);
 
   await explore.activate(context, extensionOutputChannel);
@@ -153,12 +182,7 @@ async function previewOutput(fileName: string) {
   await provider.update(uri);
 
   try {
-    await vscode.commands.executeCommand(
-      'vscode.open',
-      uri,
-      vscode.ViewColumn.Active,
-      'Binary Inspector'
-    );
+    await vscode.commands.executeCommand('vscode.open', uri);
   } catch (error: Error | unknown) {
     if (error instanceof Error) {
       outputChannel.appendLine(
@@ -172,11 +196,16 @@ async function previewOutput(fileName: string) {
     const codeArtDocument = await vscode.workspace.openTextDocument(uri);
 
     if (codeArtDocument) {
-      await vscode.window.showTextDocument(codeArtDocument, {
+      const viewOptions: vscode.TextDocumentShowOptions = {
         preview: false,
         viewColumn: vscode.ViewColumn.Active,
         preserveFocus: false,
-      });
+      };
+
+      const codeArtEditor = await vscode.window.showTextDocument(
+        codeArtDocument,
+        viewOptions
+      );
     } else {
       outputChannel.appendLine(
         `Failed to open CodeArt results for ${path.basename(fileName)} `
