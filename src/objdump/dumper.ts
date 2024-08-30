@@ -29,12 +29,12 @@ export class ObjDumper {
    * @returns "ERROR" if the command fails.
    */
   public async dump(): Promise<string> {
+    const command = `${this.objDumpPath} ${this.args.join(' ')} ${this.filePath}`;
     try {
       const output = await execute(this.objDumpPath, this.args, this.filePath);
-
       if (output.stderr !== '') {
         if (outputChannel) {
-          outputChannel.appendLine('Error running objDump command:');
+          outputChannel.appendLine(`Error running objdump command: ${command}`);
           outputChannel.appendLine(output.stderr);
           outputChannel.show();
         }
@@ -44,7 +44,7 @@ export class ObjDumper {
     } catch (error: Error | unknown) {
       if (error instanceof Error) {
         if (outputChannel) {
-          outputChannel.appendLine('Error running objDump command:');
+          outputChannel.appendLine(`Error running objdump command: ${command}`);
           outputChannel.appendLine(error.message);
           outputChannel.show();
         }
