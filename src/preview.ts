@@ -73,24 +73,10 @@ class CodeArtSymbolProvider implements vscode.DocumentSymbolProvider {
   provideDocumentSymbols(
     document: vscode.TextDocument,
     _token: vscode.CancellationToken
-  ): vscode.ProviderResult<vscode.SymbolInformation[]> {
-    const symbols: vscode.SymbolInformation[] = [];
-
-    const codeArtSymbols: explore.CodeArtSymbol[] =
+  ): vscode.ProviderResult<vscode.DocumentSymbol[]> {
+    const codeArtSymbols: vscode.DocumentSymbol[] =
       explore.getCodeArtSymbols(document);
-
-    for (const item of codeArtSymbols) {
-      const codeArtSymbols = new vscode.SymbolInformation(
-        item.label,
-        item.kind,
-        item.parent,
-        item.location
-      );
-
-      symbols.push(codeArtSymbols);
-    }
-
-    return symbols;
+    return codeArtSymbols;
   }
 }
 
