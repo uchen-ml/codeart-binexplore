@@ -95,8 +95,6 @@ async function handleConfigurationChange(
   if (event.affectsConfiguration(objDumpPathKey)) {
     await validateObjDumpBinary();
   }
-
-  // TODO: Handle changes in objDumpOptionsKey.
 }
 
 /**
@@ -234,4 +232,65 @@ export async function isObjectFile(filePath: string): Promise<boolean> {
     }
     return false;
   }
+}
+
+/**
+ * Gets the codeart symbols for a document.
+ * @param document The document.
+ * @returns The codeart symbols.
+ */
+export function getCodeArtSymbols(
+  document: vscode.TextDocument
+): vscode.DocumentSymbol[] {
+  const items: vscode.DocumentSymbol[] = [];
+  let parent: vscode.DocumentSymbol | undefined;
+
+  for (let line = 0; line < document.lineCount; line++) {
+    const text = document.lineAt(line).text;
+    const match = text.match(/^[0-9a-f]+ <([^>]+)>:/);
+    const parentMatch =
+      text.match(/Disassembly of section \.([a-zA-Z0-9_.]+):/) ||
+      text.match(/Disassembly of section __TEXT,__(\w+):/);
+
+    if (match) {
+      const name = match[1];
+      const position = new vscode.Position(line, text.indexOf(name));
+      const range = new vscode.Range(
+        position,
+        position.translate(0, name.length)
+      );
+      const symbol = new vscode.DocumentSymbol(
+        name,
+        '',
+        vscode.SymbolKind.Function,
+        range,
+        range
+      );
+      parent?.children?.push(symbol);
+    } else if (parentMatch) {
+      if (parent) {
+        items.push(parent);
+      }
+
+      const name = parentMatch[1];
+      const position = new vscode.Position(line, text.indexOf(name));
+      const range = new vscode.Range(
+        position,
+        position.translate(0, name.length)
+      );
+      parent = new vscode.DocumentSymbol(
+        parentMatch[1],
+        '',
+        vscode.SymbolKind.Namespace,
+        range,
+        range
+      );
+    }
+  }
+
+  if (parent) {
+    items.push(parent);
+  }
+
+  return items;
 }
