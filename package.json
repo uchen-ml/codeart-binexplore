@@ -37,6 +37,29 @@
           }
         }
       }
+    ],
+    "languages": [
+      {
+        "id": "codeart-binexplore",
+        "aliases": [
+          "Binary Explore"
+        ],
+        "extensions": [
+          ".uc"
+        ],
+        "configuration": "./language-configuration.json",
+        "icon": {
+          "light": "assets/images/logo.png",
+          "dark": "assets/images/logo.png"
+        }
+      }
+    ],
+    "grammars": [
+      {
+        "language": "codeart-binexplore",
+        "scopeName": "source.uc.asm",
+        "path": "./syntaxes/language-uc-assembly.tmLanguage"
+      }
     ]
   },
   "activationEvents": [

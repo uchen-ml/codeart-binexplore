@@ -95,8 +95,6 @@ async function handleConfigurationChange(
   if (event.affectsConfiguration(objDumpPathKey)) {
     await validateObjDumpBinary();
   }
-
-  // TODO: Handle changes in objDumpOptionsKey.
 }
 
 /**
