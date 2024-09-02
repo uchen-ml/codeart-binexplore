@@ -69,10 +69,19 @@ class CodeArtContentProvider implements vscode.TextDocumentContentProvider {
   }
 }
 
+/**
+ * Provides the symbols for the CodeArt document.
+ */
 class CodeArtSymbolProvider implements vscode.DocumentSymbolProvider {
+  /**
+   * Provides the symbols for the given document.
+   * @param document The CodeArt document to provide symbols for.
+   * @param token A cancellation token.
+   * @returns The symbols for the document.
+   */
   provideDocumentSymbols(
     document: vscode.TextDocument,
-    _token: vscode.CancellationToken
+    token: vscode.CancellationToken
   ): vscode.ProviderResult<vscode.DocumentSymbol[]> {
     const codeArtSymbols: vscode.DocumentSymbol[] =
       explore.getCodeArtSymbols(document);
