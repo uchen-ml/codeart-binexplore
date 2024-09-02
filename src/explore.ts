@@ -247,7 +247,7 @@ export function getCodeArtSymbols(
 
   for (let line = 0; line < document.lineCount; line++) {
     const text = document.lineAt(line).text;
-    const match = text.match(/^[0-9a-f]+ <(\w+)>:/);
+    const match = text.match(/^[0-9a-f]+ <([^>]+)>:/);
     const parentMatch =
       text.match(/Disassembly of section \.([a-zA-Z0-9_.]+):/) ||
       text.match(/Disassembly of section __TEXT,__(\w+):/);

@@ -8,7 +8,7 @@
     <array>
         <dict>
             <key>match</key>
-            <string>\b(mov|add|sub|mul|div|and|or|xor|not|cmp|jmp|call|ret|push|movq|lea|movd|addq|setb|test|jne|leave|test|je|endbr64|bnd|nopl|nop|punpcklqdq|movaps|nopw|pop|cmpq|sar|jbe|movups|shl|addpsmovl|movabs|ja|pxor|cvtss2sd|movb|jns|data16|hlt|cs|shr|cmpb|movss|addss|movss|movlps|stp|ldp|subs|ldr|csinc|lsl|ccmp|ldp|lsl|subq|testq|callq|retq|pushq|repne)\b</string>
+            <string>\b(mov|add|sub|mul|div|and|or|xor|not|cmp|jmp|call|ret|push|movq|lea|movd|addq|setb|test|jne|leave|test|je|endbr64|bnd|nopl|nop|punpcklqdq|movaps|nopw|pop|cmpq|sar|jbe|movups|shl|addpsmovl|movabs|ja|pxor|cvtss2sd|movb|jns|data16|hlt|cs|shr|cmpb|movss|addss|movss|movlps|stp|ldp|subs|ldr|csinc|lsl|ccmp|ldp|lsl|subq|testq|callq|retq|pushq|repne|jae|vxorps|vmovss|xchg|vmulss|vaddss|jb)\b</string>
             <key>name</key>
             <string>keyword</string>
         </dict>
@@ -39,7 +39,5 @@
     </array>
     <key>scopeName</key>
     <string>source.uc.asm</string>
-    <key>uuid</key>
-    <string>932CA89E-7D79-4406-9F53-8BC58525560C</string>
 </dict>
 </plist>

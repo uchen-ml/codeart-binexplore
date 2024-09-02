@@ -3,7 +3,9 @@ import * as vscode from 'vscode';
 import * as explore from './explore';
 
 const extensionScheme = 'uchenml.codeart-binexplore';
+const extensionLanguageId = 'codeart-binexplore';
 const previewTitle = 'CodeArt: Binary Explore';
+const autoSaveKey = 'codeart-binexplore.saveCodeArtFiles';
 
 let outputChannel: vscode.OutputChannel;
 
@@ -118,6 +120,15 @@ export async function activate(
   );
   context.subscriptions.push(disposable);
 
+  disposable = await vscode.languages.registerDocumentSymbolProvider(
+    {
+      scheme: 'file',
+      language: extensionLanguageId,
+    },
+    new CodeArtSymbolProvider()
+  );
+  context.subscriptions.push(disposable);
+
   await explore.activate(context, extensionOutputChannel);
 
   outputChannel = extensionOutputChannel;
@@ -170,8 +181,10 @@ async function previewOutput(fileName: string) {
     return;
   }
 
+  const filePath = path.dirname(fileName);
+
   const uri = await vscode.Uri.parse(
-    `${extensionScheme}://authority/${previewTitle} - ${path.basename(fileName)}`
+    `${extensionScheme}://${filePath}/${previewTitle} - ${path.basename(fileName)}`
   );
 
   await provider.update(uri);
@@ -189,6 +202,10 @@ async function previewOutput(fileName: string) {
 
   try {
     const codeArtDocument = await vscode.workspace.openTextDocument(uri);
+    vscode.languages.setTextDocumentLanguage(
+      codeArtDocument,
+      extensionLanguageId
+    );
 
     if (codeArtDocument) {
       const viewOptions: vscode.TextDocumentShowOptions = {
@@ -201,6 +218,19 @@ async function previewOutput(fileName: string) {
         codeArtDocument,
         viewOptions
       );
+
+      const configuration = vscode.workspace.getConfiguration();
+      const autoSaveEnabled = configuration.get<boolean>(autoSaveKey, false);
+
+      if (autoSaveEnabled) {
+        const savedUri = vscode.Uri.parse(
+          `file://${filePath}/.${path.basename(fileName)}.uc`
+        );
+        await vscode.workspace.fs.writeFile(
+          savedUri,
+          Buffer.from(codeArtDocument.getText())
+        );
+      }
     } else {
       outputChannel.appendLine(
         `Failed to open CodeArt results for ${path.basename(fileName)} `
