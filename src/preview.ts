@@ -2,10 +2,10 @@ import * as path from 'path';
 import * as vscode from 'vscode';
 import * as explore from './explore';
 
-const extensionScheme = 'uchenml.codeart-binexplore';
-const extensionLanguageId = 'codeart-binexplore';
-const previewTitle = 'CodeArt: Binary Explore';
-const autoSaveKey = 'codeart-binexplore.saveCodeArtFiles';
+const EXTENSION_SCHEME = 'uchenml.codeart-binexplore';
+const EXTENSION_LANGUAGE_ID = 'codeart-binexplore';
+const PREVIEW_TITLE = 'CodeArt: Binary Explore';
+const AUTO_SAVE_KEY = 'codeart-binexplore.saveCodeArtFiles';
 
 let outputChannel: vscode.OutputChannel;
 
@@ -20,7 +20,7 @@ class CodeArtContentProvider implements vscode.TextDocumentContentProvider {
    */
   public provideTextDocumentContent(uri: vscode.Uri): string {
     try {
-      if (!uri.path.includes(`${previewTitle} - `)) {
+      if (!uri.path.includes(`${PREVIEW_TITLE} - `)) {
         outputChannel.appendLine(`Invalid URI: ${uri}`);
         return '';
       }
@@ -107,14 +107,14 @@ export async function activate(
   context.subscriptions.push(disposable);
 
   disposable = await vscode.workspace.registerTextDocumentContentProvider(
-    extensionScheme,
+    EXTENSION_SCHEME,
     provider
   );
   context.subscriptions.push(disposable);
 
   disposable = await vscode.languages.registerDocumentSymbolProvider(
     {
-      scheme: extensionScheme,
+      scheme: EXTENSION_SCHEME,
     },
     new CodeArtSymbolProvider()
   );
@@ -123,7 +123,7 @@ export async function activate(
   disposable = await vscode.languages.registerDocumentSymbolProvider(
     {
       scheme: 'file',
-      language: extensionLanguageId,
+      language: EXTENSION_LANGUAGE_ID,
     },
     new CodeArtSymbolProvider()
   );
@@ -184,7 +184,7 @@ async function previewOutput(fileName: string) {
   const filePath = path.dirname(fileName);
 
   const uri = await vscode.Uri.parse(
-    `${extensionScheme}://${filePath}/${previewTitle} - ${path.basename(fileName)}`
+    `${EXTENSION_SCHEME}://${filePath}/${PREVIEW_TITLE} - ${path.basename(fileName)}`
   );
 
   await provider.update(uri);
@@ -204,7 +204,7 @@ async function previewOutput(fileName: string) {
     const codeArtDocument = await vscode.workspace.openTextDocument(uri);
     vscode.languages.setTextDocumentLanguage(
       codeArtDocument,
-      extensionLanguageId
+      EXTENSION_LANGUAGE_ID
     );
 
     if (codeArtDocument) {
@@ -220,7 +220,7 @@ async function previewOutput(fileName: string) {
       );
 
       const configuration = vscode.workspace.getConfiguration();
-      const autoSaveEnabled = configuration.get<boolean>(autoSaveKey, false);
+      const autoSaveEnabled = configuration.get<boolean>(AUTO_SAVE_KEY, false);
 
       if (autoSaveEnabled) {
         const savedUri = vscode.Uri.parse(

@@ -2,11 +2,15 @@ import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as dump from './objdump/dumper';
 
-const objDumpPathKey = 'codeart-binexplore.objdumpPath';
-const objDumpOptionsKey = 'codeart-binexplore.objdumpOptions';
+const OBJ_DUMP_PATH_KEY = 'codeart-binexplore.objdumpPath';
+const OBJ_DUMP_OPTIONS_KEY = 'codeart-binexplore.objdumpOptions';
 
-const defaultObjDumpPath = 'objdump';
-const defaultObjDumpOptions = '-d -S';
+const DEFAULT_OBJ_DUMP_PATH = 'objdump';
+const DEFAULT_OBJ_DUMP_OPTIONS = '-d -S';
+
+const SECTION_REGEX_1 = /Disassembly of section \.([a-zA-Z0-9_.]+):/;
+const SECTION_REGEX_2 = /Disassembly of section __TEXT,__(\w+):/;
+const FUNCTION_REGEX = /^[0-9a-f]+ <(.+)>:$/;
 
 let outputChannel: vscode.OutputChannel;
 let statusBar: vscode.StatusBarItem;
@@ -45,11 +49,11 @@ export function deactivate() {}
 async function validateObjDumpBinary() {
   const configuration = vscode.workspace.getConfiguration();
   const objDumpPath = configuration.get<string>(
-    objDumpPathKey,
-    defaultObjDumpPath
+    OBJ_DUMP_PATH_KEY,
+    DEFAULT_OBJ_DUMP_PATH
   );
 
-  let isObjDumpPathValid = objDumpPath === defaultObjDumpPath;
+  let isObjDumpPathValid = objDumpPath === DEFAULT_OBJ_DUMP_PATH;
   if (!isObjDumpPathValid) {
     isObjDumpPathValid = await dump.isObjDumpBinary(objDumpPath);
   }
@@ -79,8 +83,8 @@ async function resetObjDumpPath() {
   const configuration = vscode.workspace.getConfiguration();
 
   configuration.update(
-    objDumpPathKey,
-    defaultObjDumpPath,
+    OBJ_DUMP_PATH_KEY,
+    DEFAULT_OBJ_DUMP_PATH,
     vscode.ConfigurationTarget.Global
   );
 }
@@ -92,7 +96,7 @@ async function resetObjDumpPath() {
 async function handleConfigurationChange(
   event: vscode.ConfigurationChangeEvent
 ) {
-  if (event.affectsConfiguration(objDumpPathKey)) {
+  if (event.affectsConfiguration(OBJ_DUMP_PATH_KEY)) {
     await validateObjDumpBinary();
   }
 }
@@ -151,8 +155,8 @@ export class ObjDumpResult {
   public static async create(filePath: string): Promise<ObjDumpResult> {
     const configuration = vscode.workspace.getConfiguration();
     const objDumpPath = configuration.get<string>(
-      objDumpPathKey,
-      defaultObjDumpPath
+      OBJ_DUMP_PATH_KEY,
+      DEFAULT_OBJ_DUMP_PATH
     );
     const args = this.getArgs(configuration);
 
@@ -177,15 +181,15 @@ export class ObjDumpResult {
     configuration: vscode.WorkspaceConfiguration
   ): string[] {
     const cliObjDumpOptions = configuration.get<string>(
-      objDumpOptionsKey,
-      defaultObjDumpOptions
+      OBJ_DUMP_OPTIONS_KEY,
+      DEFAULT_OBJ_DUMP_OPTIONS
     );
 
     if (cliObjDumpOptions.length > 0) {
       return cliObjDumpOptions.split(' ');
     }
 
-    return defaultObjDumpOptions.split(' ');
+    return DEFAULT_OBJ_DUMP_OPTIONS.split(' ');
   }
 }
 
@@ -243,14 +247,83 @@ export function getCodeArtSymbols(
   document: vscode.TextDocument
 ): vscode.DocumentSymbol[] {
   const items: vscode.DocumentSymbol[] = [];
-  let parent: vscode.DocumentSymbol | undefined;
 
-  for (let line = 0; line < document.lineCount; line++) {
+  let line = 0;
+  while (line < document.lineCount) {
     const text = document.lineAt(line).text;
-    const match = text.match(/^[0-9a-f]+ <([^>]+)>:/);
+    const sectionMatch =
+      text.match(SECTION_REGEX_1) || text.match(SECTION_REGEX_2);
+
+    if (sectionMatch) {
+      const sectionName = sectionMatch[1];
+      const [section, newLine] = getSection(document, line, sectionName);
+      items.push(section);
+      line = newLine;
+    } else {
+      line++;
+    }
+  }
+
+  return items;
+}
+
+/**
+ * Gets the section symbol.
+ * @param document The document.
+ * @param line The line number.
+ * @param sectionName The name of the section.
+ * @returns The section symbol.
+ * @returns The line number after the section.
+ */
+function getSection(
+  document: vscode.TextDocument,
+  line: number,
+  sectionName: string
+): [vscode.DocumentSymbol, number] {
+  const text = document.lineAt(line).text;
+  const position = new vscode.Position(line, text.indexOf(sectionName));
+  const range = new vscode.Range(
+    position,
+    position.translate(0, sectionName.length)
+  );
+
+  const section = new vscode.DocumentSymbol(
+    sectionName,
+    '',
+    vscode.SymbolKind.Namespace,
+    range,
+    range
+  );
+
+  const [children, atLine] = getSectionSymbols(document, line + 1);
+
+  section.children = children;
+  return [section, atLine];
+}
+
+/**
+ * Gets the symbols for a section.
+ * @param document The document.
+ * @param line The line number.
+ * @returns The symbols for the section.
+ * @returns The line number after the section.
+ */
+function getSectionSymbols(
+  document: vscode.TextDocument,
+  line: number
+): [vscode.DocumentSymbol[], number] {
+  const functionSymbols: vscode.DocumentSymbol[] = [];
+
+  while (line < document.lineCount) {
+    const text = document.lineAt(line).text;
+
     const parentMatch =
-      text.match(/Disassembly of section \.([a-zA-Z0-9_.]+):/) ||
-      text.match(/Disassembly of section __TEXT,__(\w+):/);
+      text.match(SECTION_REGEX_1) || text.match(SECTION_REGEX_2);
+    if (parentMatch) {
+      return [functionSymbols, line];
+    }
+
+    const match = text.match(FUNCTION_REGEX);
 
     if (match) {
       const name = match[1];
@@ -266,31 +339,10 @@ export function getCodeArtSymbols(
         range,
         range
       );
-      parent?.children?.push(symbol);
-    } else if (parentMatch) {
-      if (parent) {
-        items.push(parent);
-      }
-
-      const name = parentMatch[1];
-      const position = new vscode.Position(line, text.indexOf(name));
-      const range = new vscode.Range(
-        position,
-        position.translate(0, name.length)
-      );
-      parent = new vscode.DocumentSymbol(
-        parentMatch[1],
-        '',
-        vscode.SymbolKind.Namespace,
-        range,
-        range
-      );
+      functionSymbols.push(symbol);
     }
-  }
 
-  if (parent) {
-    items.push(parent);
+    line++;
   }
-
-  return items;
+  return [functionSymbols, line];
 }

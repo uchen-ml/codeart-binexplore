@@ -33,23 +33,23 @@ export class ObjDumper {
     try {
       const output = await execute(this.objDumpPath, this.args, this.filePath);
       if (output.stderr !== '') {
-        if (outputChannel) {
-          outputChannel.appendLine(`Error running objdump command: ${command}`);
-          outputChannel.appendLine(output.stderr);
-          outputChannel.show();
-        }
+        this.logError(command, output.stderr);
         return 'ERROR';
       }
       return output.stdout;
     } catch (error: Error | unknown) {
       if (error instanceof Error) {
-        if (outputChannel) {
-          outputChannel.appendLine(`Error running objdump command: ${command}`);
-          outputChannel.appendLine(error.message);
-          outputChannel.show();
-        }
+        this.logError(command, error.message);
       }
       return 'ERROR';
+    }
+  }
+
+  private logError(command: string, message: string): void {
+    if (outputChannel) {
+      outputChannel.appendLine(`Error running objdump command: ${command}`);
+      outputChannel.appendLine(message);
+      outputChannel.show();
     }
   }
 }
