@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>name</key>
+    <string>GDB Disassembly</string>
+    <key>patterns</key>
+    <array>
+        <dict>
+            <key>match</key>
+            <string>\b(mov|add|sub|mul|div|and|or|xor|not|cmp|jmp|call|ret|push|movq|lea|movd|addq|setb|test|jne|leave|test|je|endbr64|bnd|nopl|nop|punpcklqdq|movaps|nopw|pop|cmpq|sar|jbe|movups|shl|addpsmovl|movabs|ja|pxor|cvtss2sd|movb|jns|data16|hlt|cs|shr|cmpb|movss|addss|movss|movlps|stp|ldp|subs|ldr|csinc|lsl|ccmp|ldp|lsl|subq|testq|callq|retq|pushq|repne|jae|vxorps|vmovss|xchg|vmulss|vaddss|jb)\b</string>
+            <key>name</key>
+            <string>keyword</string>
+        </dict>
+        <dict>
+            <key>match</key>
+            <string>(;|#)[^\d].*$</string>
+            <key>name</key>
+            <string>comment</string>
+        </dict>
+        <dict>
+            <key>match</key>
+            <string>\<(.+)\>:$</string>
+            <key>name</key>
+            <string>entity.name.function.uc</string>
+        </dict>
+        <dict>
+            <key>match</key>
+            <string>(?<=Disassembly of section )\.(\w+)</string>
+            <key>name</key>
+            <string>entity.name.type.class.uc</string>
+        </dict>
+        <dict>
+            <key>match</key>
+            <string>(?<=Disassembly of section )\.(\w+)</string>
+            <key>name</key>
+            <string>entity.name.type.class.uc</string>
+        </dict>
+    </array>
+    <key>scopeName</key>
+    <string>source.uc.asm</string>
+</dict>
+</plist>

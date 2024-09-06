@@ -3,7 +3,7 @@
   "displayName": "Code Art - Binary Explore",
   "description": "VSCode extension for analyzing compiled binaries",
   "publisher": "uchenml",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/uchen-ml/codeart-binexplore"
@@ -34,8 +34,37 @@
             "markdownDescription": "Options of objdump command. At least one option from the list '-a,-d,-D,-e,-f,-g,-G,-h,-H,-p,-P,-r,-R,-s,-S,-t,-T,-V,-x' must be given. [More info](https://man7.org/linux/man-pages/man1/objdump.1.html).",
             "default": "-d -S",
             "scope": "resource"
+          },
+          "codeart-binexplore.saveCodeArtFiles": {
+            "type": "boolean",
+            "markdownDescription": "Auto save CodeArt Preview to the binary file directory.",
+            "default": false,
+            "scope": "resource"
           }
         }
+      }
+    ],
+    "languages": [
+      {
+        "id": "codeart-binexplore",
+        "aliases": [
+          "Binary Explore"
+        ],
+        "extensions": [
+          ".uc"
+        ],
+        "configuration": "./language-configuration.json",
+        "icon": {
+          "light": "assets/images/logo.png",
+          "dark": "assets/images/logo.png"
+        }
+      }
+    ],
+    "grammars": [
+      {
+        "language": "codeart-binexplore",
+        "scopeName": "source.uc.asm",
+        "path": "./syntaxes/language-uc-assembly.tmLanguage"
       }
     ]
   },
