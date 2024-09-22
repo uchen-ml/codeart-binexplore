@@ -96,7 +96,7 @@
     "@types/node": "20.16.5",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0",
-    "esbuild": "^0.23.0",
+    "esbuild": "^0.24.0",
     "npm-run-all2": "^6.0.0",
     "typescript": "^5.4.3",
     "@vscode/test-cli": "^0.0.10",
