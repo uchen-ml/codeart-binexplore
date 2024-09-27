@@ -71,6 +71,73 @@ class CodeArtContentProvider implements vscode.TextDocumentContentProvider {
   }
 }
 
+export class CodeArtDocument implements vscode.CustomDocument {
+  constructor(readonly uri: vscode.Uri) {
+    this.uri = uri;
+  }
+
+  dispose() {}
+}
+
+class CodeArtEditorProvider implements vscode.CustomReadonlyEditorProvider {
+  /**
+   * Called by vscode when a file is opened.
+   * Create document
+   */
+  public async openCustomDocument(
+    uri: vscode.Uri,
+    openContext: vscode.CustomDocumentOpenContext,
+    token: vscode.CancellationToken
+  ): Promise<vscode.CustomDocument> {
+    const document = new CodeArtDocument(uri);
+    return document;
+  }
+
+  public async resolveCustomEditor(
+    document: vscode.CustomDocument,
+    webviewPanel: vscode.WebviewPanel,
+    token: vscode.CancellationToken
+  ): Promise<void> {
+    const webview = webviewPanel.webview;
+    webview.options = {enableScripts: true};
+
+    webview.html = this.getHtmlForWebview(webview);
+
+    const binaryFilePath = document.uri.fsPath;
+    const objDumpResult = await explore.ObjDumpResult.create(binaryFilePath);
+    let content = objDumpResult.output;
+
+    if (content && content.startsWith('\n')) {
+      content = content.slice(1);
+      webview.postMessage({command: 'display', content: content});
+    } else {
+      webview.postMessage({
+        command: 'error',
+        content: 'failed to generate objdump output for the file',
+      });
+    }
+  }
+
+  private getHtmlForWebview(webview: vscode.Webview): string {
+    return `
+      <html>
+      <body>
+        <pre id="output"></pre>
+        <script>
+          const vscode = acquireVsCodeApi();
+          window.addEventListener('message', event => {
+            const message = event.data;
+            if (message.command === 'display') {
+              document.getElementById('output').textContent = message.content;
+            }
+          });
+        </script>
+      </body>
+      </html>
+    `;
+  }
+}
+
 /**
  * Provides the symbols for the CodeArt document.
  */
@@ -128,6 +195,13 @@ export async function activate(
     new CodeArtSymbolProvider()
   );
   context.subscriptions.push(disposable);
+
+  const viewProvider = new CodeArtEditorProvider();
+  vscode.window.registerCustomEditorProvider(
+    'codeart-binexplore.binaryEditor',
+    viewProvider,
+    {webviewOptions: {enableFindWidget: true, retainContextWhenHidden: true}}
+  );
 
   await explore.activate(context, extensionOutputChannel);
 

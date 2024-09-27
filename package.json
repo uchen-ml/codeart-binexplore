@@ -66,6 +66,18 @@
         "scopeName": "source.uc.asm",
         "path": "./syntaxes/language-uc-assembly.tmLanguage"
       }
+    ],
+    "customEditors": [
+      {
+        "viewType": "codeart-binexplore.binaryEditor",
+        "displayName": "Code Art - Binary Explore",
+        "selector": [
+          {
+            "filenamePattern": "*"
+          }
+        ],
+        "priority": "option"
+      }
     ]
   },
   "activationEvents": [
