@@ -129,7 +129,8 @@
       {
         "command": "codeart-binexplore.previewBinary",
         "key": "ctrl+shift+v",
-        "mac": "cmd+shift+v"
+        "mac": "cmd+shift+v",
+        "when": "resourceScheme == file && (resourceExtname == '' || resourceExtname == .o || resourceExtName == .obj || resourceExtname == .exe)"
       }
     ]
   },
