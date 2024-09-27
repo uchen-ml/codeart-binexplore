@@ -98,43 +98,8 @@ class CodeArtEditorProvider implements vscode.CustomReadonlyEditorProvider {
     webviewPanel: vscode.WebviewPanel,
     token: vscode.CancellationToken
   ): Promise<void> {
-    const webview = webviewPanel.webview;
-    webview.options = {enableScripts: true};
-
-    webview.html = this.getHtmlForWebview(webview);
-
-    const binaryFilePath = document.uri.fsPath;
-    const objDumpResult = await explore.ObjDumpResult.create(binaryFilePath);
-    let content = objDumpResult.output;
-
-    if (content && content.startsWith('\n')) {
-      content = content.slice(1);
-      webview.postMessage({command: 'display', content: content});
-    } else {
-      webview.postMessage({
-        command: 'error',
-        content: 'failed to generate objdump output for the file',
-      });
-    }
-  }
-
-  private getHtmlForWebview(webview: vscode.Webview): string {
-    return `
-      <html>
-      <body>
-        <pre id="output"></pre>
-        <script>
-          const vscode = acquireVsCodeApi();
-          window.addEventListener('message', event => {
-            const message = event.data;
-            if (message.command === 'display') {
-              document.getElementById('output').textContent = message.content;
-            }
-          });
-        </script>
-      </body>
-      </html>
-    `;
+    vscode.commands.executeCommand('workbench.action.closeActiveEditor');
+    previewOutput(document.uri);
   }
 }
 
@@ -170,6 +135,12 @@ export async function activate(
 ) {
   let disposable = await vscode.workspace.onDidOpenTextDocument(
     analyzeOpenedDocument
+  );
+  context.subscriptions.push(disposable);
+
+  disposable = vscode.commands.registerCommand(
+    'codeart-binexplore.previewBinary',
+    previewOutput
   );
   context.subscriptions.push(disposable);
 
@@ -230,7 +201,7 @@ async function analyzeOpenedDocument(document: vscode.TextDocument) {
       explore.isObjectFile(document.fileName),
     ]);
     if (isExecutable || isObjectFile) {
-      await previewOutput(document.fileName);
+      await previewOutput(document.uri);
     }
   } catch (error: Error | unknown) {
     if (error instanceof Error) {
@@ -245,7 +216,18 @@ async function analyzeOpenedDocument(document: vscode.TextDocument) {
 /**
  * Previews the output in a new editor column.
  */
-async function previewOutput(fileName: string) {
+async function previewOutput(documentUri: vscode.Uri) {
+  if (!documentUri) {
+    const activeEditor = vscode.window.activeTextEditor;
+    if (activeEditor) {
+      documentUri = activeEditor?.document.uri;
+    } else {
+      return;
+    }
+  }
+
+  const fileName = documentUri.fsPath;
+
   const isExplored = await provider.exploreFile(fileName);
 
   if (!isExplored) {

@@ -74,9 +74,62 @@
         "selector": [
           {
             "filenamePattern": "*"
+          },
+          {
+            "filenamePattern": "*.o"
+          },
+          {
+            "filenamePattern": "*.obj"
+          },
+          {
+            "filenamePattern": "*.exe"
           }
         ],
         "priority": "option"
+      }
+    ],
+    "commands": [
+      {
+        "command": "codeart-binexplore.previewBinary",
+        "title": "Preview CodeArt",
+        "category": "Binary Operations",
+        "icon": "./assets/images/logo.svg"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "codeart-binexplore.previewBinary",
+          "when": "resourceScheme == file && !explorerResourceIsFolder && (resourceExtname == '' || resourceExtname == .o || resourceExtName == .obj || resourceExtname == .exe)",
+          "group": "navigation"
+        }
+      ],
+      "editor/title": [
+        {
+          "command": "codeart-binexplore.previewBinary",
+          "when": "resourceScheme == file && (resourceExtname == '' || resourceExtname == .o || resourceExtName == .obj || resourceExtname == .exe)",
+          "group": "navigation"
+        }
+      ],
+      "editor/title/context": [
+        {
+          "command": "codeart-binexplore.previewBinary",
+          "when": "resourceScheme == file && (resourceExtname == '' || resourceExtname == .o || resourceExtName == .obj || resourceExtname == .exe)",
+          "group": "navigation"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "codeart-binexplore.previewBinary",
+          "when": "resourceScheme == file && (resourceExtname == '' || resourceExtname == .o || resourceExtName == .obj || resourceExtname == .exe)"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "codeart-binexplore.previewBinary",
+        "key": "ctrl+shift+v",
+        "mac": "cmd+shift+v"
       }
     ]
   },
