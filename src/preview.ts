@@ -12,7 +12,6 @@ let outputChannel: vscode.OutputChannel;
 class CodeArtContentProvider implements vscode.TextDocumentContentProvider {
   private onDidChangeEmitter = new vscode.EventEmitter<vscode.Uri>();
   private content: string | undefined;
-  private filePath: string | undefined;
 
   /**
    * Provides the content for the given URI.
@@ -61,7 +60,6 @@ class CodeArtContentProvider implements vscode.TextDocumentContentProvider {
    * @param filePath The path to the binary file.
    */
   public async exploreFile(filePath: string): Promise<boolean> {
-    this.filePath = filePath;
     this.content = await vscode.window.withProgress(
       {
         location: vscode.ProgressLocation.Notification,
