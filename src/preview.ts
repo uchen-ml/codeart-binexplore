@@ -12,6 +12,7 @@ let outputChannel: vscode.OutputChannel;
 class CodeArtContentProvider implements vscode.TextDocumentContentProvider {
   private onDidChangeEmitter = new vscode.EventEmitter<vscode.Uri>();
   private content: string | undefined;
+  private filePath: string | undefined;
 
   /**
    * Provides the content for the given URI.
@@ -60,14 +61,53 @@ class CodeArtContentProvider implements vscode.TextDocumentContentProvider {
    * @param filePath The path to the binary file.
    */
   public async exploreFile(filePath: string): Promise<boolean> {
-    const objDumpResult = await explore.ObjDumpResult.create(filePath);
-    this.content = objDumpResult.output;
+    this.filePath = filePath;
+    this.content = await vscode.window.withProgress(
+      {
+        location: vscode.ProgressLocation.Notification,
+        title: 'CodeArt',
+        cancellable: false,
+      },
+      (progress, token) => this.updateProgress(progress, token, filePath)
+    );
 
     if (this.content === '') {
       return false;
     }
 
     return this.content !== 'ERROR';
+  }
+
+  private async updateProgress(
+    progress: vscode.Progress<{message?: string; increment?: number}>,
+    token: vscode.CancellationToken,
+    filePath: string
+  ): Promise<string> {
+    if (!filePath) {
+      return 'ERROR';
+    }
+
+    progress.report({message: 'Creating objdump result...'});
+
+    try {
+      const objDumpResult = await explore.ObjDumpResult.create(filePath);
+
+      if (!objDumpResult.output) {
+        throw 'ERROR';
+      }
+
+      progress.report({message: 'Objdump result created successfully!'});
+      const content = objDumpResult.output;
+      return content;
+    } catch (error: Error | unknown) {
+      if (error instanceof Error) {
+        outputChannel.appendLine(
+          `Error exploring ${filePath}: ${error.message}`
+        );
+        progress.report({message: 'Error occurred.'});
+      }
+      return 'ERROR';
+    }
   }
 }
 
