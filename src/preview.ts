@@ -127,8 +127,7 @@ class CodeArtEditorProvider implements vscode.CustomReadonlyEditorProvider {
     openContext: vscode.CustomDocumentOpenContext,
     token: vscode.CancellationToken
   ): Promise<vscode.CustomDocument> {
-    const document = new CodeArtDocument(uri);
-    return document;
+    return new CodeArtDocument(uri);
   }
 
   public async resolveCustomEditor(
@@ -171,45 +170,36 @@ export async function activate(
   context: vscode.ExtensionContext,
   extensionOutputChannel: vscode.OutputChannel
 ) {
-  let disposable = await vscode.workspace.onDidOpenTextDocument(
-    analyzeOpenedDocument
-  );
-  context.subscriptions.push(disposable);
-
-  disposable = vscode.commands.registerCommand(
-    'codeart-binexplore.previewBinary',
-    previewOutput
-  );
-  context.subscriptions.push(disposable);
-
-  disposable = await vscode.workspace.registerTextDocumentContentProvider(
-    EXTENSION_SCHEME,
-    provider
-  );
-  context.subscriptions.push(disposable);
-
-  disposable = await vscode.languages.registerDocumentSymbolProvider(
-    {
-      scheme: EXTENSION_SCHEME,
-    },
-    new CodeArtSymbolProvider()
-  );
-  context.subscriptions.push(disposable);
-
-  disposable = await vscode.languages.registerDocumentSymbolProvider(
-    {
-      scheme: 'file',
-      language: EXTENSION_LANGUAGE_ID,
-    },
-    new CodeArtSymbolProvider()
-  );
-  context.subscriptions.push(disposable);
-
+  const symbolsProvider = new CodeArtSymbolProvider();
   const viewProvider = new CodeArtEditorProvider();
-  vscode.window.registerCustomEditorProvider(
-    'codeart-binexplore.binaryEditor',
-    viewProvider,
-    {webviewOptions: {enableFindWidget: true, retainContextWhenHidden: true}}
+  context.subscriptions.push(
+    vscode.workspace.onDidOpenTextDocument(analyzeOpenedDocument),
+    vscode.commands.registerCommand(
+      'codeart-binexplore.previewBinary',
+      previewOutput
+    ),
+    vscode.workspace.registerTextDocumentContentProvider(
+      EXTENSION_SCHEME,
+      provider
+    ),
+    vscode.languages.registerDocumentSymbolProvider(
+      {
+        scheme: EXTENSION_SCHEME,
+      },
+      symbolsProvider
+    ),
+    vscode.languages.registerDocumentSymbolProvider(
+      {
+        scheme: 'file',
+        language: EXTENSION_LANGUAGE_ID,
+      },
+      symbolsProvider
+    ),
+    vscode.window.registerCustomEditorProvider(
+      'codeart-binexplore.binaryEditor',
+      viewProvider,
+      {webviewOptions: {enableFindWidget: true, retainContextWhenHidden: true}}
+    )
   );
 
   await explore.activate(context, extensionOutputChannel);
