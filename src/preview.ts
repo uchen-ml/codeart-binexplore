@@ -60,14 +60,83 @@ class CodeArtContentProvider implements vscode.TextDocumentContentProvider {
    * @param filePath The path to the binary file.
    */
   public async exploreFile(filePath: string): Promise<boolean> {
-    const objDumpResult = await explore.ObjDumpResult.create(filePath);
-    this.content = objDumpResult.output;
+    this.content = await vscode.window.withProgress(
+      {
+        location: vscode.ProgressLocation.Notification,
+        title: 'CodeArt',
+        cancellable: false,
+      },
+      (progress, token) => this.updateProgress(progress, token, filePath)
+    );
 
     if (this.content === '') {
       return false;
     }
 
     return this.content !== 'ERROR';
+  }
+
+  private async updateProgress(
+    progress: vscode.Progress<{message?: string; increment?: number}>,
+    token: vscode.CancellationToken,
+    filePath: string
+  ): Promise<string> {
+    if (!filePath) {
+      return 'ERROR';
+    }
+
+    progress.report({message: 'Creating objdump result...'});
+
+    try {
+      const objDumpResult = await explore.ObjDumpResult.create(filePath);
+
+      if (!objDumpResult.output) {
+        throw 'ERROR';
+      }
+
+      progress.report({message: 'Objdump result created successfully!'});
+      const content = objDumpResult.output;
+      return content;
+    } catch (error: Error | unknown) {
+      if (error instanceof Error) {
+        outputChannel.appendLine(
+          `Error exploring ${filePath}: ${error.message}`
+        );
+        progress.report({message: 'Error occurred.'});
+      }
+      return 'ERROR';
+    }
+  }
+}
+
+export class CodeArtDocument implements vscode.CustomDocument {
+  constructor(readonly uri: vscode.Uri) {
+    this.uri = uri;
+  }
+
+  dispose() {}
+}
+
+class CodeArtEditorProvider implements vscode.CustomReadonlyEditorProvider {
+  /**
+   * Called by vscode when a file is opened.
+   * Create document
+   */
+  public async openCustomDocument(
+    uri: vscode.Uri,
+    openContext: vscode.CustomDocumentOpenContext,
+    token: vscode.CancellationToken
+  ): Promise<vscode.CustomDocument> {
+    return new CodeArtDocument(uri);
+  }
+
+  public async resolveCustomEditor(
+    document: vscode.CustomDocument,
+    webviewPanel: vscode.WebviewPanel,
+    token: vscode.CancellationToken
+  ): Promise<void> {
+    vscode.commands.executeCommand('workbench.action.closeActiveEditor');
+    previewOutput(document.uri);
   }
 }
 
@@ -101,33 +170,37 @@ export async function activate(
   context: vscode.ExtensionContext,
   extensionOutputChannel: vscode.OutputChannel
 ) {
-  let disposable = await vscode.workspace.onDidOpenTextDocument(
-    analyzeOpenedDocument
+  const symbolsProvider = new CodeArtSymbolProvider();
+  const viewProvider = new CodeArtEditorProvider();
+  context.subscriptions.push(
+    vscode.workspace.onDidOpenTextDocument(analyzeOpenedDocument),
+    vscode.commands.registerCommand(
+      'codeart-binexplore.previewBinary',
+      previewOutput
+    ),
+    vscode.workspace.registerTextDocumentContentProvider(
+      EXTENSION_SCHEME,
+      provider
+    ),
+    vscode.languages.registerDocumentSymbolProvider(
+      {
+        scheme: EXTENSION_SCHEME,
+      },
+      symbolsProvider
+    ),
+    vscode.languages.registerDocumentSymbolProvider(
+      {
+        scheme: 'file',
+        language: EXTENSION_LANGUAGE_ID,
+      },
+      symbolsProvider
+    ),
+    vscode.window.registerCustomEditorProvider(
+      'codeart-binexplore.binaryEditor',
+      viewProvider,
+      {webviewOptions: {enableFindWidget: true, retainContextWhenHidden: true}}
+    )
   );
-  context.subscriptions.push(disposable);
-
-  disposable = await vscode.workspace.registerTextDocumentContentProvider(
-    EXTENSION_SCHEME,
-    provider
-  );
-  context.subscriptions.push(disposable);
-
-  disposable = await vscode.languages.registerDocumentSymbolProvider(
-    {
-      scheme: EXTENSION_SCHEME,
-    },
-    new CodeArtSymbolProvider()
-  );
-  context.subscriptions.push(disposable);
-
-  disposable = await vscode.languages.registerDocumentSymbolProvider(
-    {
-      scheme: 'file',
-      language: EXTENSION_LANGUAGE_ID,
-    },
-    new CodeArtSymbolProvider()
-  );
-  context.subscriptions.push(disposable);
 
   await explore.activate(context, extensionOutputChannel);
 
@@ -156,7 +229,7 @@ async function analyzeOpenedDocument(document: vscode.TextDocument) {
       explore.isObjectFile(document.fileName),
     ]);
     if (isExecutable || isObjectFile) {
-      await previewOutput(document.fileName);
+      await previewOutput(document.uri);
     }
   } catch (error: Error | unknown) {
     if (error instanceof Error) {
@@ -171,7 +244,18 @@ async function analyzeOpenedDocument(document: vscode.TextDocument) {
 /**
  * Previews the output in a new editor column.
  */
-async function previewOutput(fileName: string) {
+async function previewOutput(documentUri: vscode.Uri) {
+  if (!documentUri) {
+    const activeEditor = vscode.window.activeTextEditor;
+    if (activeEditor) {
+      documentUri = activeEditor?.document.uri;
+    } else {
+      return;
+    }
+  }
+
+  const fileName = documentUri.fsPath;
+
   const isExplored = await provider.exploreFile(fileName);
 
   if (!isExplored) {

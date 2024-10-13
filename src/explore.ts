@@ -23,10 +23,10 @@ export async function activate(
   context: vscode.ExtensionContext,
   extensionOutputChannel: vscode.OutputChannel
 ) {
-  const disposable = await vscode.workspace.onDidChangeConfiguration(
-    handleConfigurationChange
+  context.subscriptions.push(
+    vscode.workspace.onDidChangeConfiguration(handleConfigurationChange),
+    vscode.window.onDidChangeActiveTextEditor(handleStatusBarVisibility)
   );
-  context.subscriptions.push(disposable);
 
   outputChannel = extensionOutputChannel;
 
@@ -34,8 +34,6 @@ export async function activate(
     vscode.StatusBarAlignment.Right,
     100
   );
-
-  await vscode.window.onDidChangeActiveTextEditor(handleStatusBarVisibility);
 }
 
 /**
