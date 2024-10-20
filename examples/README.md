@@ -15,6 +15,12 @@ Objdump output:
 objdump -d -S examples/vector_debug > examples/vector_debug.objdump
 ```
 
+Objdump sources list:
+```bash
+objdump -g examples/vector_debug > examples/vector_debug_debugging.objdump
+objdump -g examples/vector_debug | grep '\.cpp\|\.c\|\.cc' > examples/vector_debug_sources.txt
+```
+
 ## 2. Optimized build, no symbols.
 
 To compile:
@@ -28,6 +34,12 @@ Objdump output:
 objdump -d examples/vector_release > examples/vector_release.objdump
 ```
 
+Objdump sources list:
+```bash
+objdump -g examples/vector_release > examples/vector_release_debugging.objdump
+objdump -g examples/vector_release | grep '\.cpp\|\.c\|\.cc' > examples/vector_release_sources.txt
+```
+
 ## 3. Object file, debug build with symbols.
 
 ```bash
@@ -39,6 +51,12 @@ Objdump output:
 objdump -d -S examples/mmul_debug.o > examples/mmul_debug.objdump
 ```
 
+Objdump sources list:
+```bash
+objdump -g examples/mmul_debug.o > examples/mmul_debug_debugging.objdump
+objdump -g examples/mmul_debug.o | grep '\.cpp\|\.c\|\.cc' > examples/mmul_debug_sources.txt
+```
+
 ## 4. Object file, optimized build, no symbols.
 
 ```bash
@@ -48,4 +66,10 @@ c++ -O3 -s -c -march=sandybridge examples/src/mmul.cc -o examples/mmul_release.o
 Objdump output:
 ```bash
 objdump -d -S examples/mmul_release.o > examples/mmul_release.objdump
+```
+
+Objdump sources list:
+```bash
+objdump -g examples/mmul_release.o > examples/mmul_release_debugging.objdump
+objdump -g examples/mmul_release.o | grep '\.cpp\|\.c\|\.cc' > examples/mmul_release_sources.txt
 ```

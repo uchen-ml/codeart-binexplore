@@ -150,13 +150,16 @@ export class ObjDumpResult {
    * @param filePath - The path to the file to be analyzed.
    * @returns A new ObjDumpResult.
    */
-  public static async create(filePath: string): Promise<ObjDumpResult> {
+  public static async create(
+    filePath: string,
+    section: string
+  ): Promise<ObjDumpResult> {
     const configuration = vscode.workspace.getConfiguration();
     const objDumpPath = configuration.get<string>(
       OBJ_DUMP_PATH_KEY,
       DEFAULT_OBJ_DUMP_PATH
     );
-    const args = this.getArgs(configuration);
+    const args = this.getArgs(configuration, section);
 
     const objDumper = new dump.ObjDumper(
       filePath,
@@ -176,18 +179,32 @@ export class ObjDumpResult {
    * @default ['-d', '-S']
    */
   private static getArgs(
-    configuration: vscode.WorkspaceConfiguration
+    configuration: vscode.WorkspaceConfiguration,
+    section: string
   ): string[] {
     const cliObjDumpOptions = configuration.get<string>(
       OBJ_DUMP_OPTIONS_KEY,
       DEFAULT_OBJ_DUMP_OPTIONS
     );
 
+    let args: string[];
+
     if (cliObjDumpOptions.length > 0) {
-      return cliObjDumpOptions.split(' ');
+      args = cliObjDumpOptions.split(' ');
+    } else {
+      args = DEFAULT_OBJ_DUMP_OPTIONS.split(' ');
     }
 
-    return DEFAULT_OBJ_DUMP_OPTIONS.split(' ');
+    if (section !== '') {
+      for (let i = 0; i < args.length; i++) {
+        if (args[i] === '-d' || args[i] === '--disassemble') {
+          args[i] = `--disassemble=${section}`;
+          break;
+        }
+      }
+    }
+
+    return args;
   }
 }
 

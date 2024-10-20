@@ -1,0 +1,10 @@
+    <12>   DW_AT_name        : (indirect line string, offset: 0x2f): examples/src/mmul.cc
+  0	1	(indirect line string, offset: 0xe7): mmul.cc
+  1	1	(indirect line string, offset: 0xef): mmul.cc
+  0x00000030 00636861 7233325f 74005f5a 4e313062 .char32_t._ZN10b
+  0x000001f0 00756e73 69676e65 6420696e 74006368 .unsigned int.ch
+  0x00000220 73756c74 00636861 7231365f 74006d61 sult.char16_t.ma
+  0x00000040 2e636300 2f686f6d 652f6168 61726269 .cc./home/aharbi
+  0x000000e0 632b2b2f 3131006d 6d756c2e 6363006d c++/11.mmul.cc.m
+  0x000000f0 6d756c2e 63630073 74646465 662e6800 mul.cc.stddef.h.
+  0x00000100 632b2b63 6f6e6669 672e6800 63737464 c++config.h.cstd

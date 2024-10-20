@@ -59,14 +59,18 @@ class CodeArtContentProvider implements vscode.TextDocumentContentProvider {
    * Updates the displayed content for the opened binary file.
    * @param filePath The path to the binary file.
    */
-  public async exploreFile(filePath: string): Promise<boolean> {
+  public async exploreFile(
+    filePath: string,
+    section: string = ''
+  ): Promise<boolean> {
     this.content = await vscode.window.withProgress(
       {
         location: vscode.ProgressLocation.Notification,
         title: 'CodeArt',
         cancellable: false,
       },
-      (progress, token) => this.updateProgress(progress, token, filePath)
+      (progress, token) =>
+        this.updateProgress(progress, token, filePath, section)
     );
 
     if (this.content === '') {
@@ -79,7 +83,8 @@ class CodeArtContentProvider implements vscode.TextDocumentContentProvider {
   private async updateProgress(
     progress: vscode.Progress<{message?: string; increment?: number}>,
     token: vscode.CancellationToken,
-    filePath: string
+    filePath: string,
+    section: string
   ): Promise<string> {
     if (!filePath) {
       return 'ERROR';
@@ -88,7 +93,10 @@ class CodeArtContentProvider implements vscode.TextDocumentContentProvider {
     progress.report({message: 'Creating objdump result...'});
 
     try {
-      const objDumpResult = await explore.ObjDumpResult.create(filePath);
+      const objDumpResult = await explore.ObjDumpResult.create(
+        filePath,
+        section
+      );
 
       if (!objDumpResult.output) {
         throw 'ERROR';
@@ -241,6 +249,33 @@ async function analyzeOpenedDocument(document: vscode.TextDocument) {
   }
 }
 
+async function getSection(): Promise<string> {
+  const selection = await vscode.window.showQuickPick(
+    ['Full Assembly', 'Specific Section'],
+    {
+      placeHolder: 'Select the section to be disassembled',
+      canPickMany: false,
+    }
+  );
+
+  if (selection === 'Specific Section') {
+    const section = await vscode.window.showInputBox({
+      prompt: 'Enter the section to be disassembled',
+      placeHolder: 'Section',
+    });
+
+    if (section !== undefined) {
+      return section;
+    } else {
+      vscode.window.showWarningMessage(
+        'No input provided, disassembling the full file.'
+      );
+    }
+  }
+
+  return '';
+}
+
 /**
  * Previews the output in a new editor column.
  */
@@ -254,9 +289,11 @@ async function previewOutput(documentUri: vscode.Uri) {
     }
   }
 
+  const section = await getSection();
+
   const fileName = documentUri.fsPath;
 
-  const isExplored = await provider.exploreFile(fileName);
+  const isExplored = await provider.exploreFile(fileName, section);
 
   if (!isExplored) {
     await vscode.window.showWarningMessage(
@@ -285,7 +322,7 @@ async function previewOutput(documentUri: vscode.Uri) {
   }
 
   try {
-    const codeArtDocument = await vscode.workspace.openTextDocument(uri);
+    let codeArtDocument = await vscode.workspace.openTextDocument(uri);
     vscode.languages.setTextDocumentLanguage(
       codeArtDocument,
       EXTENSION_LANGUAGE_ID
@@ -310,6 +347,20 @@ async function previewOutput(documentUri: vscode.Uri) {
         const savedUri = vscode.Uri.parse(
           `file://${filePath}/.${path.basename(fileName)}.uc`
         );
+
+        if (section !== '') {
+          await provider.exploreFile(fileName);
+          const uri = await vscode.Uri.parse(
+            `${EXTENSION_SCHEME}://${filePath}/temp/${PREVIEW_TITLE} - ${path.basename(fileName)}`
+          );
+          await provider.update(uri);
+          codeArtDocument = await vscode.workspace.openTextDocument(uri);
+          vscode.languages.setTextDocumentLanguage(
+            codeArtDocument,
+            EXTENSION_LANGUAGE_ID
+          );
+        }
+
         await vscode.workspace.fs.writeFile(
           savedUri,
           Buffer.from(codeArtDocument.getText())
