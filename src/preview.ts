@@ -33,7 +33,7 @@ class CodeArtContentProvider implements vscode.TextDocumentContentProvider {
     } catch (error: Error | unknown) {
       if (error instanceof Error) {
         outputChannel.appendLine(
-          `Error providing content for ${uri.path}: ${error.message}`
+          `Error providing content for ${uri.path}: ${error.message}`,
         );
       }
       return '';
@@ -66,7 +66,7 @@ class CodeArtContentProvider implements vscode.TextDocumentContentProvider {
         title: 'CodeArt',
         cancellable: false,
       },
-      (progress, token) => this.updateProgress(progress, token, filePath)
+      (progress, token) => this.updateProgress(progress, token, filePath),
     );
 
     if (this.content === '') {
@@ -79,7 +79,7 @@ class CodeArtContentProvider implements vscode.TextDocumentContentProvider {
   private async updateProgress(
     progress: vscode.Progress<{message?: string; increment?: number}>,
     token: vscode.CancellationToken,
-    filePath: string
+    filePath: string,
   ): Promise<string> {
     if (!filePath) {
       return 'ERROR';
@@ -100,7 +100,7 @@ class CodeArtContentProvider implements vscode.TextDocumentContentProvider {
     } catch (error: Error | unknown) {
       if (error instanceof Error) {
         outputChannel.appendLine(
-          `Error exploring ${filePath}: ${error.message}`
+          `Error exploring ${filePath}: ${error.message}`,
         );
         progress.report({message: 'Error occurred.'});
       }
@@ -125,7 +125,7 @@ class CodeArtEditorProvider implements vscode.CustomReadonlyEditorProvider {
   public async openCustomDocument(
     uri: vscode.Uri,
     openContext: vscode.CustomDocumentOpenContext,
-    token: vscode.CancellationToken
+    token: vscode.CancellationToken,
   ): Promise<vscode.CustomDocument> {
     return new CodeArtDocument(uri);
   }
@@ -133,10 +133,12 @@ class CodeArtEditorProvider implements vscode.CustomReadonlyEditorProvider {
   public async resolveCustomEditor(
     document: vscode.CustomDocument,
     webviewPanel: vscode.WebviewPanel,
-    token: vscode.CancellationToken
+    token: vscode.CancellationToken,
   ): Promise<void> {
-    vscode.commands.executeCommand('workbench.action.closeActiveEditor');
-    previewOutput(document.uri);
+    await Promise.all([
+      vscode.commands.executeCommand('workbench.action.closeActiveEditor'),
+      previewOutput(document.uri),
+    ]);
   }
 }
 
@@ -152,7 +154,7 @@ class CodeArtSymbolProvider implements vscode.DocumentSymbolProvider {
    */
   provideDocumentSymbols(
     document: vscode.TextDocument,
-    token: vscode.CancellationToken
+    token: vscode.CancellationToken,
   ): vscode.ProviderResult<vscode.DocumentSymbol[]> {
     const codeArtSymbols: vscode.DocumentSymbol[] =
       explore.getCodeArtSymbols(document);
@@ -168,7 +170,7 @@ const provider = new CodeArtContentProvider();
  */
 export async function activate(
   context: vscode.ExtensionContext,
-  extensionOutputChannel: vscode.OutputChannel
+  extensionOutputChannel: vscode.OutputChannel,
 ) {
   const symbolsProvider = new CodeArtSymbolProvider();
   const viewProvider = new CodeArtEditorProvider();
@@ -176,30 +178,30 @@ export async function activate(
     vscode.workspace.onDidOpenTextDocument(analyzeOpenedDocument),
     vscode.commands.registerCommand(
       'codeart-binexplore.previewBinary',
-      previewOutput
+      previewOutput,
     ),
     vscode.workspace.registerTextDocumentContentProvider(
       EXTENSION_SCHEME,
-      provider
+      provider,
     ),
     vscode.languages.registerDocumentSymbolProvider(
       {
         scheme: EXTENSION_SCHEME,
       },
-      symbolsProvider
+      symbolsProvider,
     ),
     vscode.languages.registerDocumentSymbolProvider(
       {
         scheme: 'file',
         language: EXTENSION_LANGUAGE_ID,
       },
-      symbolsProvider
+      symbolsProvider,
     ),
     vscode.window.registerCustomEditorProvider(
       'codeart-binexplore.binaryEditor',
       viewProvider,
-      {webviewOptions: {enableFindWidget: true, retainContextWhenHidden: true}}
-    )
+      {webviewOptions: {enableFindWidget: true, retainContextWhenHidden: true}},
+    ),
   );
 
   await explore.activate(context, extensionOutputChannel);
@@ -235,7 +237,7 @@ async function analyzeOpenedDocument(document: vscode.TextDocument) {
     if (error instanceof Error) {
       outputChannel.appendLine(
         `Error exploring ${document.fileName}: 
-          ${error.message}`
+          ${error.message}`,
       );
     }
   }
@@ -260,7 +262,7 @@ async function previewOutput(documentUri: vscode.Uri) {
 
   if (!isExplored) {
     await vscode.window.showWarningMessage(
-      `Failed to explore ${path.basename(fileName)}, check output for more details.`
+      `Failed to explore ${path.basename(fileName)}, check output for more details.`,
     );
     return;
   }
@@ -268,7 +270,7 @@ async function previewOutput(documentUri: vscode.Uri) {
   const filePath = path.dirname(fileName);
 
   const uri = await vscode.Uri.parse(
-    `${EXTENSION_SCHEME}://${filePath}/${PREVIEW_TITLE} - ${path.basename(fileName)}`
+    `${EXTENSION_SCHEME}://${filePath}/${PREVIEW_TITLE} - ${path.basename(fileName)}`,
   );
 
   await provider.update(uri);
@@ -278,7 +280,7 @@ async function previewOutput(documentUri: vscode.Uri) {
   } catch (error: Error | unknown) {
     if (error instanceof Error) {
       outputChannel.appendLine(
-        `Error generating CodeArt for ${path.basename(fileName)}: ${error.message}`
+        `Error generating CodeArt for ${path.basename(fileName)}: ${error.message}`,
       );
     }
     return;
@@ -286,9 +288,9 @@ async function previewOutput(documentUri: vscode.Uri) {
 
   try {
     const codeArtDocument = await vscode.workspace.openTextDocument(uri);
-    vscode.languages.setTextDocumentLanguage(
+    await vscode.languages.setTextDocumentLanguage(
       codeArtDocument,
-      EXTENSION_LANGUAGE_ID
+      EXTENSION_LANGUAGE_ID,
     );
 
     if (codeArtDocument) {
@@ -300,7 +302,7 @@ async function previewOutput(documentUri: vscode.Uri) {
 
       const codeArtEditor = await vscode.window.showTextDocument(
         codeArtDocument,
-        viewOptions
+        viewOptions,
       );
 
       const configuration = vscode.workspace.getConfiguration();
@@ -308,22 +310,22 @@ async function previewOutput(documentUri: vscode.Uri) {
 
       if (autoSaveEnabled) {
         const savedUri = vscode.Uri.parse(
-          `file://${filePath}/.${path.basename(fileName)}.uc`
+          `file://${filePath}/.${path.basename(fileName)}.uc`,
         );
         await vscode.workspace.fs.writeFile(
           savedUri,
-          Buffer.from(codeArtDocument.getText())
+          Buffer.from(codeArtDocument.getText()),
         );
       }
     } else {
       outputChannel.appendLine(
-        `Failed to open CodeArt results for ${path.basename(fileName)} `
+        `Failed to open CodeArt results for ${path.basename(fileName)} `,
       );
     }
   } catch (error: Error | unknown) {
     if (error instanceof Error) {
       outputChannel.appendLine(
-        `Error opening CodeArt results: ${error.message}`
+        `Error opening CodeArt results: ${error.message}`,
       );
     }
     return;

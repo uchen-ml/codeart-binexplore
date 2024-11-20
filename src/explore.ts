@@ -21,18 +21,18 @@ let statusBar: vscode.StatusBarItem;
  */
 export async function activate(
   context: vscode.ExtensionContext,
-  extensionOutputChannel: vscode.OutputChannel
+  extensionOutputChannel: vscode.OutputChannel,
 ) {
   context.subscriptions.push(
     vscode.workspace.onDidChangeConfiguration(handleConfigurationChange),
-    vscode.window.onDidChangeActiveTextEditor(handleStatusBarVisibility)
+    vscode.window.onDidChangeActiveTextEditor(handleStatusBarVisibility),
   );
 
   outputChannel = extensionOutputChannel;
 
   statusBar = vscode.window.createStatusBarItem(
     vscode.StatusBarAlignment.Right,
-    100
+    100,
   );
 }
 
@@ -48,7 +48,7 @@ async function validateObjDumpBinary() {
   const configuration = vscode.workspace.getConfiguration();
   const objDumpPath = configuration.get<string>(
     OBJ_DUMP_PATH_KEY,
-    DEFAULT_OBJ_DUMP_PATH
+    DEFAULT_OBJ_DUMP_PATH,
   );
 
   let isObjDumpPathValid = objDumpPath === DEFAULT_OBJ_DUMP_PATH;
@@ -57,8 +57,10 @@ async function validateObjDumpBinary() {
   }
 
   if (!isObjDumpPathValid) {
-    vscode.window.showWarningMessage(`Invalid objDump path: ${objDumpPath}.`);
-    await resetObjDumpPath();
+    await Promise.all([
+      vscode.window.showWarningMessage(`Invalid objDump path: ${objDumpPath}.`),
+      resetObjDumpPath(),
+    ]);
     return;
   }
 
@@ -80,10 +82,10 @@ async function validateObjDumpBinary() {
 async function resetObjDumpPath() {
   const configuration = vscode.workspace.getConfiguration();
 
-  configuration.update(
+  await configuration.update(
     OBJ_DUMP_PATH_KEY,
     DEFAULT_OBJ_DUMP_PATH,
-    vscode.ConfigurationTarget.Global
+    vscode.ConfigurationTarget.Global,
   );
 }
 
@@ -92,7 +94,7 @@ async function resetObjDumpPath() {
  * @param event - The configuration change event.
  */
 async function handleConfigurationChange(
-  event: vscode.ConfigurationChangeEvent
+  event: vscode.ConfigurationChangeEvent,
 ) {
   if (event.affectsConfiguration(OBJ_DUMP_PATH_KEY)) {
     await validateObjDumpBinary();
@@ -103,7 +105,7 @@ async function handleConfigurationChange(
  * Handles the visibility of the status bar.
  */
 async function handleStatusBarVisibility(
-  editor: vscode.TextEditor | undefined
+  editor: vscode.TextEditor | undefined,
 ) {
   const document = editor?.document;
   if (document) {
@@ -154,7 +156,7 @@ export class ObjDumpResult {
     const configuration = vscode.workspace.getConfiguration();
     const objDumpPath = configuration.get<string>(
       OBJ_DUMP_PATH_KEY,
-      DEFAULT_OBJ_DUMP_PATH
+      DEFAULT_OBJ_DUMP_PATH,
     );
     const args = this.getArgs(configuration);
 
@@ -162,7 +164,7 @@ export class ObjDumpResult {
       filePath,
       objDumpPath,
       args,
-      outputChannel
+      outputChannel,
     );
 
     const output = await objDumper.dump();
@@ -176,11 +178,11 @@ export class ObjDumpResult {
    * @default ['-d', '-S']
    */
   private static getArgs(
-    configuration: vscode.WorkspaceConfiguration
+    configuration: vscode.WorkspaceConfiguration,
   ): string[] {
     const cliObjDumpOptions = configuration.get<string>(
       OBJ_DUMP_OPTIONS_KEY,
-      DEFAULT_OBJ_DUMP_OPTIONS
+      DEFAULT_OBJ_DUMP_OPTIONS,
     );
 
     if (cliObjDumpOptions.length > 0) {
@@ -242,7 +244,7 @@ export async function isObjectFile(filePath: string): Promise<boolean> {
  * @returns The codeart symbols.
  */
 export function getCodeArtSymbols(
-  document: vscode.TextDocument
+  document: vscode.TextDocument,
 ): vscode.DocumentSymbol[] {
   const items: vscode.DocumentSymbol[] = [];
 
@@ -276,13 +278,13 @@ export function getCodeArtSymbols(
 function getSection(
   document: vscode.TextDocument,
   line: number,
-  sectionName: string
+  sectionName: string,
 ): [vscode.DocumentSymbol, number] {
   const text = document.lineAt(line).text;
   const position = new vscode.Position(line, text.indexOf(sectionName));
   const range = new vscode.Range(
     position,
-    position.translate(0, sectionName.length)
+    position.translate(0, sectionName.length),
   );
 
   const section = new vscode.DocumentSymbol(
@@ -290,7 +292,7 @@ function getSection(
     '',
     vscode.SymbolKind.Namespace,
     range,
-    range
+    range,
   );
 
   const [children, atLine] = getSectionSymbols(document, line + 1);
@@ -308,7 +310,7 @@ function getSection(
  */
 function getSectionSymbols(
   document: vscode.TextDocument,
-  line: number
+  line: number,
 ): [vscode.DocumentSymbol[], number] {
   const functionSymbols: vscode.DocumentSymbol[] = [];
 
@@ -328,14 +330,14 @@ function getSectionSymbols(
       const position = new vscode.Position(line, text.indexOf(name));
       const range = new vscode.Range(
         position,
-        position.translate(0, name.length)
+        position.translate(0, name.length),
       );
       const symbol = new vscode.DocumentSymbol(
         name,
         '',
         vscode.SymbolKind.Function,
         range,
-        range
+        range,
       );
       functionSymbols.push(symbol);
     }

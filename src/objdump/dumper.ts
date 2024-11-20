@@ -18,7 +18,7 @@ export class ObjDumper {
     private readonly filePath: string,
     private readonly objDumpPath: string,
     private readonly args: string[],
-    extensionOutputChannel?: vscode.OutputChannel
+    extensionOutputChannel?: vscode.OutputChannel,
   ) {
     outputChannel = extensionOutputChannel;
   }
@@ -72,7 +72,7 @@ export interface ExecOutput {
 async function execute(
   objDumpPath: string,
   args: string[] = [],
-  filePath: string = ''
+  filePath: string = '',
 ): Promise<ExecOutput> {
   try {
     const childProcess = process.spawn(objDumpPath, [...args, filePath]);
@@ -140,7 +140,7 @@ export async function isObjDumpBinary(path: string): Promise<boolean> {
     if (error instanceof Error) {
       if (outputChannel) {
         outputChannel.appendLine(
-          `Error checking if "${path}" is an objdump binary: ${error.message}`
+          `Error checking if "${path}" is an objdump binary: ${error.message}`,
         );
       }
     }
@@ -168,7 +168,7 @@ export async function getObjDumpVersion(path: string): Promise<string> {
     if (error instanceof Error) {
       if (outputChannel) {
         outputChannel.appendLine(
-          `Error getting objdump version for "${path}": ${error.message}`
+          `Error getting objdump version for "${path}": ${error.message}`,
         );
       }
     }

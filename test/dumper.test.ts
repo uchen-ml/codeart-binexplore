@@ -23,7 +23,7 @@ suite('ObjDumper Tests', () => {
     const executeStub = async (command: string): Promise<ExecOutput> => {
       assert.strictEqual(
         command,
-        `${objDumpPath} ${args.join(' ')} ${filePath}`
+        `${objDumpPath} ${args.join(' ')} ${filePath}`,
       );
       return {stdout: expectedOutput, stderr: ''};
     };
@@ -45,7 +45,7 @@ suite('ObjDumper Tests', () => {
     const executeStub = async (command: string): Promise<ExecOutput> => {
       assert.strictEqual(
         command,
-        `${objDumpPath} ${args.join(' ')} ${filePath}`
+        `${objDumpPath} ${args.join(' ')} ${filePath}`,
       );
       return {stdout: expectedOutput, stderr: ''};
     };
@@ -67,7 +67,7 @@ suite('ObjDumper Tests', () => {
     const executeStub = async (command: string): Promise<ExecOutput> => {
       assert.strictEqual(
         command,
-        `${objDumpPath} ${args.join(' ')} ${filePath}`
+        `${objDumpPath} ${args.join(' ')} ${filePath}`,
       );
       return {stdout: expectedOutput, stderr: ''};
     };
@@ -89,7 +89,7 @@ suite('ObjDumper Tests', () => {
     const executeStub = async (command: string): Promise<ExecOutput> => {
       assert.strictEqual(
         command,
-        `${objDumpPath} ${args.join(' ')} ${filePath}`
+        `${objDumpPath} ${args.join(' ')} ${filePath}`,
       );
       return {stdout: expectedOutput, stderr: ''};
     };
