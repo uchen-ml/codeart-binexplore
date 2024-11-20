@@ -3,15 +3,15 @@ import * as os from 'os';
 import * as preview from './preview';
 
 const outputChannel = vscode.window.createOutputChannel(
-  'CodeArt: Binary Explore'
+  'CodeArt: Binary Explore',
 );
 
 /**
  * This method is called when the extension is activated.
  * @param context The context in which the extension is activated.
  */
-export function activate(context: vscode.ExtensionContext) {
-  preview.activate(context, outputChannel);
+export async function activate(context: vscode.ExtensionContext) {
+  await preview.activate(context, outputChannel);
 
   outputChannel.appendLine('CodeArt: Binary Explore is now active.');
   outputChannel.appendLine(`os.platform() = ${os.platform()}`);
@@ -25,5 +25,5 @@ export function activate(context: vscode.ExtensionContext) {
  * This method is called when the extension is deactivated.
  */
 export function deactivate() {
-  preview.deactivate();
+  void preview.deactivate();
 }
