@@ -18,7 +18,7 @@ jobs:
       - name: Setup Node.js environment
         uses: actions/setup-node@v4.1.0
         with:
-          node-version: '20.16.0'
+          node-version: '22.14.0'
           check-latest: true
 
       - name: Get Short SHA
