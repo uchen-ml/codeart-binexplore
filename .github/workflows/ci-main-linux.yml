@@ -16,7 +16,7 @@ jobs:
       - name: Setup Node environment
         uses: actions/setup-node@v4
         with:
-          node-version: 20.16.0
+          node-version: 22.14.0
 
       - name: Install ESLint
         run: npm install --global eslint@8.57.0
